@@ -5,32 +5,35 @@
 // the 2nd parameter is an array of 'requires'
 var app =angular.module('LPApp', ['ionic'])
 app.config(function($stateProvider, $urlRouterProvider) {
-      $urlRouterProvider.otherwise('/')
+      $urlRouterProvider.otherwise('/app/todos')
 
-  $stateProvider.state('app', {
-    abstract: true,
-    url: '/todos',
-    //views: {
-     // todos: {
-        templateUrl: 'main.html'
-     // }
-   // }
+  $stateProvider
+      .state('app', {
+
+    url: '/app',
+     abstract: true,
+   // views: {
+     // main: {
+        templateUrl: 'main.html',
+          controller:'mainController'
+      //}
+    //}
 
   })
-  $stateProvider.state('app.todos', {
-    url: '',
-    //views: {
-     // todos: {
+  .state('app.todos', {
+    url: '/todos',
+    views: {
+     'todos@app': {
         templateUrl: 'todos.html',
         controller: 'TodosCtrl'
-    // }
-    //}
+     }
+    }
   })
 
-  $stateProvider.state('help', {
+ .state('app.help', {
     url: '/help',
-    views: {
-      help: {
+   views: {
+      'help@app': {
         templateUrl: 'help.html'
      }
    }
@@ -43,6 +46,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
         {title: "Start cooking dinner"}
       ]
     });
+app.controller('mainController', function($scope,$ionicSideMenuDelegate){
+    $scope.toggleLeftSideMenu = function() {
+        $ionicSideMenuDelegate.toggleLeft();
+    };
+});
 app.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
 
