@@ -1,4 +1,18 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:400,900);
+.home-header-text {
+    font-size:20px !important;
+    font-family: 'Lato',verdana, sans-serif;
+    color: #28a54c;
+    text-align:center;
+   /* background:#ECECEC;*/
+}
+.my-icon:before,
+.my-icon{
+    font-size:50px !important;
+    color:#ffffff !important;
+    display:block !important;
+    text-align: center !important;
+}
 .applyFooter{
     margin-bottom: 55px !important;
 }
@@ -10,7 +24,7 @@
  /* <-- Just for the demo, Yes I like pretty fonts... */
 
 .square {
-    float:left;
+    /*float:none;*/
     position: relative;
     width: 50%;
     padding-bottom : 25%; /* = width for a 1:1 aspect ratio */
@@ -32,7 +46,7 @@
     height:100%;
 }
 .table-cell{
-    display:table-cell;
+   /* display:table-cell;*/
     vertical-align:middle;
 }
 /*  For list */

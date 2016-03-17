@@ -5,40 +5,49 @@
 // the 2nd parameter is an array of 'requires'
 var app =angular.module('LPApp', ['ionic'])
 app.config(function($stateProvider, $urlRouterProvider) {
-      $urlRouterProvider.otherwise('/app/todos')
+    $urlRouterProvider.otherwise('/app/home')
 
-  $stateProvider
-      .state('app', {
+    $stateProvider
+        .state('app', {
 
-    url: '/app',
-     abstract: true,
-   // views: {
-     // main: {
-        templateUrl: 'main.html',
-          controller:'mainController'
-      //}
-    //}
+            url: '/app',
+            abstract: true,
+            // views: {
+            // main: {
+            templateUrl: 'main.html',
+            controller: 'mainController'
+            //}
+            //}
 
-  })
-  .state('app.todos', {
-    url: '/todos',
-    views: {
-     'todos@app': {
-        templateUrl: 'todos.html',
-        controller: 'TodosCtrl'
-     }
-    }
-  })
+        })
+        .state('app.home', {
+            url: '/home',
+            /* views: {
+             'todos@app': {*/
+            templateUrl: 'todos.html',
+            controller: 'TodosCtrl'
+            /*}
+             }*/
+        })
 
- .state('app.help', {
-    url: '/help',
-   views: {
-      'help@app': {
-        templateUrl: 'help.html'
-     }
-   }
-  })
-    });
+        .state('app.help', {
+            url: '/help',
+            views: {
+                'help@app': {
+                    templateUrl: 'help.html'
+                }
+            }
+        })
+        .state('app.home.sidemenu', {
+            url: '/sidemenu',
+            views: {
+                'sidemenu@app': {
+                    templateUrl: 'side_menu.html'
+                }
+            }
+
+        })
+})
    app.controller('TodosCtrl', function($scope) {
       $scope.todos = [
         {title: "Take out the trash"},
@@ -46,9 +55,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
         {title: "Start cooking dinner"}
       ]
     });
-app.controller('mainController', function($scope,$ionicSideMenuDelegate){
+app.controller('mainController', function($scope,$ionicSideMenuDelegate,$state){
     $scope.toggleLeftSideMenu = function() {
-        $ionicSideMenuDelegate.toggleLeft();
+        $ionicSideMenuDelegate.toggleLeft()
+        /*$state.go('app.sidemenu');*/
     };
 });
 app.run(function($ionicPlatform) {
