@@ -8,26 +8,24 @@ app.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/app/home')
 
     $stateProvider
-        .state('app', {
-
-            url: '/app',
-            abstract: true,
-            // views: {
-            // main: {
-            templateUrl: 'main.html',
-            controller: 'mainController'
-            //}
-            //}
-
+        .state('app',{
+            url:'/app',
+            abstract:true,
+            templateUrl:'main.html',
+            controller:'mainController'
         })
+
         .state('app.home', {
             url: '/home',
-            /* views: {
-             'todos@app': {*/
-            templateUrl: 'todos.html',
-            controller: 'TodosCtrl'
-            /*}
-             }*/
+             views: {
+             'maincontent@app': {
+                 templateUrl: 'todos.html',
+                 controller: 'TodosCtrl'
+             },
+                 'sidemenu@app':{
+                     templateUrl:'side_menu.html'
+                 }
+            }
         })
 
         .state('app.help', {
@@ -38,15 +36,28 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
-        .state('app.home.sidemenu', {
+        .state('app.pattaQuery',{
+            url:'/pattaQuery',
+            views:{
+                'maincontent':{
+                    templateUrl:'PattaQuery.html',
+                    controller:'PqController'
+                },
+                'sidemenu':{
+                    templateUrl:'side_menu.html'
+
+                }
+            }
+        })
+        /*.state('sidemenu', {
             url: '/sidemenu',
             views: {
                 'sidemenu@app': {
-                    templateUrl: 'side_menu.html'
+                    template: '<h2>happu</h2>'
                 }
             }
 
-        })
+        })*/
 })
    app.controller('TodosCtrl', function($scope) {
       $scope.todos = [
@@ -61,6 +72,70 @@ app.controller('mainController', function($scope,$ionicSideMenuDelegate,$state){
         /*$state.go('app.sidemenu');*/
     };
 });
+app.controller('PqController',function($scope){
+
+})
+app.directive('headerShrink', function($document) {
+    var fadeAmt;
+
+    var shrink = function(header, content, amt, max) {
+        amt = Math.min(44, amt);
+        fadeAmt = 1 - amt / 44;
+        ionic.requestAnimationFrame(function() {
+            header.style[ionic.CSS.TRANSFORM] = 'translate3d(0, -' + amt + 'px, 0)';
+            for(var i = 0, j = header.children.length; i < j; i++) {
+                header.children[i].style.opacity = fadeAmt;
+            }
+        });
+    };
+
+    return {
+        restrict: 'A',
+        link: function($scope, $element, $attr) {
+            var starty = $scope.$eval($attr.headerShrink) || 0;
+            var shrinkAmt;
+
+            var header = $document[0].body.querySelector('.bar-header');
+            var headerHeight = header.offsetHeight;
+
+            $element.bind('scroll', function(e) {
+                var scrollTop = null;
+                if(e.detail){
+                    scrollTop = e.detail.scrollTop;
+                }else if(e.target){
+                    scrollTop = e.target.scrollTop;
+                }
+                if(scrollTop > starty){
+                    // Start shrinking
+                    shrinkAmt = headerHeight - Math.max(0, (starty + headerHeight) - scrollTop);
+                    shrink(header, $element[0], shrinkAmt, headerHeight);
+                } else {
+                    shrink(header, $element[0], 0, headerHeight);
+                }
+            });
+        }
+    }
+});
+app.directive('scrollWatch', function($rootScope) {
+        return function(scope, elem, attr) {
+            var start = 0;
+            var threshold = 150;
+
+            elem.bind('scroll', function(e) {
+                if(e.detail.scrollTop - start > threshold) {
+                    $rootScope.slideHeader = true;
+                } else {
+                    $rootScope.slideHeader = false;
+                }
+                if ($rootScope.slideHeaderPrevious >= e.detail.scrollTop - start) {
+                    $rootScope.slideHeader = false;
+                }
+                $rootScope.slideHeaderPrevious = e.detail.scrollTop - start;
+                $rootScope.$apply();
+            });
+        };
+    });
+
 app.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
 
