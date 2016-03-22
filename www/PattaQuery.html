@@ -1,27 +1,59 @@
-<ion-view>
-    <ion-content  >
-        <ion-list>
-            <ion-item>dsfjdlkf</ion-item>
-            <ion-item>sfdsfd</ion-item>
-            <ion-item>dsfdsfdf</ion-item>
-            <ion-item>dfdfdfd</ion-item>
-            <ion-item>sdfdfdfd</ion-item>
-            <ion-item>dfdsfdfd</ion-item>
-            <ion-item>sdfdfdf</ion-item>
-            <ion-item>dsfdfd</ion-item>
-            <ion-item>dsfdfd</ion-item>
-            <ion-item>dfdfd</ion-item>
-            <ion-item>dfdfd</ion-item>
-            <ion-item>fjdslfjdkl</ion-item>
-            <ion-item>dsfdfdfd</ion-item>
-            <ion-item>dfdfdfd</ion-item>
-            <ion-item>dfdsfdf</ion-item>
-            <ion-item>dsfdfdfd</ion-item>
-            <ion-item>dfdfdf</ion-item>
-            <ion-item>dfdfdfd</ion-item>
-            <ion-item>dfdfdfd</ion-item>
-            <ion-item>dfdfd</ion-item>
-            <ion-item>HAPPU</ion-item>
-        </ion-list>
+<ion-view title="PattaQuery">
+    <ion-content overflow-scroll="true" >
+        <div class="list list-inset">
+
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    District:
+                </div>
+                <select>
+                    <option>-Select District-</option>
+                    <option >বিষ্ণুপুর</option>
+                    <option >ইম্ফাল ইস্ঠ</option>
+                </select>
+            </label>
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Circle:
+                </div>
+                <select>
+                    <option>-Select Circle-</option>
+                    <option >Green</option>
+                    <option>Red</option>
+                </select>
+            </label>
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Village:
+                </div>
+                <select>
+                    <option>-Select Village-</option>
+                    <option >Green</option>
+                    <option>Red</option>
+                </select>
+            </label>
+            <label class="item item-input">
+                <span class="input-label">NewDagNo:</span>
+                <input type="text">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">NewPattaNo:</span>
+                <input type="password">
+            </label>
+            <div class="padding">
+                <button class="button button-block base-color" ng-click="modal.show()">Submit</button>
+            </div>
+        </div>
     </ion-content>
 </ion-view>
+<script id="my-modal.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar class="base-color">
+            <h1 class="title">PattaDetails</h1>
+            <div class="button button-clear" ng-click="modal.hide()"><span class="icon ion-close" style="color:#ffffff;"></span></div>
+        </ion-header-bar>
+        <ion-content>
+            Hello!
+        </ion-content>
+    </ion-modal-view>
+</script>

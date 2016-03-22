@@ -72,7 +72,13 @@ app.controller('mainController', function($scope,$ionicSideMenuDelegate,$state){
         /*$state.go('app.sidemenu');*/
     };
 });
-app.controller('PqController',function($scope){
+app.controller('PqController',function($scope,$ionicModal){
+    $ionicModal.fromTemplateUrl('my-modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
 
 })
 app.directive('headerShrink', function($document) {

@@ -16,6 +16,24 @@
 .applyFooter{
     margin-bottom: 55px !important;
 }
+.base-color{
+    background-color: #5DBCD2 !important;
+   /* over-flow:hidden !important;
+    display: block !important;*/
+    /*border-color: #5DBCD2 !important;*/
+    /*border:0px !important;*/
+   /* border-bottom-color: #5DBCD2 !important;
+    padding: 0 !important;*/
+    color:#ffffff !important;
+}
+.menu-base-color{
+    background-color: #c6c6c6 !important;
+    color:#ffffff !important;
+
+}
+.item .item-content{
+    background-color: transparent !important;
+}
 /*
 .square{
     width: 30%;
@@ -29,7 +47,7 @@
     width: 50%;
     padding-bottom : 25%; /* = width for a 1:1 aspect ratio */
     margin:.66%;
-    background-color:#387ef5;
+    background-color:#5DBCD2;
     overflow:hidden;
 }
 
