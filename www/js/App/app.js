@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app =angular.module('LPApp', ['ionic'])
+var app =angular.module('LPApp', ['ionic','pdf'])
 app.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/app/home')
 
@@ -11,19 +11,21 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('app',{
             url:'/app',
             abstract:true,
-            templateUrl:'main.html',
-            controller:'mainController'
+            templateUrl:'Views/General/main.html',
+            controller:'MainController',
+            controllerAs:'master'
         })
 
         .state('app.home', {
             url: '/home',
              views: {
              'maincontent@app': {
-                 templateUrl: 'todos.html',
-                 controller: 'TodosCtrl'
+                 templateUrl: 'Views/General/home.html',
+                 controller: 'HomeController',
+                 controllerAs:'home'
              },
                  'sidemenu@app':{
-                     templateUrl:'side_menu.html'
+                     templateUrl:'Views/General/side_menu.html'
                  }
             }
         })
@@ -32,7 +34,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/help',
             views: {
                 'help@app': {
-                    templateUrl: 'help.html'
+                    templateUrl: 'Views/help.html'
                 }
             }
         })
@@ -40,39 +42,32 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url:'/pattaQuery',
             views:{
                 'maincontent':{
-                    templateUrl:'PattaQuery.html',
-                    controller:'PqController'
+                    templateUrl:'Views/PattaQuery/PattaQuery.html',
+                    controller: 'PqController',
+                    controllerAs:'PQuery'
                 },
                 'sidemenu':{
-                    templateUrl:'side_menu.html'
+                    templateUrl:'Views/General/side_menu.html'
 
                 }
             }
         })
-        /*.state('sidemenu', {
-            url: '/sidemenu',
-            views: {
-                'sidemenu@app': {
-                    template: '<h2>happu</h2>'
-                }
-            }
 
-        })*/
 })
-   app.controller('TodosCtrl', function($scope) {
+  /* app.controller('TodosCtrl', function($scope) {
       $scope.todos = [
         {title: "Take out the trash"},
         {title: "Do laundry"},
         {title: "Start cooking dinner"}
       ]
-    });
-app.controller('mainController', function($scope,$ionicSideMenuDelegate,$state){
+    });*/
+/*app.controller('mainController', function($scope,$ionicSideMenuDelegate,$state){
     $scope.toggleLeftSideMenu = function() {
         $ionicSideMenuDelegate.toggleLeft()
-        /*$state.go('app.sidemenu');*/
+        /!*$state.go('app.sidemenu');*!/
     };
-});
-app.controller('PqController',function($scope,$ionicModal){
+});*/
+/*app.controller('PqController',function($scope,$ionicModal){
     $ionicModal.fromTemplateUrl('my-modal.html', {
         scope: $scope,
         animation: 'slide-in-up'
@@ -80,7 +75,10 @@ app.controller('PqController',function($scope,$ionicModal){
         $scope.modal = modal;
     });
 
-})
+})*/
+
+
+
 app.directive('headerShrink', function($document) {
     var fadeAmt;
 

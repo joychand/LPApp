@@ -41,19 +41,19 @@
                 <input type="password">
             </label>
             <div class="padding">
-                <button class="button button-block base-color" ng-click="modal.show()">Submit</button>
+                <button class="button button-block base-color" ng-click="PQuery.createInvoice()">Submit</button>
             </div>
         </div>
     </ion-content>
 </ion-view>
-<script id="my-modal.html" type="text/ng-template">
+<script id="pdf-viewer.html" type="text/ng-template">
     <ion-modal-view>
         <ion-header-bar class="base-color">
             <h1 class="title">PattaDetails</h1>
-            <div class="button button-clear" ng-click="modal.hide()"><span class="icon ion-close" style="color:#ffffff;"></span></div>
+            <div class="button button-clear" ng-click="PQuery.modal.hide()"><span class="icon ion-close" style="color:#ffffff;"></span></div>
         </ion-header-bar>
         <ion-content>
-            Hello!
+            <ng-pdf ng-if="pdfUrl" template-url="Views/PattaQuery/viewer.html" canvasid="pdf" scale="page-fit"></ng-pdf>
         </ion-content>
     </ion-modal-view>
 </script>
