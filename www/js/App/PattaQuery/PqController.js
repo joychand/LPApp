@@ -4,7 +4,8 @@
 (function(){
     'use strict'
     angular.module('LPApp')
-        .controller('PqController',['$scope','$ionicModal','InvoiceService',PqController]);
+        .controller('PqController',['$scope','$ionicModal','InvoiceService','PqDataFactory',PqController]);
+
    /* function PqController($scope,$ionicModal,InvoiceService){
         var vm = this;
 
@@ -38,15 +39,21 @@
 
         return vm;
     }*/
-    function PqController($scope,$ionicModal,InvoiceService){
+    function PqController($scope,$ionicModal,InvoiceService,PqDataFactory){
         var vm = this;
+        //vm.district=[];
         vm.createInvoice=createInvoice;
         var initModal=initModal;
+
         activate();
         function activate(){
+            return getdistricts().then(function(){
+
+            })
             setDefaultsForPdfViewer($scope);
             initModal();
         }
+
         // Initialize the modal view.
         function initModal(){
             $ionicModal.fromTemplateUrl('pdf-viewer.html', {
@@ -69,6 +76,13 @@
                     vm.modal.show();
                 });
         };
+        function getdistricts(){
+            return PqDataFactory.getdistrict().then(function (data){
+                vm.districts=data;
+                //console.log(vm.districts);
+                return vm.districts;
+            })
+        }
 
         // Clean up the modal view.
         $scope.$on('$destroy', function () {

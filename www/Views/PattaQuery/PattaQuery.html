@@ -6,10 +6,9 @@
                 <div class="input-label">
                     District:
                 </div>
-                <select>
-                    <option>-Select District-</option>
-                    <option >বিষ্ণুপুর</option>
-                    <option >ইম্ফাল ইস্ঠ</option>
+                <select ng-model="PQuery.district" ng-options="d.distcode as d.distDesc for d in PQuery.districts">
+                    <option value="" disabled selected>-Select District-</option>
+
                 </select>
             </label>
             <label class="item item-input item-select">
