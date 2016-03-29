@@ -24,7 +24,7 @@
                 <div class="input-label">
                     Village:
                 </div>
-                <select ng-disabled="!PQuery.circle  " ng-model="PQuery.village" ng-options="v.locDesc for v in PQuery.villages ">
+                <select ng-disabled="!PQuery.circle ||!PQuery.district " ng-model="PQuery.village" ng-options="v.locDesc for v in PQuery.villages ">
                     <option value="" disabled selected>-Select Village-</option>
 
                 </select>
