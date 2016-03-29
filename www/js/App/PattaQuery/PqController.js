@@ -6,52 +6,23 @@
     angular.module('LPApp')
         .controller('PqController',['$scope','$ionicModal','InvoiceService','PqDataFactory',PqController]);
 
-   /* function PqController($scope,$ionicModal,InvoiceService){
-        var vm = this;
 
-        setDefaultsForPdfViewer($scope);
-
-        // Initialize the modal view.
-        $ionicModal.fromTemplateUrl('pdf-viewer.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function (modal) {
-            vm.modal = modal;
-        });
-
-        vm.createInvoice = function () {
-            var invoice = getDummyData();
-
-            InvoiceService.createPdf(invoice)
-                .then(function (pdf) {
-                    var blob = new Blob([pdf], { type: 'application/pdf' });
-                    $scope.pdfUrl = URL.createObjectURL(blob);
-
-                    // Display the modal view
-                    vm.modal.show();
-                });
-        };
-
-        // Clean up the modal view.
-        $scope.$on('$destroy', function () {
-            vm.modal.remove();
-        });
-
-        return vm;
-    }*/
     function PqController($scope,$ionicModal,InvoiceService,PqDataFactory){
         var vm = this;
         //vm.district=[];
         vm.createInvoice=createInvoice;
-        var initModal=initModal;
+        vm.onDistSelect=onDistSelect;
+        vm.onCircSelect=onCircSelect;
+        /*var initModal=initModal;*/
 
         activate();
         function activate(){
-            return getdistricts().then(function(){
 
+            return getdistricts().then(function(){
+                setDefaultsForPdfViewer($scope);
+                initModal();
             })
-            setDefaultsForPdfViewer($scope);
-            initModal();
+
         }
 
         // Initialize the modal view.
@@ -61,6 +32,7 @@
                 animation: 'slide-in-up'
             }).then(function (modal) {
                 vm.modal = modal;
+                console.log(vm.modal);
             });
         }
 
@@ -83,7 +55,30 @@
                 return vm.districts;
             })
         }
+        function onDistSelect(){
 
+          return getcircle().then(function(){
+              console.log('dfdfdfdf');
+          })
+        }
+        function getcircle(){
+            console.log(vm.district);
+            return PqDataFactory.getCircles(vm.district).then(function (data){
+                vm.circles=data;
+                return vm.circles;
+            })
+        }
+        function onCircSelect(){
+            return getVill().then(function(){
+                console.log('villages success');
+            })
+        }
+        function getVill(){
+            return PqDataFactory.getVillages(vm.circle).then(function(data){
+                vm.villages=data;
+                return vm.villages;
+            })
+        }
         // Clean up the modal view.
         $scope.$on('$destroy', function () {
             vm.modal.remove();

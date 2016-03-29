@@ -8,9 +8,9 @@
     PqDataFactory.$inject=['$http'];
     function PqDataFactory($http){
         var service={
-            getdistrict:getdistrict
-       /* getcircles:getcircles,
-        getvillages:getvillages*/
+            getdistrict:getdistrict,
+            getCircles:getCircles,
+        getVillages:getVillages
         }
          return service;
         function getdistrict (){
@@ -19,14 +19,16 @@
                 .catch(failure);
 
         }
-        function getCircles (){
-            return $http.get('http://10.178.2.34/eSiroi.Resource/api/LPAppController/getCircles')
+        function getCircles (distcode){
+            return $http.get('http://10.178.2.34/eSiroi.Resource/api/LPAppController/' + distcode +'/getCircle')
                 .then(success)
                 .catch(failure);
 
         }
-        function getVillages (){
-            return $http.get('http://10.178.2.34/eSiroi.Resource/api/LPAppController/getVillages')
+        function getVillages (circle){
+            var data =circle;
+            console.log(data);
+            return $http.post('http://10.178.2.34/eSiroi.Resource/api/LPAppController/postVillage', data)
                 .then(success)
                 .catch(failure);
 
