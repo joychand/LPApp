@@ -15,13 +15,13 @@
         }
          return service;
         function getdistrict (){
-            return $http.get('http://10.178.2.34/eSiroi.Resource/api/LPAppController/getDistrict')
+            return $http.get('http://localhost/eSiroi.Resource/api/LPAppController/getDistrict')
                 .then(success)
                 .catch(failure);
 
         }
         function getCircles (distcode){
-            return $http.get('http://10.178.2.34/eSiroi.Resource/api/LPAppController/' + distcode +'/getCircle')
+            return $http.get('http://localhost/eSiroi.Resource/api/LPAppController/' + distcode +'/getCircle')
                 .then(success)
                 .catch(failure);
 
@@ -29,7 +29,7 @@
         function getVillages (circle){
             var data =circle;
             console.log(data);
-            return $http.post('http://10.178.2.34/eSiroi.Resource/api/LPAppController/postVillage', data)
+            return $http.post('http://localhost/eSiroi.Resource/api/LPAppController/postVillage', data)
                 .then(success)
                 .catch(failure);
 

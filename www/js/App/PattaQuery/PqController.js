@@ -57,7 +57,8 @@
             })
         }
         function onDistSelect(){
-
+           vm.circle='';
+            vm.village='';
           return getcircle().then(function(){
               console.log('dfdfdfdf');
           })
