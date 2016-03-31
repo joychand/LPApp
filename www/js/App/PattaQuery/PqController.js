@@ -10,6 +10,7 @@
     function PqController($scope,$ionicModal,InvoiceService,PqDataFactory){
         var vm = this;
         //vm.district=[];
+        vm.getDetail=getDetail;
         vm.createInvoice=createInvoice;
         vm.onDistSelect=onDistSelect;
         vm.onCircSelect=onCircSelect;
@@ -78,6 +79,26 @@
                 vm.villages=data;
                 return vm.villages;
             })
+        }
+        function getDetail() {
+            return getOwners().then(function () {
+                vm.modal.show();
+            })
+        }
+        function getOwners(){
+            vm.pqmodal={};
+            angular.extend(vm.pqmodal,{
+                LocCd: vm.village,
+                NewDagNo:vm.NewDagNO,
+                NewPattaNo:vm.NewPattaNo
+            });
+           return  PqDataFactory.getOwners(vm.pqmodal).then (function(data){
+               vm.owndetail=[];
+               vm.owndetail=data;
+               return vm.owndetail;
+
+
+           })
         }
         // Clean up the modal view.
         $scope.$on('$destroy', function () {

@@ -24,26 +24,26 @@
                 <div class="input-label">
                     Village:
                 </div>
-                <select ng-disabled="!PQuery.circle  " ng-model="PQuery.village" ng-options="v.locDesc for v in PQuery.villages ">
+                <select ng-disabled="!PQuery.circle  " ng-model="PQuery.village" ng-options=" v.locCd as v.locDesc for v in PQuery.villages ">
                     <option value="" disabled selected>-Select Village-</option>
 
                 </select>
             </label>
             <label class="item item-input">
                 <span class="input-label">NewDagNo:</span>
-                <input type="text">
+                <input type="text" ng-model="PQuery.NewDagNO">
             </label>
             <label class="item item-input">
                 <span class="input-label">NewPattaNo:</span>
-                <input type="password">
+                <input type="text" ng-model="PQuery.NewPattaNo">
             </label>
             <div class="padding">
-                <button class="button button-block base-color" ng-click="PQuery.createInvoice()">Submit</button>
+                <button class="button button-block base-color" ng-click="PQuery.getDetail()">Submit</button>
             </div>
         </div>
     </ion-content>
 </ion-view>
-<script id="pdf-viewer.html" type="text/ng-template">
+<!--<script id="pdf-viewer.html" type="text/ng-template">
     <ion-modal-view>
         <ion-header-bar class="base-color">
             <h1 class="title">PattaDetails</h1>
@@ -51,6 +51,34 @@
         </ion-header-bar>
         <ion-content>
             <ng-pdf ng-if="pdfUrl" template-url="Views/PattaQuery/viewer.html" canvasid="pdf" scale="page-fit"></ng-pdf>
+        </ion-content>
+    </ion-modal-view>
+</script>-->
+<script id="pdf-viewer.html" type="text/ng-template">
+    <ion-modal-view class="mymodal">
+        <ion-header-bar class="base-color">
+            <h1 class="title">PattaDetails</h1>
+            <div class="button button-clear" ng-click="PQuery.modal.hide()"><span class="icon ion-close" style="color:#ffffff;"></span></div>
+        </ion-header-bar>
+        <ion-content>
+
+                <h4 class="text-center">OwnerDetails</h4>
+                    <div class="row text-center">
+                        <div class="col-33 text-center">Name</div>
+                        <div class="col-33 text-center">Father</div>
+                        <div class="col-33 text-center">Address</div>
+                    </div>
+                    <ion-item collection-repeat="o in PQuery.owndetail ">
+                        <div class="row">
+                        <div class="col-33"><p>{{o.name}}</P></div>
+                        <div class="col-33"><p>{{o.father}}</P></div>
+                        <div class="col-33"><p>{{o.address}}</P></div>
+                        </div>
+                    </ion-item>
+
+
+
+            <!--<ng-pdf ng-if="pdfUrl" template-url="Views/PattaQuery/viewer.html" canvasid="pdf" scale="page-fit"></ng-pdf>-->
         </ion-content>
     </ion-modal-view>
 </script>

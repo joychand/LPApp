@@ -10,7 +10,8 @@
         var service={
             getdistrict:getdistrict,
             getCircles:getCircles,
-        getVillages:getVillages
+        getVillages:getVillages,
+            getOwners:getOwners
         }
          return service;
         function getdistrict (){
@@ -32,6 +33,11 @@
                 .then(success)
                 .catch(failure);
 
+        }
+        function getOwners(pqmodal){
+          return $http.post('http://10.178.2.34/eSiroi.Resource/api/LPAppController/getOwnDetail', pqmodal)
+              .then (success)
+              .catch(failure);
         }
         function success(response){
             return response.data;
