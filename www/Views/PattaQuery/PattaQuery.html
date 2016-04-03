@@ -39,11 +39,13 @@
             </label>
             <div class="padding">
                 <button class="button button-block base-color" ng-click="PQuery.getDetail()">Submit</button>
+               <!-- <button class="button button-block base-color" ui-sref="app.pqResult">Submit</button>-->
             </div>
         </div>
     </ion-content>
 </ion-view>
-<!--<script id="pdf-viewer.html" type="text/ng-template">
+<!--<scriptijndf hnv r vv ntfedew3re3r
+  id="pdf-viewer.html" type="text/ng-template">
     <ion-modal-view>
         <ion-header-bar class="base-color">
             <h1 class="title">PattaDetails</h1>
@@ -63,16 +65,17 @@
         <ion-content>
 
                 <h4 class="text-center">OwnerDetails</h4>
-                    <div class="row text-center">
-                        <div class="col-33 text-center">Name</div>
+                    <div class="row ">
+                        <div class="col-40 text-center ">Name</div>
                         <div class="col-33 text-center">Father</div>
-                        <div class="col-33 text-center">Address</div>
+                        <div class="col-20 text-center">Address</div>
                     </div>
                     <ion-item collection-repeat="o in PQuery.owndetail ">
-                        <div class="row">
-                        <div class="col-33"><p>{{o.name}}</P></div>
-                        <div class="col-33"><p>{{o.father}}</P></div>
-                        <div class="col-33"><p>{{o.address}}</P></div>
+                        <div class="row text-left">
+
+                        <div class="col-40"><p>{{o.name}}</P></div>
+                        <div class="col-30"><p>{{o.father}}</P></div>
+                        <div class="col-30"><p>{{o.address}}</P></div>
                         </div>
                     </ion-item>
 

@@ -16,7 +16,8 @@
 .applyFooter{
     margin-bottom: 55px !important;
 }
-.base-color{
+.base-color {
+   /* backgroud: -webkit-linear-gradient(left top,red,blue )!important;*/
     background-color: #5DBCD2 !important;
    /* over-flow:hidden !important;
     display: block !important;*/
@@ -76,6 +77,15 @@
         right: 5%;
         bottom: 5%;
     }
+}
+.mytabsicon {
+    width: 100% !important;
+    background-repeat: no-repeat  !important;
+    background-position: 50% !important;
+    height: 100%;
+    background-color: #5DBCD2 !important;
+    background-size:contain !important;
+    color:#5DBCD2 !important;
 }
 /*.bar-header {
     height: 64px !important;

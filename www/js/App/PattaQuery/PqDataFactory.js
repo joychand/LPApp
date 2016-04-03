@@ -11,7 +11,8 @@
             getdistrict:getdistrict,
             getCircles:getCircles,
         getVillages:getVillages,
-            getOwners:getOwners
+            getOwners:getOwners,
+            getPlot:getPlot
         }
          return service;
         function getdistrict (){
@@ -35,9 +36,16 @@
 
         }
         function getOwners(pqmodal){
-          return $http.post('http://10.178.2.34/eSiroi.Resource/api/LPAppController/getOwnDetail', pqmodal)
+          return $http.post('http://localhost/eSiroi.Resource/api/LPAppController/getOwnDetail', pqmodal)
               .then (success)
               .catch(failure);
+        }
+        function getPlot(pqmodal){
+            return $http.post('http://localhost/eSiroi.Resource/api/LPAppController/getplotDetail',pqmodal)
+                .then(success)
+                .catch(failure);
+
+
         }
         function success(response){
             return response.data;

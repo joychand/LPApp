@@ -1,0 +1,211 @@
+<ion-view hide-nav-bar="true" title="PattaDetails">
+
+    <ion-tabs class=" tabs-positive  base-color ">
+        <ion-tab  title="PATTA-DETAILS" >
+            <ion-nav-view >
+                <ion-content overflow-scroll="true">
+
+                        <h3 class="text-center">PlotDetails</h3>
+                    <div class="list">
+                        <div class="row "  >
+                            <div class="col-50" style="color:#111111">
+                                <div class="list list-inset">
+
+                                    <div class="item">
+                                        NewDagno: <i> {{Pr.plotdetail.newDagNo}}</i>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                            <div class="col-50" style="color:#111111">
+                                <div class="list list-inset">
+
+                                    <div class="item">
+                                        NewDagno: <i> {{Pr.plotdetail.oldDagNo}}</i>
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-50" style="color:#111111">
+                                <div class="list list-inset">
+
+                                    <div class="item">
+                                        NewDagno: <i> {{Pr.plotdetail.newPattaNo}}</i>
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+                            <div class="col-50" style="color:#111111">
+                                <div class="list list-inset">
+
+                                    <div class="item">
+                                        NewDagno: <i> {{Pr.plotdetail.area}}</i>
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-50" style="color:#111111">
+                                <div class="list list-inset">
+
+                                    <div class="item">
+                                        NewDagno: <i> {{Pr.plotdetail.area_acre}}</i>
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+                            <div class="col-50" style="color:#111111">
+                                <div class="list list-inset">
+
+                                    <div class="item">
+                                        NewDagno: <i> {{Pr.plotdetail.landClass}}</i>
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                   <!-- <div class="row "  >
+                        <div class="col-50" style="color:#111111">
+                            <div class="list list-inset">
+
+                                <div class="item">
+                                    NewDagno: <i> {{Pr.plotdetail.newDagNo}}</i>
+                                </div>
+
+
+
+                        </div>
+                        </div>
+                        <div class="col-50" style="color:#111111">
+                            <div class="list list-inset">
+
+                                <div class="item">
+                                    NewDagno: <i> {{Pr.plotdetail.oldDagNo}}</i>
+                                </div>
+
+
+
+                            </div>
+                            &lt;!&ndash;<div class="input-label">
+                                OldDagno:{{""+Pr.plotdetail.oldDagNo}}
+                            </div>&ndash;&gt;
+                        </div>
+
+
+                    </div>
+                        <div class="row">
+                            <div class="col-50" style="color:#111111">
+                                <div class="input-label">
+                                NewPattaNo:{{""+Pr.plotdetail.newPattaNo}}
+                            </div>
+                            </div>
+                            <div class="col-50" style="color:#111111">
+                                <div class="input-label">
+                                    Area(Hect):{{""+Pr.plotdetail.area}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-50" style="color:#111111">
+                                <div class="input-label">
+                                    Area:{{""+Pr.plotdetail.area_acre}}
+                                </div>
+                            </div>
+                            <div class="col-50" style="color:#111111">
+                                <div class="input-label">
+                                    LandClass:{{""+Pr.plotdetail.landClass}}
+                                </div>
+                            </div>
+                        </div>-->
+                       <!-- <div class="row">
+                            <div class="col-50">
+                                <div class="input-label">
+                                    NewDagno:{{Pr.newDagNo}}
+                                </div>
+                            </div>
+                            <div class="col-50">
+                                <div class="input-label">
+                                    NewDagno:{{Pr.newDagNo}}
+                                </div>
+                            </div>
+
+                        </div>-->
+
+                <h3 class="text-center">Pattadars</h3>
+                <div class="row ">
+                    <div class="col text-center" style="color:#111111">(Slno  Name  Father/Husband  Address)</div>
+
+                </div>
+                <ion-item  class="item-text-wrap"collection-repeat="o in Pr.owndetail ">
+                    <div class="row" style="display:inline-block !important">
+
+                        <div  ><p style="color:#111111;font-size: large ">{{1+')'+" "+o.name}}</p></div>
+                        <div ><p style="color:#111111">{{o.father}}</P></div>
+                        <div ><p style="color:#111111">{{o.address}}</P></div>
+                    </div>
+                </ion-item>
+
+            </ion-content>
+            </ion-nav-view>
+
+        </ion-tab>
+        <ion-tab  title="VIEW AS PDF" >
+            <ion-nav-view >
+                <!--<ion-content overflow-scroll="true">
+                <h4 class="text-center">OwnerDetails</h4>
+                <div class="row text-center">
+                    <div class="col-33 text-center">Name</div>
+                    <div class="col-33 text-center">Father</div>
+                    <div class="col-33 text-center">Address</div>
+                </div>
+                &lt;!&ndash;<ion-item collection-repeat="o in PQuery.owndetail ">
+                    <div class="row">
+                        <div class="col-33"><p>{{o.name}}</p></div>
+                        <div class="col-33"><p>{{o.father}}</P></div>
+                        <div class="col-33"><p>{{o.address}}</P></div>
+                    </div>
+                </ion-item>&ndash;&gt;
+            </ion-content>-->
+            </ion-nav-view>
+
+        </ion-tab>
+    </ion-tabs>
+   <!-- <ion-tabs class = "  tabs-positive base-color" >
+
+        <ion-tab title="Home"  >
+            &lt;!&ndash; Tab 1 content &ndash;&gt;
+        </ion-tab>
+
+        <ion-tab title="About" >
+            &lt;!&ndash; Tab 2 content &ndash;&gt;
+        </ion-tab>
+
+        &lt;!&ndash;<ion-tab title="Settings" class="base-color" icon-on="ion-ios-gear" icon-off="ion-ios-gear-outline">
+            &lt;!&ndash; Tab 3 content &ndash;&gt;
+        </ion-tab>&ndash;&gt;
+
+    </ion-tabs>-->
+</ion-view>

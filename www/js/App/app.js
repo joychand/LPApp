@@ -52,8 +52,22 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state('app.pqResult',{
+            url:'/pqResult',
+            views:{
+                'maincontent':{
+                    templateUrl:'Views/PattaQuery/PQresult.html',
+                    controller: 'PqResultController',
+                    controllerAs:'Pr'
+                },
+                'sidemenu':{
+                    templateUrl:'Views/General/side_menu.html'
 
+                }
+            }
+        })
 })
+
   /* app.controller('TodosCtrl', function($scope) {
       $scope.todos = [
         {title: "Take out the trash"},

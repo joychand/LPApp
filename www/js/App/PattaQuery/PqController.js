@@ -2,12 +2,12 @@
  * Created by Joychand on 27-03-2016.
  */
 (function(){
-    'use strict'
-    angular.module('LPApp')
-        .controller('PqController',['$scope','$ionicModal','InvoiceService','PqDataFactory',PqController]);
+        'use strict'
+        angular.module('LPApp')
+        .controller('PqController',['$scope','$ionicModal','InvoiceService','PqDataFactory','PQResModel','$state',PqController]);
 
 
-    function PqController($scope,$ionicModal,InvoiceService,PqDataFactory){
+    function PqController($scope,$ionicModal,InvoiceService,PqDataFactory,PQResModel,$state){
         var vm = this;
         //vm.district=[];
         vm.getDetail=getDetail;
@@ -82,20 +82,30 @@
             })
         }
         function getDetail() {
-            return getOwners().then(function () {
-                vm.modal.show();
-            })
-        }
-        function getOwners(){
             vm.pqmodal={};
             angular.extend(vm.pqmodal,{
                 LocCd: vm.village,
                 NewDagNo:vm.NewDagNO,
                 NewPattaNo:vm.NewPattaNo
             });
+            return getOwners().then(getPlots);
+        }
+        function getPlots(){
+            return PqDataFactory.getPlot(vm.pqmodal).then(function(data){
+                PQResModel.plot={};
+                PQResModel.plot=data;
+                console.log( PQResModel.plot);
+                $state.go('app.pqResult');
+            })
+        }
+
+
+        function getOwners(){
+
            return  PqDataFactory.getOwners(vm.pqmodal).then (function(data){
-               vm.owndetail=[];
-               vm.owndetail=data;
+              /* vm.owndetail=[];
+               vm.owndetail=data;*/
+               PQResModel.owner=data;
                return vm.owndetail;
 
 
@@ -148,4 +158,16 @@
         };
     }
 
+})();
+(function(){
+    'use strict'
+    angular.module('LPApp')
+        .controller('PqResultController',PqResultController);
+    PqResultController.$inject=['$scope','PQResModel'];
+    function PqResultController($scope,PQResModel){
+        var vm=this;
+        vm.owndetail=PQResModel.owner;
+        vm.plotdetail=PQResModel.plot;
+        console.log(vm.owndetail);
+    }
 })();
