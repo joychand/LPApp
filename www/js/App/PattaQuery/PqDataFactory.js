@@ -12,7 +12,8 @@
             getCircles:getCircles,
         getVillages:getVillages,
             getOwners:getOwners,
-            getPlot:getPlot
+            getPlot:getPlot,
+            getPdf:getPdf
         }
          return service;
         function getdistrict (){
@@ -46,6 +47,11 @@
                 .catch(failure);
 
 
+        }
+        function getPdf(){
+            return $http.get('http://localhost/eSiroi.Resource/api/SRController/gettrialPdf',{responseType:'arraybuffer'})
+                .then(success)
+                .catch(failure);
         }
         function success(response){
             return response.data;

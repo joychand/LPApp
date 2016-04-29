@@ -14,6 +14,7 @@
         vm.createInvoice=createInvoice;
         vm.onDistSelect=onDistSelect;
         vm.onCircSelect=onCircSelect;
+        vm.onSubmit=onSubmit;
         /*var initModal=initModal;*/
 
         activate();
@@ -90,6 +91,15 @@
             });
             return getOwners().then(getPlots);
         }
+        function onSubmit(){
+            return PqDataFactory.getPdf().then(function(pdf){
+                var blob = new Blob([pdf], { type: 'application/pdf' });
+                $scope.pdfUrl = URL.createObjectURL(blob);
+
+                // Display the modal view
+                vm.modal.show();
+            })
+        }
         function getPlots(){
             return PqDataFactory.getPlot(vm.pqmodal).then(function(data){
                 PQResModel.plot={};
@@ -111,6 +121,7 @@
 
            })
         }
+
         // Clean up the modal view.
         $scope.$on('$destroy', function () {
             vm.modal.remove();
@@ -168,6 +179,22 @@
         var vm=this;
         vm.owndetail=PQResModel.owner;
         vm.plotdetail=PQResModel.plot;
-        console.log(vm.owndetail);
+        vm.changelayout=changelayout;
+        document.addEventListener("deviceready", onDeviceReady, false);
+        function changelayout(){
+            console.log(screen);
+            window.screen.lockOrientation('landscape');
+        }
+
+            function onDeviceReady()
+            {
+                vm.changelayout() ;
+
+                /*$scope.changeOriantationPortrait = function() {
+                    screen.lockOrientation('portrait');
+                }*/
+            }
+
+                console.log(vm.owndetail);
     }
 })();
