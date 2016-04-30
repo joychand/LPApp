@@ -5,8 +5,8 @@
     'use strict'
     angular.module('LPApp')
         .factory('PqDataFactory',PqDataFactory);
-    PqDataFactory.$inject=['$http'];
-    function PqDataFactory($http){
+    PqDataFactory.$inject=['$http','LPAppSetting'];
+    function PqDataFactory($http,LPAppSetting){
         var service={
             getdistrict:getdistrict,
             getCircles:getCircles,
@@ -17,13 +17,13 @@
         }
          return service;
         function getdistrict (){
-            return $http.get('http://localhost/eSiroi.Resource/api/LPAppController/getDistrict')
+            return $http.get(LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/getDistrict')
                 .then(success)
                 .catch(failure);
 
         }
         function getCircles (distcode){
-            return $http.get('http://localhost/eSiroi.Resource/api/LPAppController/' + distcode +'/getCircle')
+            return $http.get(LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/' + distcode +'/getCircle')
                 .then(success)
                 .catch(failure);
 
@@ -31,25 +31,25 @@
         function getVillages (circle){
             var data =circle;
             console.log(data);
-            return $http.post('http://localhost/eSiroi.Resource/api/LPAppController/postVillage', data)
+            return $http.post(LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/postVillage', data)
                 .then(success)
                 .catch(failure);
 
         }
         function getOwners(pqmodal){
-          return $http.post('http://localhost/eSiroi.Resource/api/LPAppController/getOwnDetail', pqmodal)
+          return $http.post(LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/getOwnDetail', pqmodal)
               .then (success)
               .catch(failure);
         }
         function getPlot(pqmodal){
-            return $http.post('http://localhost/eSiroi.Resource/api/LPAppController/getplotDetail',pqmodal)
+            return $http.post(LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/getplotDetail',pqmodal)
                 .then(success)
                 .catch(failure);
 
 
         }
         function getPdf(){
-            return $http.get('http://localhost/eSiroi.Resource/api/SRController/gettrialPdf',{responseType:'arraybuffer'})
+            return $http.get(LPAppSetting.apiResrcServiceBaseUri +'/api/SRController/gettrialPdf',{responseType:'arraybuffer'})
                 .then(success)
                 .catch(failure);
         }

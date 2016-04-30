@@ -9,6 +9,9 @@
 
     function PqController($scope,$ionicModal,InvoiceService,PqDataFactory,PQResModel,$state){
         var vm = this;
+        vm.village='';
+        vm.NewDagNO='';
+        vm.NewPattaNo='';
         //vm.district=[];
         vm.getDetail=getDetail;
         vm.createInvoice=createInvoice;
@@ -60,6 +63,8 @@
         function onDistSelect(){
            vm.circle='';
             vm.village='';
+            vm.NewDagNO='';
+                vm.NewPattaNo='';
           return getcircle().then(function(){
               console.log('dfdfdfdf');
           })
@@ -72,6 +77,9 @@
             })
         }
         function onCircSelect(){
+            vm.village='';
+            vm.NewDagNO='';
+            vm.NewPattaNo='';
             return getVill().then(function(){
                 console.log('villages success');
             })
@@ -84,6 +92,7 @@
         }
         function getDetail() {
             vm.pqmodal={};
+            console.log(vm.NewDagNO);
             angular.extend(vm.pqmodal,{
                 LocCd: vm.village,
                 NewDagNo:vm.NewDagNO,
@@ -113,8 +122,9 @@
         function getOwners(){
 
            return  PqDataFactory.getOwners(vm.pqmodal).then (function(data){
-              /* vm.owndetail=[];
+              /*vm.owndetail=[];
                vm.owndetail=data;*/
+               PQResModel.owner={};
                PQResModel.owner=data;
                return vm.owndetail;
 
@@ -174,27 +184,52 @@
     'use strict'
     angular.module('LPApp')
         .controller('PqResultController',PqResultController);
-    PqResultController.$inject=['$scope','PQResModel'];
-    function PqResultController($scope,PQResModel){
+    PqResultController.$inject=['$scope','PQResModel','$http'];
+    function PqResultController($scope,PQResModel,$http){
         var vm=this;
+        vm.dwnJamabandi=dwnJamabandi;
+
         vm.owndetail=PQResModel.owner;
         vm.plotdetail=PQResModel.plot;
-        vm.changelayout=changelayout;
-        document.addEventListener("deviceready", onDeviceReady, false);
+        /*vm.changelayout=changelayout;*/
+        /*document.addEventListener("deviceready", onDeviceReady, false);
         function changelayout(){
             console.log(screen);
-            window.screen.lockOrientation('landscape');
+            window.screen.lockOrientation('potrait');
         }
 
             function onDeviceReady()
             {
                 vm.changelayout() ;
 
-                /*$scope.changeOriantationPortrait = function() {
+                /!*$scope.changeOriantationPortrait = function() {
                     screen.lockOrientation('portrait');
-                }*/
+                }*!/
+            }*/
+            function dwnJamabandi(){
+                window.open(encodeURI('http://10.178.2.34:8090/uniLouchaPathap/api/patta/jamabandipdf.php?d=বিষ্ণুপুর&c=নম্বোল&v=024-বলরাম খুল&dg=329&p=309&l=0602001024&rid=t'), '_system');
+                /*return $http.get('http://10.178.2.34:8090/uniLouchaPathap/api/patta/jamabandipdf.php',
+                    {params:{
+                        d:'বিষ্ণুপুর',
+                        c:'নম্বোল',
+                        v:'024-বলরাম খুল',
+                        dg:'329',
+                        p:'309',
+                        l:'0602001024',
+                        rid:'t'
+                    }})
+                    .then (function(response){
+                        var blob = new Blob([response.data], { type: 'application/pdf' });
+                         var pdfUrl = URL.createObjectURL(blob);
+                        console.log(pdfUrl)
+                        //var ref=window.open(encodeURI(pdfUrl), '_system');
+                        var ref=window.open(pdfUrl, '_system');
+                    }).then(function(error){
+                        console.log('error');
+                    });*/
+
             }
 
-                console.log(vm.owndetail);
+                //console.log(vm.owndetail);
     }
 })();

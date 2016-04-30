@@ -3,7 +3,16 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app =angular.module('LPApp', ['ionic','pdf'])
+var app =angular.module('LPApp', ['ionic','pdf']);
+//var AuthServiceBase = '/eSiroi.Authentication/';
+var ResrcServiceBase = 'http://10.178.2.34/eSiroi.Resource/';
+
+app.constant('LPAppSetting', {
+    //apiAuthServiceBaseUri: AuthServiceBase,
+    apiResrcServiceBaseUri:ResrcServiceBase,
+    clientId: 'eSiroi.Web',
+
+});
 app.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/app/home')
 
@@ -40,6 +49,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         })
         .state('app.pattaQuery',{
             url:'/pattaQuery',
+            cache:'false',
             views:{
                 'maincontent':{
                     templateUrl:'Views/PattaQuery/PattaQuery.html',
