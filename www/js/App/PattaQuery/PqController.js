@@ -191,6 +191,25 @@
 
         vm.owndetail=PQResModel.owner;
         vm.plotdetail=PQResModel.plot;
+        function dwnJamabandi(){
+            var fileURL = cordova.file.externalApplicationStorageDirectory+"local.pdf";
+
+            var fileTransfer = new FileTransfer();
+            var uri = encodeURI( url );
+
+            fileTransfer.download(
+                uri,
+                fileURL,
+                function(entry) {
+                    $scope.data.localFileUri = entry.toURL();
+                    window.plugins.fileOpener.open(entry.toURL());
+                },
+                function(error) {
+
+                },
+                false
+            );
+        }
         /*vm.changelayout=changelayout;*/
         /*document.addEventListener("deviceready", onDeviceReady, false);
         function changelayout(){
