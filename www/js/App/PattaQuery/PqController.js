@@ -191,25 +191,7 @@
 
         vm.owndetail=PQResModel.owner;
         vm.plotdetail=PQResModel.plot;
-        function dwnJamabandi(){
-            var fileURL = cordova.file.externalApplicationStorageDirectory+"local.pdf";
 
-            var fileTransfer = new FileTransfer();
-            var uri = encodeURI( url );
-
-            fileTransfer.download(
-                uri,
-                fileURL,
-                function(entry) {
-                    $scope.data.localFileUri = entry.toURL();
-                    window.plugins.fileOpener.open(entry.toURL());
-                },
-                function(error) {
-
-                },
-                false
-            );
-        }
         /*vm.changelayout=changelayout;*/
         /*document.addEventListener("deviceready", onDeviceReady, false);
         function changelayout(){
@@ -225,9 +207,34 @@
                     screen.lockOrientation('portrait');
                 }*!/
             }*/
-            function dwnJamabandi(){
+        /*document.addEventListener("deviceready", onDeviceReady, false);
+        function onDeviceReady()
+        {
+            vm.dwnJamabandi();
+        }*/
+
+        function dwnJamabandi(){
+            var fileURL = cordova.file.externalApplicationStorageDirectory+"local.pdf";
+
+            var fileTransfer = new FileTransfer();
+            var uri = encodeURI('http://10.178.2.34:8090/uniLouchaPathap/api/patta/jamabandipdf.php?d=বিষ্ণুপুর&c=নম্বোল&v=024-বলরাম খুল&dg=329&p=309&l=0602001024&rid=t' );
+
+            fileTransfer.download(
+                uri,
+                fileURL,
+                function(entry) {
+                    $scope.data.localFileUri = entry.toURL();
+                    window.plugins.fileOpener.open(entry.toURL());
+                },
+                function(error) {
+
+                },
+                false
+            );
+        }
+           /* function dwnJamabandi(){
                 window.open(encodeURI('http://10.178.2.34:8090/uniLouchaPathap/api/patta/jamabandipdf.php?d=বিষ্ণুপুর&c=নম্বোল&v=024-বলরাম খুল&dg=329&p=309&l=0602001024&rid=t'), '_system');
-                /*return $http.get('http://10.178.2.34:8090/uniLouchaPathap/api/patta/jamabandipdf.php',
+                /!*return $http.get('http://10.178.2.34:8090/uniLouchaPathap/api/patta/jamabandipdf.php',
                     {params:{
                         d:'বিষ্ণুপুর',
                         c:'নম্বোল',
@@ -245,9 +252,9 @@
                         var ref=window.open(pdfUrl, '_system');
                     }).then(function(error){
                         console.log('error');
-                    });*/
+                    });*!/
 
-            }
+            }*/
 
                 //console.log(vm.owndetail);
     }
