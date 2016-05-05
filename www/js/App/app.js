@@ -164,7 +164,7 @@ app.directive('scrollWatch', function($rootScope) {
         };
     });
 
-app.run(function($ionicPlatform) {
+app.run(function($ionicPlatform,$rootScope) {
   $ionicPlatform.ready(function() {
 
     if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -180,5 +180,10 @@ app.run(function($ionicPlatform) {
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+      //window.open=cordova.InAppBrowser.open;
+      $rootScope.fileURL = cordova.file.externalApplicationStorageDirectory+"jamabandi.pdf";
+      console.log($rootScope.fileURL);
+      $rootScope.fileTransfer = new FileTransfer();
+      console.log( $rootScope.fileTransfer);
   });
 })

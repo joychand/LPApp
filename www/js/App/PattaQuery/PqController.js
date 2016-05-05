@@ -184,14 +184,98 @@
     'use strict'
     angular.module('LPApp')
         .controller('PqResultController',PqResultController);
-    PqResultController.$inject=['$scope','PQResModel','$http'];
-    function PqResultController($scope,PQResModel,$http){
+    PqResultController.$inject=['$scope','PQResModel','$http','$rootScope','InvoiceService'];
+    function PqResultController($scope,PQResModel,$http,$rootScope,InvoiceService){
         var vm=this;
         vm.dwnJamabandi=dwnJamabandi;
 
         vm.owndetail=PQResModel.owner;
         vm.plotdetail=PQResModel.plot;
+        setDefaultsForPdfViewer($scope);
+        /*Create Custom PattaDetails PDF report*/
+        function dwnJamabandi(){
+            var invoice = getDummyData();
 
+            InvoiceService.createPdf(invoice)
+                .then(function (pdf) {
+                    var blob = new Blob([pdf], {type: 'application/pdf'});
+                    $scope.pdfUrl = URL.createObjectURL(blob);
+                    console.log($scope.pdfUrl);
+                    var uri = $scope.pdfUrl;
+                    $rootScope.fileTransfer.download(
+                        uri,
+                        $rootScope.fileURL,
+                        function (entry) {
+                            cordova.plugins.fileOpener2.open(entry.toURL(),
+                                'application/pdf',
+                                {
+                                    error: function (e) {
+                                        console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
+                                    },
+                                    success: function () {
+                                        console.log('file opened successfully');
+                                    }
+                                });
+                        },
+                        function (error) {
+                            console.log(error);
+                        },
+                        true);
+
+
+                });
+                    //cordova.InAppBrowser.open($scope.pdfUrl,'_blank');
+                    /*cordova.plugins.fileOpener2.open($scope.pdfUrl,
+                        'application/pdf',
+                        {
+                            error : function(e) {
+                                console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
+                            },
+                            success : function () {
+                                console.log('file opened successfully');
+                            }
+                        });*/
+
+
+        }
+        function setDefaultsForPdfViewer($scope) {
+            $scope.scroll = 0;
+            $scope.loading = 'loading';
+
+            $scope.onError = function (error) {
+                console.error(error);
+            };
+
+            $scope.onLoad = function () {
+                $scope.loading = '';
+            };
+
+            $scope.onProgress = function (progress) {
+                console.log(progress);
+            };
+        }
+        function getDummyData() {
+            return {
+                Date: new Date().toLocaleDateString("en-IE", { year: "numeric", month: "long", day: "numeric" }),
+                AddressFrom: {
+                    Name: chance.name(),
+                    Address: chance.address(),
+                    Country: chance.country({ full: true })
+                },
+                AddressTo: {
+                    Name: chance.name(),
+                    Address: chance.address(),
+                    Country: chance.country({ full: true })
+                },
+                Items: [
+                    { Description: 'iPhone 6S', Quantity: '1', Price: '€700' },
+                    { Description: 'Samsung Galaxy S6', Quantity: '2', Price: '€655' }
+                ],
+                Subtotal: '€2010',
+                Shipping: '€6',
+                Total: '€2016'
+            };
+        }
         /*vm.changelayout=changelayout;*/
         /*document.addEventListener("deviceready", onDeviceReady, false);
         function changelayout(){
@@ -207,55 +291,84 @@
                     screen.lockOrientation('portrait');
                 }*!/
             }*/
-        /*document.addEventListener("deviceready", onDeviceReady, false);
+       /* document.addEventListener("deviceready", onDeviceReady, false);
         function onDeviceReady()
         {
             vm.dwnJamabandi();
-        }*/
+        }
+*/
+        /*function dwnJamabandi(){
+            //var fileURL = cordova.file.externalApplicationStorageDirectory+"local.pdf";
 
-        function dwnJamabandi(){
-            var fileURL = cordova.file.externalApplicationStorageDirectory+"local.pdf";
+            //var fileTransfer = new FileTransfer();
 
-            var fileTransfer = new FileTransfer();
-            var uri = encodeURI('http://10.178.2.34:8090/uniLouchaPathap/api/patta/jamabandipdf.php?d=বিষ্ণুপুর&c=নম্বোল&v=024-বলরাম খুল&dg=329&p=309&l=0602001024&rid=t' );
-
-            fileTransfer.download(
+            //console.log(FileTransfer);
+            console.log('HHHHHH');
+           // var uri = encodeURI('http://10.178.2.34:8090/uniLouchaPathap/api/patta/jamabandipdf.php?d=বিষ্ণুপুর&c=নম্বোল&v=024-বলরাম খুল&dg=329&p=309&l=0602001024&rid=t' );
+            var uri = encodeURI('http://10.178.2.34/eSiroi.Resource/api/SRController/gettrialPdf' );
+            /!*console.log(uri);
+            console.log(fileURL);*!/
+            //window.open(uri,'_system');
+            $rootScope.fileTransfer.download(
                 uri,
-                fileURL,
+                $rootScope.fileURL,
                 function(entry) {
-                    $scope.data.localFileUri = entry.toURL();
-                    window.plugins.fileOpener.open(entry.toURL());
+                    console.log(uri);
+                    console.log(entry.toURL);
+
+                    //$scope.data.localFileUri = entry.toURL();
+                    cordova.plugins.fileOpener2.open(entry.toURL(),
+                        'application/pdf',
+                        {
+                            error : function(e) {
+                                console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
+                            },
+                            success : function () {
+                                console.log('file opened successfully');
+                            }
+                        });
                 },
                 function(error) {
+                    console.log(error);
 
                 },
-                false
+                true
             );
-        }
+        }*/
+
+       /* document.addEventListener("deviceready", onDeviceReady, false);
+        function onDeviceReady() {
+           // window.open = cordova.InAppBrowser.open;
+        }*/
            /* function dwnJamabandi(){
-                window.open(encodeURI('http://10.178.2.34:8090/uniLouchaPathap/api/patta/jamabandipdf.php?d=বিষ্ণুপুর&c=নম্বোল&v=024-বলরাম খুল&dg=329&p=309&l=0602001024&rid=t'), '_system');
-                /!*return $http.get('http://10.178.2.34:8090/uniLouchaPathap/api/patta/jamabandipdf.php',
-                    {params:{
-                        d:'বিষ্ণুপুর',
-                        c:'নম্বোল',
-                        v:'024-বলরাম খুল',
-                        dg:'329',
-                        p:'309',
-                        l:'0602001024',
-                        rid:'t'
-                    }})
-                    .then (function(response){
-                        var blob = new Blob([response.data], { type: 'application/pdf' });
-                         var pdfUrl = URL.createObjectURL(blob);
-                        console.log(pdfUrl)
-                        //var ref=window.open(encodeURI(pdfUrl), '_system');
-                        var ref=window.open(pdfUrl, '_system');
-                    }).then(function(error){
-                        console.log('error');
-                    });*!/
+         cordova.InAppBrowser.open('http://apache.org', '_blank', 'location=yes');
+         //window.open(encodeURI('http://10.178.2.34:8090/uniLouchaPathap/api/patta/jamabandipdf.php?d=বিষ্ণুপুর&c=নম্বোল&v=024-বলরাম খুল&dg=329&p=309&l=0602001024&rid=t'), '_system');
+         /!*return $http.get('http://10.178.2.34/eSiroi.Resource/api/SRController/gettrialPdf')
 
-            }*/
+         .then (function(pdf){
+         var blob = new Blob([pdf], { type: 'application/pdf' });
+         var pdfUrl = URL.createObjectURL(blob);
+         console.log(pdfUrl)
+         //var ref=window.open(encodeURI(pdfUrl), '_system');
+         window.open('http://www.google.com', '_system');
+         /!*cordova.plugins.fileOpener2.open(
+         pdfUrl, // You can also use a Cordova-style file uri: cdvfile://localhost/persistent/Download/starwars.pdf
+         'application/pdf',
+         {
+         error : function(e) {
+         console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
+         },
+         success : function () {
+         console.log('file opened successfully');
+         }
+         }
+         );*!/
+         }).then(function(error){
+         console.log(error);
+         });*!/
 
+         }
+         */
                 //console.log(vm.owndetail);
     }
 })();
