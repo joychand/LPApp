@@ -5,8 +5,10 @@
 // the 2nd parameter is an array of 'requires'
 var app =angular.module('LPApp', ['ionic','pdf']);
 //var AuthServiceBase = '/eSiroi.Authentication/';
-var ResrcServiceBase = 'http://10.178.2.34/eSiroi.Resource/';
-
+//var ResrcServiceBase = 'http://10.178.2.34/eSiroi.Resource/';
+var ResrcServiceBase = 'http://192.168.254.4/eSiroi.Resource';
+//var ResrcServiceBase = 'http://192.168.43.239/eSiroi.Resource';
+//var ResrcServiceBase = 'http://localhost:8081/eSiroi.Resource';
 app.constant('LPAppSetting', {
     //apiAuthServiceBaseUri: AuthServiceBase,
     apiResrcServiceBaseUri:ResrcServiceBase,

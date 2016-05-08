@@ -28,11 +28,12 @@
         });
 
         var dd = {
+            pageSize:'A4',
             content: [
-                { text: 'INVOICE', style: 'header' },
-                { text: invoice.Date, alignment: 'right' },
+                { text: 'PattaDetails', style: 'header' },
+                { text: invoice.Date, alignment: 'centre' },
 
-                { text: 'From', style: 'subheader' },
+                { text: 'District', style: 'subheader' },
                 invoice.AddressFrom.Name,
                 invoice.AddressFrom.Address,
                 invoice.AddressFrom.Country,
@@ -42,16 +43,21 @@
                 invoice.AddressTo.Address,
                 invoice.AddressTo.Country,
 
-                { text: 'Items', style: 'subheader' },
+                { text: 'Pattadars', style: 'subheader' },
                 {
                     style: 'itemsTable',
                     table: {
-                        widths: ['*', 75, 75],
+                        headerRows:1,
+                        widths: ['auto', 75, 75],
                         body: [
                             [
-                                { text: 'Description', style: 'itemsTableHeader' },
-                                { text: 'Quantity', style: 'itemsTableHeader' },
-                                { text: 'Price', style: 'itemsTableHeader' },
+                                { text: 'NewDagno', style: 'itemsTableHeader' },
+                                { text: 'NewPattaNo', style: 'itemsTableHeader' },
+                                { text: 'Area(A)', style: 'itemsTableHeader' },
+                                { text: 'Area(A)', style: 'itemsTableHeader' },
+                                { text: 'Area(A)', style: 'itemsTableHeader' },
+                                { text: 'Area(A)', style: 'itemsTableHeader' },
+                                { text: 'Area(A)', style: 'itemsTableHeader' },
                             ]
                         ].concat(items)
                     }
