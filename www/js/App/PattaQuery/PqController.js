@@ -149,15 +149,22 @@
     PqResultController.$inject=['$scope','PQResModel','$http','PattaRptService'];
     function PqResultController($scope,PQResModel,$http,PattaRptService){
         var vm=this;
+        vm.show=false;
         vm.dwnJamabandi=dwnJamabandi;
-
+        vm.toggleGroup=toggleGroup;
+        vm.isGroupShown=isGroupShown;
         vm.owndetail=PQResModel.owner;
         vm.plotdetail=PQResModel.plot;
         console.log(vm.owndetail);
         console.log(vm.plotdetail) ;
         setDefaultsForPdfViewer($scope);
+function toggleGroup(){
+    vm.show=!vm.show;
 
-
+}
+function isGroupShown(){
+    return vm.show;
+}
 
 // creat pdf patta and download to local file system and open with mobile default app
         function dwnJamabandi(){

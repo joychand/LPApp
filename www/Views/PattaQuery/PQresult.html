@@ -4,15 +4,21 @@
             <button class="button button-outline button-positive" ng-click="Pr.dwnJamabandi()">
                 Download Jamabandi
             </button>
+             {{Pr.show}}
         </div>
 
-        <h3 class="text-center">PlotDetails</h3>
+       <!-- <h3 class="text-center">PlotDetails</h3>-->
         <div class="list">
+           <div class="item item-divider"  ng-click="Pr.toggleGroup()"
+                    ng-class="{active: Pr.isGroupShown()}">
+              <i class="icon" ng-class="Pr.isGroupShown() ? 'ion-minus' : 'ion-plus'"></i>
+            &nbsp;PlotDetails</div>
             <div class="row "  >
+               
                 <div class="col-50" style="color:#111111">
                     <div class="list list-inset">
 
-                        <div class="item">
+                        <div class="item item-accordion" ng-show="isGroupShown()">
                             NewDagno: <i> {{Pr.plotdetail.newDagNo}}</i>
                         </div>
 
@@ -36,6 +42,7 @@
 
             </div>
             <div class="row">
+               
                 <div class="col-50" style="color:#111111">
                     <div class="list list-inset">
 
@@ -155,9 +162,11 @@
 
          </div>-->
 
-        <h3 class="text-center">Pattadars</h3>
+       <!-- <h3 class="text-center">Pattadars</h3>-->
+        <div class="item item-divider">Pattadars</div>
         <div class="row ">
-            <div class="col text-center" style="color:#111111">(Slno  Name  Father/Husband  Address)</div>
+          
+            <div class="col text-left" style="color:#111111">(Slno  Name  Father/Husband  Address)</div>
 
         </div>
         <ion-item  class="item-text-wrap"collection-repeat="o in Pr.owndetail ">
