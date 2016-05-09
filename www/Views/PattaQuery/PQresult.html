@@ -13,61 +13,6 @@
                     ng-class="{active: Pr.isGroupShown()}">
               <i class="icon" ng-class="Pr.isGroupShown() ? 'ion-minus' : 'ion-plus'"></i>
             &nbsp;PlotDetails</div>
-            <div class="row "  >
-               
-                <div class="col-50" style="color:#111111">
-                    <div class="list list-inset">
-
-                        <div class="item item-accordion" ng-show="isGroupShown()">
-                            NewDagno: <i> {{Pr.plotdetail.newDagNo}}</i>
-                        </div>
-
-
-
-                    </div>
-                </div>
-                <div class="col-50" style="color:#111111">
-                    <div class="list list-inset">
-
-                        <div class="item">
-                            OldDagno: <i> {{Pr.plotdetail.oldDagNo}}</i>
-                        </div>
-
-
-
-                    </div>
-
-                </div>
-
-
-            </div>
-            <div class="row">
-               
-                <div class="col-50" style="color:#111111">
-                    <div class="list list-inset">
-
-                        <div class="item">
-                            PattaNo: <i> {{Pr.plotdetail.newPattaNo}}</i>
-                        </div>
-
-
-
-                    </div>
-
-                </div>
-                <div class="col-50" style="color:#111111">
-                    <div class="list list-inset">
-
-                        <div class="item">
-                            Area(H): <i> {{Pr.plotdetail.area}}</i>
-                        </div>
-
-
-
-                    </div>
-
-                </div>
-            </div>
             <div class="row">
                 <div class="col-50" style="color:#111111">
                     <div class="list list-inset">
@@ -94,6 +39,62 @@
 
                 </div>
             </div>
+            <div class="row "  >
+               
+                <div class="col-50" style="color:#111111">
+                    <div class="list list-inset">
+
+                        <div class="item item-accordion" ng-show="Pr.isGroupShown()">
+                            NewDagno: <i> {{Pr.plotdetail.newDagNo}}</i>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <div class="col-50" style="color:#111111">
+                    <div class="list list-inset">
+
+                        <div class="item item-accordion" ng-show="Pr.isGroupShown()">
+                            OldDagno: <i> {{Pr.plotdetail.oldDagNo}}</i>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="row">
+               
+                <div class="col-50" style="color:#111111">
+                    <div class="list list-inset">
+
+                       <div class="item item-accordion" ng-show="Pr.isGroupShown()">
+                            PattaNo: <i> {{Pr.plotdetail.newPattaNo}}</i>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+                <div class="col-50" style="color:#111111">
+                    <div class="list list-inset">
+
+                        <div class="item item-accordion" ng-show="Pr.isGroupShown()">
+                            Area(H): <i> {{Pr.plotdetail.area}}</i>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+            
         </div>
         <!-- <div class="row "  >
              <div class="col-50" style="color:#111111">
