@@ -88,13 +88,15 @@
     color:#5DBCD2 !important;
 }
 .list .item.item-accordion {
-  line-height: 38px;
+  line-height: 50px;
   padding-top: 0;
   padding-bottom: 0;
   transition: 0.09s all linear;
 }
 .list .item.item-accordion.ng-hide {
   line-height: 0px;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 .list .item.item-accordion.ng-hide-add,
 .list .item.item-accordion.ng-hide-remove {

@@ -5,8 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 var app =angular.module('LPApp', ['ionic','pdf']);
 //var AuthServiceBase = '/eSiroi.Authentication/';
-//var ResrcServiceBase = 'http://10.178.2.34/eSiroi.Resource/';
-var ResrcServiceBase = 'http://192.168.254.4/eSiroi.Resource';
+var ResrcServiceBase = 'http://10.178.2.34/eSiroi.Resource/';
+//var ResrcServiceBase = 'http://192.168.254.4/eSiroi.Resource';
 //var ResrcServiceBase = 'http://192.168.43.239/eSiroi.Resource';
 //var ResrcServiceBase = 'http://localhost:8081/eSiroi.Resource';
 app.constant('LPAppSetting', {
@@ -166,9 +166,21 @@ app.directive('scrollWatch', function($rootScope) {
         };
     });
 
-app.run(function($ionicPlatform) {
+app.run(function($ionicPlatform,$ionicPopup) {
   $ionicPlatform.ready(function() {
+    if (window.connection){
+        if(navigator.connection.type=Connection.NONE){
+            $ionicPopup.confirm({
+                title:'NO INTERNET',
+                content:'Please Check your internet connection and try again'
+            }).then(function(result){
+                if(!result){
+                    $ionicPlatform.exitApp();
+                }
+            })
 
+        }
+    }
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
