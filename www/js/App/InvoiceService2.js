@@ -8,24 +8,24 @@
         function createPdf(rptData) {
             return $q(function (resolve, reject) {
 
-                var dd = createDocumentDefinition(rptData);
-               /* pdfMake.fonts = {
+
+                window.pdfMake.fonts = {
 
                     Roboto: {
                         normal: 'Roboto-Regular.ttf',
                         bold: 'Roboto-Medium.tff',
-                        italics: 'Roboto-Regular.ttf',
+                        italics: 'Roboto-Italic.ttf',
                         bolditalics: 'Roboto-Medium.ttf'
                     },
-                    SolaimanLipi: {
-                        normal: 'SolaimanLipi.ttf',
-                        bold: 'SolaimanLipi_Bold.tff',
-                        italics: 'SolaimanLipi.ttf',
-                        bolditalics: 'SolaimanLipi.ttf'
+                    Solaimanlipi: {
+                        normal: 'SolaimanLipi-Normal.ttf',
+                        bold: 'SolaimanLipi-Bold.tff',
+                        italics: 'SolaimanLipi-Normal.ttf',
+                        bolditalics: 'SolaimanLipi-Bold.ttf'
                     }
 
-                };*/
-
+                };
+                var dd = createDocumentDefinition(rptData);
                 var pdf = pdfMake.createPdf(dd);
 
                 pdf.getBase64(function (output) {
@@ -40,40 +40,48 @@
     }
 
     function createDocumentDefinition(rptData) {
-        var plot=Object.keys(rptData.plot).map(function(item) { return [item.newDagNo, item.oldDagNo, item.newPattaNo,item.area,item.area_acre,item.landClass] });
-
+        //var plot=Object.keys(rptData.plot).map(function(item) { return [item.newDagNo, item.oldDagNo, item.newPattaNo,item.area,item.area_acre,item.landClass] });
+        console.log(rptData.plot);
         /*var plot = rptData.plot.map(function (item) {
             return [item.newDagNo, item.oldDagNo, item.newPattaNo,item.area,item.area_acre,item.landClass];
         });*/
         var pattadar = rptData.pattadar.map(function (item) {
-            return [item.ownno, item.name, item.father,item.address];
+            return [item.ownno.toString(), item.name, item.father,item.address];
         });
 
         var dd = {
             pageSize:'A4',
+           /* content:[
+                {text:'District:'},
+                {text:'পিং মৃত কুলা সিংহ'},
+               /!* 'Circle:',
+                'পিং মৃত কুলা সিংহ',
+                'Village:',
+                'পিং মৃত কুলা সিংহ'*!/
+            ],*/
             content: [
-                { text: 'PattaDetails', style: 'header' },
+                { text: 'PattaDetails',style:'header' },
                 /*{ text: rptData.Date, alignment: 'centre' },*/
 
                 {
-                    style: 'totalsTable',
+                    //style: 'totalsTable',
                     table: {
-                        widths: [75, 75, 75, 75, 75, 75],
+                        widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
                         body: [
                             [
-                                'District:',
+                               /* 'District:',
                                 'পিং মৃত কুলা সিংহ',
                                 'Circle:',
                                 'পিং মৃত কুলা সিংহ',
                                 'Village:',
-                                'পিং মৃত কুলা সিংহ'
+                                'পিং মৃত কুলা সিংহ'*/
 
-                               /* 'District:',
+                                'District:',
                                 rptData.location.district,
                                 'Circle:',
                                 rptData.location.circle,
                                 'Village:',
-                                rptData.location.village*/
+                                rptData.location.village
 
                             ]
 
@@ -87,19 +95,38 @@
                     style: 'itemsTable',
                     table: {
                         headerRows:1,
-                        widths: ['*',75,75,75,75,75],
+                        widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
                         body: [
                             [
                                 { text: 'NewDagno', style: 'itemsTableHeader' },
                                 { text: 'OldPattaNo', style: 'itemsTableHeader' },
-                                { text: 'NewPattaNo)', style: 'itemsTableHeader' },
+                                { text: 'NewPattaNo', style: 'itemsTableHeader' },
                                 { text: 'Area(A)', style: 'itemsTableHeader' },
                                 { text: 'Area(H)', style: 'itemsTableHeader' },
                                 { text: 'LandClass', style: 'itemsTableHeader' }
 
+                            ],
+                            [
+                               /* {text:rptData.plot.newDagNo},
+                                {text:rptData.plot.newDagNo},
+                                {text:rptData.plot.newDagNo},
+                                {text:rptData.plot.newDagNo},
+                                {text:rptData.plot.newDagNo},
+                                {text:rptData.plot.newDagNo}*/
+                                rptData.plot.newDagNo,
+                                rptData.plot.oldDagNo,
+                                rptData.plot.newPattaNo,
+                                /*rptData.plot.newPattaNo,
+                                rptData.plot.newPattaNo,*/
+                                rptData.plot.area_acre.toString(),
+                                rptData.plot.area.toString(),
+                                rptData.plot.landClass
+
+
+
                             ]
-                       // ]//.concat(plot)
-                        ]
+                       ]//.concat(plot)
+                        //]
                             }
                 },
                 { text: 'Pattadars', style: 'subheader' },
@@ -112,11 +139,11 @@
                             [
                                 { text: 'Slno', style: 'itemsTableHeader' },
                                 { text: 'Name', style: 'itemsTableHeader' },
-                                { text: 'Father/Husband)', style: 'itemsTableHeader' },
-                                { text: 'Address)', style: 'itemsTableHeader' }
+                                { text: 'Father/Husband', style: 'itemsTableHeader' },
+                                { text: 'Address', style: 'itemsTableHeader' }
                             ]
-                       // ].concat(pattadar)
-                        ]
+                        ].concat(pattadar)
+                       // ]
                     }
                 }
 
@@ -124,31 +151,31 @@
             styles: {
                 header: {
                     fontSize: 30,
-                    bold: true,
+                   // bold: true,
                     margin: [0, 0, 0, 10],
                     alignment: 'centre'
                 },
                 subheader: {
                     fontSize: 16,
-                    bold: true,
+                   // bold: true,
                     margin: [0, 20, 0, 5]
                 },
                 itemsTable: {
                     margin: [0, 5, 0, 15]
                 },
                 itemsTableHeader: {
-                    bold: true,
+                   // bold: true,
                     fontSize: 13,
-                    color: 'black'
+                    //color: 'black'
                 },
                 totalsTable: {
-                    bold: true,
+                    //bold: true,
                     margin: [0, 30, 0, 0]
                 }
             },
             defaultStyle: {
 
-                 /*  font: 'Roboto'*/
+                   font: 'Solaimanlipi'
 
             }
         }

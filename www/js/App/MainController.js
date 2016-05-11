@@ -4,10 +4,14 @@
 (function(){
     angular.module('LPApp')
         .controller('MainController',MainController);
-    MainController.$inject=['$ionicSideMenuDelegate'];
-    function MainController($ionicSideMenuDelegate){
+    MainController.$inject=['$ionicSideMenuDelegate','$state'];
+    function MainController($ionicSideMenuDelegate,$state){
         var vm=this;
-
+        vm.$state=$state;
+        vm.gotohome=gotohome;
+        function gotohome(){
+            vm.$state.go('app.home');
+        }
         vm.toggleLeftSideMenu = function() {
             $ionicSideMenuDelegate.toggleLeft()
             /*$state.go('app.sidemenu');*/

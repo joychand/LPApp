@@ -180,12 +180,13 @@ function isGroupShown(){
                 }
 
             }
+            //cosole.log(rptData.plot);
 
             PattaRptService.createPdf(rptData)
                 .then(function (pdf) {
                     var blob = new Blob([pdf], { type: 'application/pdf' });
                    // $scope.pdfUrl = URL.createObjectURL(blob);
-                    var filename='PattaDetail.pdf';
+                    var filename='PattaDetail2.pdf';
                     writeToFile(filename,blob);
 
                 });
