@@ -4,60 +4,40 @@
 (function(){
         'use strict'
         angular.module('LPApp')
-        .controller('PqController',['$scope','$ionicModal','InvoiceService','PqDataFactory','PQResModel','$state',PqController]);
+        .controller('PqController',['$scope','$ionicModal','InvoiceService','PqDataFactory','PQResModel','$state','$ionicPopup','$q',PqController]);
 
 
-    function PqController($scope,$ionicModal,InvoiceService,PqDataFactory,PQResModel,$state){
+    function PqController($scope,$ionicModal,InvoiceService,PqDataFactory,PQResModel,$state,$ionicPopup,$q){
         var vm = this;
         vm.village='';
         vm.NewDagNO='';
         vm.NewPattaNo='';
         //vm.district=[];
         vm.getDetail=getDetail;
-        vm.createInvoice=createInvoice;
+        //vm.createInvoice=createInvoice;
         vm.onDistSelect=onDistSelect;
         vm.onCircSelect=onCircSelect;
-        vm.onSubmit=onSubmit;
+        //vm.onSubmit=onSubmit;
         /*var initModal=initModal;*/
 
         activate();
         function activate(){
 
             return getdistricts().then(function(){
-               /* setDefaultsForPdfViewer($scope);
-                initModal();*/
+
             })
 
         }
 
-        // Initialize the modal view.
-        function initModal(){
-            $ionicModal.fromTemplateUrl('pdf-viewer.html', {
-                scope: $scope,
-                animation: 'slide-in-up'
-            }).then(function (modal) {
-                vm.modal = modal;
-                console.log(vm.modal);
-            });
-        }
-
-        function createInvoice() {
-            var invoice = getDummyData();
-
-            InvoiceService.createPdf(invoice)
-                .then(function (pdf) {
-                    var blob = new Blob([pdf], { type: 'application/pdf' });
-                    $scope.pdfUrl = URL.createObjectURL(blob);
-
-                    // Display the modal view
-                    vm.modal.show();
-                });
-        };
         function getdistricts(){
             return PqDataFactory.getdistrict().then(function (data){
                 vm.districts=data;
                 //console.log(vm.districts);
                 return vm.districts;
+            },function(error){
+                loadingErrorHandler(error.status);
+
+                //console.log(error);
             })
         }
         function onDistSelect(){
@@ -66,15 +46,17 @@
             vm.NewDagNO='';
                 vm.NewPattaNo='';
           return getcircle().then(function(){
-              console.log('dfdfdfdf');
+
           })
         }
         function getcircle(){
-            console.log(vm.district);
+            //console.log(vm.district);
             return PqDataFactory.getCircles(vm.district).then(function (data){
                 vm.circles=data;
                 return vm.circles;
-            })
+            },(function(error){
+                loadingErrorHandler(error.status);
+            }))
         }
         function onCircSelect(){
             vm.village='';
@@ -88,6 +70,8 @@
             return PqDataFactory.getVillages(vm.circle).then(function(data){
                 vm.villages=data;
                 return vm.villages;
+            },function(error){
+                loadingErrorHandler(error.status);
             })
         }
         function getDetail() {
@@ -98,50 +82,95 @@
                 NewDagNo:vm.NewDagNO,
                 NewPattaNo:vm.NewPattaNo
             });
-            return getOwners().then(getPlots);
+            return getOwners()
+                .then(function(success){
+                    getPlots()
+                        .catch( function(errorCode){detailErrorHandler(errorCode);});
+                }, function(errorCode){
+                    console.log(errorCode);
+                   return detailErrorHandler(errorCode);
+                })
+
         }
+        function getOwners(){
 
-        function onSubmit(){
-            return PqDataFactory.getPdf().then(function(pdf){
-                var blob = new Blob([pdf], { type: 'application/pdf' });
-                $scope.pdfUrl = URL.createObjectURL(blob);
+            return  PqDataFactory.getOwners(vm.pqmodal).then (function(data){
+                /*vm.owndetail=[];
+                 vm.owndetail=data;*/
+                PQResModel.owner={};
+                PQResModel.owner=data;
+                return vm.owndetail;
 
-                // Display the modal view
-                vm.modal.show();
+
+            },function(error){
+
+              return $q.reject(error.status);
             })
         }
+
         function getPlots(){
             return PqDataFactory.getPlot(vm.pqmodal).then(function(data){
                 PQResModel.plot={};
                 PQResModel.plot=data;
                 console.log( PQResModel.plot);
                 $state.go('app.pqResult');
+            },function(error){
+               return $q.reject(error.status);
             })
         }
 
 
-        function getOwners(){
-
-           return  PqDataFactory.getOwners(vm.pqmodal).then (function(data){
-              /*vm.owndetail=[];
-               vm.owndetail=data;*/
-               PQResModel.owner={};
-               PQResModel.owner=data;
-               return vm.owndetail;
 
 
-           })
+        //ERROR HANDLING
+        function loadingErrorHandler(errorCode){
+            var errmessage;
+            if(errorCode===0)
+            {
+                errmessage='No Internet Connection';
+            }
+            else{
+                errmessage='Sorry Fatal Error:' + errorCode;
+            }
+            $ionicPopup.alert({
+                title:'Error',
+                content:errmessage
+            }).then(function(result){
+                $state.go('app.home');
+            })
+        }
+        function detailErrorHandler(errorCode){
+            console.log(errorCode);
+            var errmessage;
+            var fatalerror;
+            if (errorCode===404){
+
+                errmessage='Records not found Plz try Again';
+                fatalerror=false;
+
+            }
+            else{
+                errmessage='Sorry Fatal error.. Plz try again';
+                fatalerror=true;
+            }
+            $ionicPopup.alert({
+                title:'Error',
+                content:errmessage
+            }).then(function(result){
+                if(fatalerror){
+                    $state.go('app.home');
+                }
+
+            })
         }
 
-        // Clean up the modal view.
-       /* $scope.$on('$destroy', function () {
-            vm.modal.remove();
-        });*/
 
         return vm;
     }
 
 })();
+
+/*****************PQRESULTCONTROLLER ********************/
 (function(){
     'use strict'
     angular.module('LPApp')
