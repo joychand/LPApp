@@ -10,7 +10,7 @@
         var service={
             getdistrict:getdistrict,
             getCircles:getCircles,
-        getVillages:getVillages,
+            getVillages:getVillages,
             getOwners:getOwners,
             getPlot:getPlot,
             getPdf:getPdf

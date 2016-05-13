@@ -99,7 +99,7 @@
                  vm.owndetail=data;*/
                 PQResModel.owner={};
                 PQResModel.owner=data;
-                return vm.owndetail;
+                return PQResModel ;
 
 
             },function(error){
@@ -175,8 +175,8 @@
     'use strict'
     angular.module('LPApp')
         .controller('PqResultController',PqResultController);
-    PqResultController.$inject=['$scope','PQResModel','$http','PattaRptService'];
-    function PqResultController($scope,PQResModel,$http,PattaRptService){
+    PqResultController.$inject=['$scope','PQResModel','$http','PattaRptService','$ionicScrollDelegate'];
+    function PqResultController($scope,PQResModel,$http,PattaRptService,$ionicScrollDelegate){
         var vm=this;
         vm.show=false;
         vm.dwnJamabandi=dwnJamabandi;
@@ -186,9 +186,10 @@
         vm.plotdetail=PQResModel.plot;
         console.log(vm.owndetail);
         console.log(vm.plotdetail) ;
-        setDefaultsForPdfViewer($scope);
+        //setDefaultsForPdfViewer($scope);
 function toggleGroup(){
     vm.show=!vm.show;
+    $ionicScrollDelegate.resize();
 
 }
 function isGroupShown(){
@@ -254,28 +255,7 @@ function isGroupShown(){
 
         }
 
-       /* function dwnJamabandi(){
 
-
-
-            var fileURL = cordova.file.externalApplicationStorageDirectory+"local.pdf";
-            console.log(FileTransfer());
-            var fileTransfer = new FileTransfer();
-            var uri = encodeURI('http://localhost:8090/uniLouchaPathap/api/patta/jamabandipdf.php?d=বিষ্ণুপুর&c=নম্বোল&v=024-বলরাম খুল&dg=329&p=309&l=0602001024&rid=t' );
-
-            fileTransfer.download(
-                uri,
-                fileURL,
-                function(entry) {
-                    $scope.data.localFileUri = entry.toURL();
-                    window.plugins.fileOpener.open(entry.toURL());
-                },
-                function(error) {
-
-                },
-                false
-            );
-        }*/
 
         function setDefaultsForPdfViewer($scope) {
             $scope.scroll = 0;
