@@ -3,12 +3,12 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app =angular.module('LPApp', ['ionic','pdf']);
+var app =angular.module('LPApp', ['ionic','pdf','ionic-modal-select']);
 //var AuthServiceBase = '/eSiroi.Authentication/';
-var ResrcServiceBase = 'http://10.178.2.34/eSiroi.Resource/';
+//var ResrcServiceBase = 'http://10.178.2.34/eSiroi.Resource/';
 //var ResrcServiceBase = 'http://192.168.254.4/eSiroi.Resource';
 //var ResrcServiceBase = 'http://192.168.43.239/eSiroi.Resource';
-//var ResrcServiceBase = 'http://localhost:8081/eSiroi.Resource';
+var ResrcServiceBase = 'http://localhost/eSiroi.Resource';
 app.constant('LPAppSetting', {
     //apiAuthServiceBaseUri: AuthServiceBase,
     apiResrcServiceBaseUri:ResrcServiceBase,
@@ -78,30 +78,21 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state('app.lValue',{
+            url:'/lValue',
+            views:{
+                'maincontent':{
+                    templateUrl:'Views/LValue/LValue.html',
+                   controller: 'LValueController',
+                    controllerAs:'lv'
+                },
+                'sidemenu':{
+                    templateUrl:'Views/General/side_menu.html'
+
+                }
+            }
+        })
 })
-
-  /* app.controller('TodosCtrl', function($scope) {
-      $scope.todos = [
-        {title: "Take out the trash"},
-        {title: "Do laundry"},
-        {title: "Start cooking dinner"}
-      ]
-    });*/
-/*app.controller('mainController', function($scope,$ionicSideMenuDelegate,$state){
-    $scope.toggleLeftSideMenu = function() {
-        $ionicSideMenuDelegate.toggleLeft()
-        /!*$state.go('app.sidemenu');*!/
-    };
-});*/
-/*app.controller('PqController',function($scope,$ionicModal){
-    $ionicModal.fromTemplateUrl('my-modal.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-    }).then(function(modal) {
-        $scope.modal = modal;
-    });
-
-})*/
 
 
 
