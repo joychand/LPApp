@@ -6,15 +6,22 @@
     'use strict'
     angular.module('LPApp')
         .controller('LValueController',LValueController);
-    LValueController.$inject=['$scope','PqDataFactory','$ionicScrollDelegate','$ionicModal','$q','$ionicPopup'];
-    function LValueController($scope,PqDataFactory,$ionicScrollDelegate,$ionicModal,$q,$ionicPopup)
+    LValueController.$inject=['$scope','PqDataFactory','$ionicScrollDelegate','$ionicModal','$q','$ionicPopup','LVfactory','$state'];
+    function LValueController($scope,PqDataFactory,$ionicScrollDelegate,$ionicModal,$q,$ionicPopup,LVfactory,$state)
     {
 
         var vm = this;
+        vm.unitgroup=['UNIT-1','UNIT-2','UNIT-3','UNIT-4'];//hardcoded unitgroup needs to replace
         vm.selectunit=selectunit;
         vm.onUnitSelect=onUnitSelect;
         vm.enterArea=enterArea;
-
+        activate();
+        function activate(){
+            /*getunit().then(function(response){
+                vm.unitgroup=response.data;
+                console.log(vm.unitgroup);
+            })*/
+        }
         $ionicModal.fromTemplateUrl('templates/modal.html', {
             scope: $scope,
             animation: 'slide-in-up'
@@ -60,6 +67,7 @@
             $scope.data = {};
             $scope.data.food='sqf';
             $scope.data.prev='sqf'
+            //Area calculator/convertor popup
             var myPopup = $ionicPopup.show({
                 templateUrl: 'templates/area_popup.html',
                 title: 'Enter Area',
@@ -123,7 +131,30 @@
 
 
         }
-
+        function getunit(){
+            return LVfactory.getunit()
+                .catch(function(error){
+                    loadingErrorHandler(error);
+                 return $q.reject(error);
+                });
+        }
+        function loadingErrorHandler(error){
+            var errmessage;
+            if(error.status===0)
+            {
+                errmessage='Service Unavailable';
+            }
+            else{
+                errmessage='Sorry Fatal Error:' + error.status;
+            }
+            $ionicPopup.alert({
+                title:'Error',
+                content:errmessage
+            }).then(function(result){
+                $state.go('app.home');
+            })
+            //return $q.reject(promise);
+        }
 
 
     }

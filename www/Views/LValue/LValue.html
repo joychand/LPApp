@@ -33,8 +33,8 @@
            select unit
         </button>-->
             <div class="item item-input item-select ">
-                <select class="item-select" ng-model="newUser.firstName" ng-change="lv.getUnits()">
-                    <option value="">-selectUnit-</option>
+                <select class="item-select" ng-model="lv.unitHead" ng-options="u as u for u in lv.unitgroup" >
+                    <option value="">-selectUnitGroup-</option>
                 </select>
                 <button class="button button-positive button-bar-inline button-balanced" modal-select="" ng-model="lv.someOtherModel" options="lv.longList" modal-title="Select a Unit" header-footer-class="bar-positive" has-search="true" sub-header-class="bar-positive">
                     GetUnitDetails

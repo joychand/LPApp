@@ -127,7 +127,7 @@
             var errmessage;
             if(errorCode===0)
             {
-                errmessage='No Internet Connection';
+                errmessage='Service Unavailable';
             }
             else{
                 errmessage='Sorry Fatal Error:' + errorCode;
