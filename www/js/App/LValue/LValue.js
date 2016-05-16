@@ -12,16 +12,20 @@
 
         var vm = this;
         vm.unitgroup=['UNIT-1','UNIT-2','UNIT-3','UNIT-4'];//hardcoded unitgroup needs to replace
+        vm.unitdetail;
+        vm.selectedUnit='';
+        vm.getunitdetail=getunitdetail;
         vm.selectunit=selectunit;
         vm.onUnitSelect=onUnitSelect;
         vm.enterArea=enterArea;
-        activate();
+
+       /* activate();
         function activate(){
-            /*getunit().then(function(response){
-                vm.unitgroup=response.data;
-                console.log(vm.unitgroup);
-            })*/
-        }
+            getunit(vm.selectedUnit).then(function(response){
+                vm.unitdetail=response.data;
+                console.log(vm.unitdetail);
+            })
+        }*/
         $ionicModal.fromTemplateUrl('templates/modal.html', {
             scope: $scope,
             animation: 'slide-in-up'
@@ -131,12 +135,16 @@
 
 
         }
-        function getunit(){
-            return LVfactory.getunit()
-                .catch(function(error){
-                    loadingErrorHandler(error);
-                 return $q.reject(error);
-                });
+        function getunitdetail()
+        {
+             LVfactory.getMasterLandValue(vm.selectedUnit).then(function(response){
+                vm.unitdetail=response.data;
+            },function(error){
+                 loadingErrorHandler(error);
+                 //return $q.reject(error);
+             });
+
+
         }
         function loadingErrorHandler(error){
             var errmessage;

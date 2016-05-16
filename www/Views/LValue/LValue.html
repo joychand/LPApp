@@ -11,11 +11,27 @@
         </button>-->
         <div class="list list-inset">
             <label class="item item-input ">
-                <span class="input-label " style="float:right">Computed Min GuidanceValue(Rs):</span>
+                <span class="input-label " style="float:right">SelectedUnit:</span>
+                <input type="text" ng-model="lv.unit.unit">
+            </label>
+            <label class="item item-input item-select ">
+                <div class="input-label">
+                    Rate:
+                </div>
+                <select ng-model="lv.selectedRate" ng-change="" >
+                    <option value="" disabled selected>-Select-</option>
+                    <option value="lv.unit.rate1">{{lv.unit.rate1}}</option>
+                    <option value="lv.unit.rate1">{{lv.unit.rate2}}</option>
+                    <option value="lv.unit.rate1">{{lv.unit.rate3}}</option>
+
+                </select>
+            </label>
+            <label class="item item-input ">
+                <span class="input-label " style="float:right">ComputedGuidanceValue(Rs):</span>
                 <input type="text" ng-model="lv.cMinGV">
             </label>
             <label class="item item-input ">
-                <span class="input-label "style="float:right">Actual Min GuidanceValue(Rs):</span>
+                <span class="input-label "style="float:right">ActualGuidanceValue(Rs):</span>
                 <input type="text" ng-model="lv.MinGV" >
             </label>
             <label class="item item-input ">
@@ -33,13 +49,16 @@
            select unit
         </button>-->
             <div class="item item-input item-select ">
-                <select class="item-select" ng-model="lv.unitHead" ng-options="u as u for u in lv.unitgroup" >
+                <select class="item-select" ng-model="lv.selectedUnit" ng-options="u as u for u in lv.unitgroup" ng-change="lv.getunitdetail()" >
                     <option value="">-selectUnitGroup-</option>
                 </select>
-                <button class="button button-positive button-bar-inline button-balanced" modal-select="" ng-model="lv.someOtherModel" options="lv.longList" modal-title="Select a Unit" header-footer-class="bar-positive" has-search="true" sub-header-class="bar-positive">
+                <button class="button button-positive button-bar-inline button-balanced" modal-select ng-model="lv.unit" options="lv.unitdetail" modal-title="Select a Unit" header-footer-class="bar-positive" has-search="true" sub-header-class="bar-positive">
                     GetUnitDetails
                     <div class="option">
-                        {{option}}
+                        <div class="text-center">
+                            {{option.unit }}
+                        </div>
+                        {{option.details}}
                     </div>
                 </button>
             </div>

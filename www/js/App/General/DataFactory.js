@@ -12,8 +12,8 @@
         }
         return service;
 
-        function getMasterLandValue(){
-            return $http.post(LPAppSetting.apiResrcServiceBaseUri + '/api/LPAppController/getlandvalue');
+        function getMasterLandValue(unit){
+            return $http.post(LPAppSetting.apiResrcServiceBaseUri + '/api/LPAppController/getmasterlandvalue', '"'+unit+'"');
         }
         function getunit(){
             return $http.post(LPAppSetting.apiResrcServiceBaseUri + '/api/LPAppController/getunitgroup');
