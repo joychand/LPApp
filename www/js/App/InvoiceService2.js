@@ -51,30 +51,17 @@
 
         var dd = {
             pageSize:'A4',
-           /* content:[
-                {text:'District:'},
-                {text:'পিং মৃত কুলা সিংহ'},
-               /!* 'Circle:',
-                'পিং মৃত কুলা সিংহ',
-                'Village:',
-                'পিং মৃত কুলা সিংহ'*!/
-            ],*/
+
             content: [
                 { text: 'PattaDetails',style:'header' },
-                /*{ text: rptData.Date, alignment: 'centre' },*/
+
 
                 {
-                    //style: 'totalsTable',
+
                     table: {
                         widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
                         body: [
                             [
-                               /* 'District:',
-                                'পিং মৃত কুলা সিংহ',
-                                'Circle:',
-                                'পিং মৃত কুলা সিংহ',
-                                'Village:',
-                                'পিং মৃত কুলা সিংহ'*/
 
                                 'District:',
                                 rptData.location.district,

@@ -4,14 +4,18 @@
 (function(){
         'use strict'
         angular.module('LPApp')
-        .controller('PqController',['$scope','$ionicModal','InvoiceService','PqDataFactory','PQResModel','$state','$ionicPopup','$q',PqController]);
+        .controller('PqController',['$scope','$ionicModal','InvoiceService','PqDataFactory','PQResModel','$state','$ionicPopup','$q','$ionicLoading',PqController]);
 
 
-    function PqController($scope,$ionicModal,InvoiceService,PqDataFactory,PQResModel,$state,$ionicPopup,$q){
+    function PqController($scope,$ionicModal,InvoiceService,PqDataFactory,PQResModel,$state,$ionicPopup,$q,$ionicLoading){
         var vm = this;
         vm.village='';
         vm.NewDagNO='';
         vm.NewPattaNo='';
+       /* vm.loading={
+            show:show,
+            hide:hide
+        };*/
         //vm.district=[];
         vm.getDetail=getDetail;
         //vm.createInvoice=createInvoice;
@@ -19,12 +23,17 @@
         vm.onCircSelect=onCircSelect;
         //vm.onSubmit=onSubmit;
         /*var initModal=initModal;*/
-
+        /*$scope.$broadcast('loadingstart','loading of page started');*/
+        $ionicLoading.show({
+            template: '<ion-spinner icon="bubbles" style="color:#ffffff"></ion-spinner>'
+        })
         activate();
         function activate(){
 
-            return getdistricts().then(function(){
 
+
+            return getdistricts().then(function(){
+                $ionicLoading.hide();
             })
 
         }
@@ -32,12 +41,13 @@
         function getdistricts(){
             return PqDataFactory.getdistrict().then(function (data){
                 vm.districts=data;
-                //console.log(vm.districts);
+
                 return vm.districts;
             },function(error){
+                $ionicLoading.hide();
                 loadingErrorHandler(error.status);
 
-                //console.log(error);
+
             })
         }
         function onDistSelect(){
@@ -45,15 +55,18 @@
             vm.village='';
             vm.NewDagNO='';
                 vm.NewPattaNo='';
+            console.log(vm.district);
           return getcircle().then(function(){
 
           })
         }
         function getcircle(){
             //console.log(vm.district);
-            return PqDataFactory.getCircles(vm.district).then(function (data){
+            return PqDataFactory.getCircles(vm.district.distcode).then(function (data){
                 vm.circles=data;
                 return vm.circles;
+                console.log(vm.circles);
+
             },(function(error){
                 loadingErrorHandler(error.status);
             }))
@@ -78,7 +91,7 @@
             vm.pqmodal={};
             console.log(vm.NewDagNO);
             angular.extend(vm.pqmodal,{
-                LocCd: vm.village,
+                LocCd: vm.village.locCd,
                 NewDagNo:vm.NewDagNO,
                 NewPattaNo:vm.NewPattaNo
             });
@@ -111,14 +124,42 @@
         function getPlots(){
             return PqDataFactory.getPlot(vm.pqmodal).then(function(data){
                 PQResModel.plot={};
+                PQResModel.location={};
                 PQResModel.plot=data;
+                PQResModel.location={
+                    district:vm.district.distDesc,
+                    circle:vm.circle.cirDesc,
+                    village:vm.village.locDesc
+                }
                 console.log( PQResModel.plot);
+                console.log(PQResModel.location);
                 $state.go('app.pqResult');
             },function(error){
                return $q.reject(error.status);
             })
         }
+      /*  $scope.$on('loadingstart', function(event,data){
+            console.log(data);
+            $ionicLoading.show({
+                template:'Loading..'
+            });
+        })
+        $scope.$on('loadingstop', function(event){
+            $ionicLoading.hide();
+        })*/
+       /* function show(){
+            $ionicLoading.show({
+                template: 'Loading...'
+            }).then(function(){
+                console.log("The loading indicator is now displayed");
+            });
+        }
+        function hide(){
+            $ionicLoading.hide().then(function(){
+                console.log("The loading indicator is now hidden");
+            });
 
+        }*/
 
 
 
@@ -184,6 +225,7 @@
         vm.isGroupShown=isGroupShown;
         vm.owndetail=PQResModel.owner;
         vm.plotdetail=PQResModel.plot;
+        vm.location=PQResModel.location;
         console.log(vm.owndetail);
         console.log(vm.plotdetail) ;
         //setDefaultsForPdfViewer($scope);
@@ -202,12 +244,13 @@ function isGroupShown(){
             var rptData ={
                 pattadar:vm.owndetail,
                 plot: vm.plotdetail,
-                location:{
+                /*location:{
                     district:'বিষ্ণুপুর',
                     circle:'নম্বোল',
                     village:'024-বলরাম খুল'
 
-                }
+                }*/
+                location:vm.location
 
             }
             //cosole.log(rptData.plot);

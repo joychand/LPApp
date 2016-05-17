@@ -8,7 +8,7 @@ var app =angular.module('LPApp', ['ionic','pdf','ionic-modal-select']);
 //var ResrcServiceBase = 'http://10.178.2.34/eSiroi.Resource/';
 //var ResrcServiceBase = 'http://192.168.254.4/eSiroi.Resource';
 //var ResrcServiceBase = 'http://192.168.43.239/eSiroi.Resource';
-var ResrcServiceBase = 'http://localhost/eSiroi.Resource';
+var ResrcServiceBase = 'http://10.178.2.34/eSiroi.Resource';
 app.constant('LPAppSetting', {
     //apiAuthServiceBaseUri: AuthServiceBase,
     apiResrcServiceBaseUri:ResrcServiceBase,
@@ -80,6 +80,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         })
         .state('app.lValue',{
             url:'/lValue',
+            cache:'false',
             views:{
                 'maincontent':{
                     templateUrl:'Views/LValue/LValue.html',

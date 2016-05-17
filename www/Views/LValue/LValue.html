@@ -10,37 +10,37 @@
             </div>
         </button>-->
         <div class="list list-inset">
-            <label class="item item-input ">
+            <label class="item item-input " ng-if="vm.unitselected">
                 <span class="input-label " style="float:right">SelectedUnit:</span>
                 <input type="text" ng-model="lv.unit.unit">
             </label>
-            <label class="item item-input item-select ">
+            <label class="item item-input item-select " ng-if="vm.unitselected">
                 <div class="input-label">
                     Rate:
                 </div>
                 <select ng-model="lv.selectedRate" ng-change="" >
-                    <option value="" disabled selected>-Select-</option>
+                    //<option value="" disabled selected>-Select-</option>
                     <option value="lv.unit.rate1">{{lv.unit.rate1}}</option>
-                    <option value="lv.unit.rate1">{{lv.unit.rate2}}</option>
-                    <option value="lv.unit.rate1">{{lv.unit.rate3}}</option>
+                    <option value="lv.unit.rate2">{{lv.unit.rate2}}</option>
+                    <option value="lv.unit.rate3">{{lv.unit.rate3}}</option>
 
                 </select>
             </label>
             <label class="item item-input ">
-                <span class="input-label " style="float:right">ComputedGuidanceValue(Rs):</span>
+                <span class="input-label " style="float:right">ComputedValue(Rs):</span>
                 <input type="text" ng-model="lv.cMinGV">
             </label>
             <label class="item item-input ">
-                <span class="input-label "style="float:right">ActualGuidanceValue(Rs):</span>
+                <span class="input-label "style="float:right">ActualValue(Rs):</span>
                 <input type="text" ng-model="lv.MinGV" >
             </label>
             <label class="item item-input ">
                 <span class="input-label" style="float:right">Registration Fee(Rs):</span>
-                <input type="text" ng-model="lv.cMinGV"  >
+                <input type="text" ng-model="lv.regFee"  >
             </label>
             <label class="item item-input ">
                 <span class="input-label" style="float:right">Stamp Paper Value(Rs):</span>
-                <input type="text" ng-model="lv.MinGV" >
+                <input type="text" ng-model="lv.stmpValue" >
             </label>
 
         </div>
@@ -52,7 +52,7 @@
                 <select class="item-select" ng-model="lv.selectedUnit" ng-options="u as u for u in lv.unitgroup" ng-change="lv.getunitdetail()" >
                     <option value="">-selectUnitGroup-</option>
                 </select>
-                <button class="button button-positive button-bar-inline button-balanced" modal-select ng-model="lv.unit" options="lv.unitdetail" modal-title="Select a Unit" header-footer-class="bar-positive" has-search="true" sub-header-class="bar-positive">
+                <button class="button button-positive button-bar-inline button-balanced" modal-select="" ng-model="lv.unit" options="lv.unitdetail" modal-title="Select a Unit" header-footer-class="bar-positive" has-search="true" sub-header-class="bar-positive">
                     GetUnitDetails
                     <div class="option">
                         <div class="text-center">
@@ -158,10 +158,10 @@
 
             <ion-list>
 
-                    <ion-radio ng-model="data.food" ng-value="'H'" ng-change="changeunit()">Hectare</ion-radio>
-                    <ion-radio ng-model="data.food" ng-value="'A'" ng-change="changeunit()" >Acre</ion-radio>
-                    <ion-radio ng-model="data.food" ng-value="'sqf'" ng-change="changeunit()">SqFeet</ion-radio>
-                <div class="item item-input"><input type="text" ng-model="data.area" placeholder=" Enter Area(any one of the units)"></div>
+                    <ion-radio ng-model="area.Unit" ng-value="'H'" ng-change="changeunit()">Hectare</ion-radio>
+                    <ion-radio ng-model="area.Unit" ng-value="'A'" ng-change="changeunit()" >Acre</ion-radio>
+                    <ion-radio ng-model="area.Unit" ng-value="'sqf'" ng-change="changeunit()">SqFeet</ion-radio>
+                <div class="item item-input"><input type="text" ng-model="area.data" placeholder=" Enter Area(any one of the units)"></div>
 
         </ion-list>
 

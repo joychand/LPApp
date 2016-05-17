@@ -6,7 +6,8 @@
                 <div class="input-label">
                     District:
                 </div>
-                <select ng-model="PQuery.district" ng-options="d.distcode as d.distDesc for d in PQuery.districts" ng-change="PQuery.onDistSelect()" >
+                <!--<select ng-model="PQuery.district" ng-options="d.distcode as d.distDesc for d in PQuery.districts" ng-change="PQuery.onDistSelect()" >-->
+                    <select ng-model="PQuery.district" ng-options="d.distDesc for d in PQuery.districts" ng-change="PQuery.onDistSelect()" >
                     <option value="" disabled selected>-Select District-</option>
 
                 </select>
@@ -24,7 +25,8 @@
                 <div class="input-label">
                     Village:
                 </div>
-                <select ng-disabled="!PQuery.circle  " ng-model="PQuery.village" ng-options=" v.locCd as v.locDesc for v in PQuery.villages ">
+                <!--<select ng-disabled="!PQuery.circle  " ng-model="PQuery.village" ng-options=" v.locCd as v.locDesc for v in PQuery.villages ">-->
+                    <select ng-disabled="!PQuery.circle  " ng-model="PQuery.village" ng-options=" v.locDesc for v in PQuery.villages ">
                     <option value="" disabled selected>-Select Village-</option>
 
                 </select>

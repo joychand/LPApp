@@ -8,6 +8,6 @@
     HomeController.$inject=['$scope','$state']
     function HomeController($scope,$state){
        var vm=this;
-        vm.homtitle='Happu';
+        vm.homtitle='LouchaPathap';
     }
 })();

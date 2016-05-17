@@ -14,6 +14,7 @@
         vm.unitgroup=['UNIT-1','UNIT-2','UNIT-3','UNIT-4'];//hardcoded unitgroup needs to replace
         vm.unitdetail;
         vm.selectedUnit='';
+        vm.unitselected=false;
         vm.getunitdetail=getunitdetail;
         vm.selectunit=selectunit;
         vm.onUnitSelect=onUnitSelect;
@@ -68,9 +69,9 @@
             alert( i );
         }
         function enterArea(){
-            $scope.data = {};
-            $scope.data.food='sqf';
-            $scope.data.prev='sqf'
+            $scope.area = {};
+            $scope.area.Unit='sqf';
+            $scope.area.unitPrev='sqf'
             //Area calculator/convertor popup
             var myPopup = $ionicPopup.show({
                 templateUrl: 'templates/area_popup.html',
@@ -83,11 +84,11 @@
                         text: '<b>ok</b>',
                         type: 'button-positive',
                         onTap: function(e) {
-                            if (!$scope.data.area) {
+                            if (!$scope.area.data) {
                                 //don't allow the user to close unless he enters wifi password
                                 e.preventDefault();
                             } else {
-                                return $scope.data.area;
+                                return $scope.area.data;
                             }
                         }
                     }
@@ -95,42 +96,49 @@
             });
 
             myPopup.then(function(res) {
+
+                calculate();
                 console.log('Tapped!', res);
                 vm.area=res;
-                console.log(vm.area);
+                console.log(res);
             });
             $scope.changeunit=function(){
-                if($scope.data.food==='H'){
-                    if($scope.data.prev==='A'){
-                        $scope.data.area=$scope.data.area/2;
+                if($scope.area.data){
+                    if( $scope.area.Unit==='H'){
+                        if($scope.area.unitPrev==='A'){
+                            $scope.area.data=($scope.area.data *0.40468726267).toFixed(5);
+                        }
+                        else if($scope.area.unitPrev==='sqf')
+                            $scope.area.data=($scope.area.data *0.0000092903412).toFixed(5);
+
+                        $scope.area.unitPrev='H';
                     }
-                    else if($scope.data.prev==='sqf')
-                        $scope.data.area=$scope.data.area /8;
+                    else if($scope.area.Unit==='A'){
 
-                    $scope.data.prev='H';
-                }
-                else if($scope.data.food==='A'){
+                        if($scope.area.unitPrev==='H'){
+                            $scope.area.data=($scope.area.data * 2.4710439202).toFixed(5);
+                        }
+                        else if($scope.area.unitPrev==='sqf')
+                            $scope.area.data=($scope.area.data *0.000022956841139).toFixed(5);
 
-                    if($scope.data.prev==='H'){
-                        $scope.data.area=$scope.data.area * 2;
+                        $scope.area.unitPrev='A';
                     }
-                    else if($scope.data.prev==='sqf')
-                    $scope.data.area=$scope.data.area /4;
+                    else{
+                        if($scope.area.unitPrev==='H'){
+                            $scope.area.data=Number(Math.round($scope.area.data *107638.67316)+'e'+0);
+                            //$scope.area.data=($scope.area.data * 107638.67316).toFixed(5);
+                        }
+                        else if($scope.area.unitPrev==='A')
+                            $scope.area.data=Number(Math.round($scope.area.data *43560)+'e'+0);
+                        //$scope.area.data=($scope.area.data *43560).toFixed(5);
+                        $scope.area.unitPrev='sqf';
 
-                    $scope.data.prev='A';
-                }
-                else{
-                    if($scope.data.prev==='H'){
-                        $scope.data.area=$scope.data.area * 8;
+
                     }
-                    else if($scope.data.prev==='A')
-                        $scope.data.area=$scope.data.area *4;
-                    $scope.data.prev='sqf';
-
-
                 }
 
-                console.log($scope.data.food);
+
+                console.log($scope.area.Unit);
             }
 
 
@@ -144,6 +152,10 @@
                  //return $q.reject(error);
              });
 
+
+        }
+        //
+        function calculate(){
 
         }
         function loadingErrorHandler(error){
