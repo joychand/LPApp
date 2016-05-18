@@ -40,7 +40,8 @@
                 <input type="text" ng-model="PQuery.NewPattaNo">
             </label>
             <div class="padding">
-                <button class="button button-block base-color" ng-click="PQuery.getDetail()">Submit</button>
+                <button class="button button-block base-color" ng-click="PQuery.getDetail()">{{PQuery.btnText}}<ion-spinner class="spinner-energized myspinner" ng-if="PQuery.isProcessing"></ion-spinner></button>
+
                <!-- <button class="button button-block base-color" ui-sref="app.pqResult">Submit</button>-->
             </div>
         </div>

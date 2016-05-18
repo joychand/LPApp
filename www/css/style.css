@@ -102,6 +102,20 @@
 .list .item.item-accordion.ng-hide-remove {
   display: block !important;
 }
+.myspinner svg {
+    padding-top: 3px !important;
+    width: 28px !important;
+    height: 28px !important;
+    stroke: #fff !important;
+    fill: #999 !important;
+}
+.myhome-font{
+
+    -webkit-text-fill-color: #ffffff !important;
+    -webkit-text-stroke: 2px #ffffff !important;
+}
+
+
 /*.bar-header {
     height: 64px !important;
 }

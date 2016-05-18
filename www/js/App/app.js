@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app =angular.module('LPApp', ['ionic','pdf','ionic-modal-select']);
+var app =angular.module('LPApp', ['ionic','pdf','ionic-modal-select','ionicProcessSpinner']);
 //var AuthServiceBase = '/eSiroi.Authentication/';
 //var ResrcServiceBase = 'http://10.178.2.34/eSiroi.Resource/';
 //var ResrcServiceBase = 'http://192.168.254.4/eSiroi.Resource';
@@ -189,9 +189,9 @@ app.run(function($ionicPlatform,$ionicPopup) {
       StatusBar.styleDefault();
     }
       //window.open=cordova.InAppBrowser.open;
-      $rootScope.fileURL = cordova.file.externalApplicationStorageDirectory+"jamabandi.pdf";
+      /*$rootScope.fileURL = cordova.file.externalApplicationStorageDirectory+"jamabandi.pdf";
       console.log($rootScope.fileURL);
       $rootScope.fileTransfer = new FileTransfer();
-      console.log( $rootScope.fileTransfer);
+      console.log( $rootScope.fileTransfer);*/
   });
 })

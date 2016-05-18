@@ -4,14 +4,16 @@
 (function(){
         'use strict'
         angular.module('LPApp')
-        .controller('PqController',['$scope','$ionicModal','InvoiceService','PqDataFactory','PQResModel','$state','$ionicPopup','$q','$ionicLoading',PqController]);
+        .controller('PqController',['$scope','$ionicModal','InvoiceService','PqDataFactory','PQResModel','$state','$ionicPopup','$q','$ionicLoading','$rootScope',PqController]);
 
 
-    function PqController($scope,$ionicModal,InvoiceService,PqDataFactory,PQResModel,$state,$ionicPopup,$q,$ionicLoading){
+    function PqController($scope,$ionicModal,InvoiceService,PqDataFactory,PQResModel,$state,$ionicPopup,$q,$ionicLoading,$rootScope){
         var vm = this;
         vm.village='';
         vm.NewDagNO='';
         vm.NewPattaNo='';
+        vm.isProcessing=false;
+        vm.btnText='Submit'
        /* vm.loading={
             show:show,
             hide:hide
@@ -88,6 +90,7 @@
             })
         }
         function getDetail() {
+            $rootScope.$broadcast('processing');
             vm.pqmodal={};
             console.log(vm.NewDagNO);
             angular.extend(vm.pqmodal,{
@@ -100,6 +103,7 @@
                     getPlots()
                         .catch( function(errorCode){detailErrorHandler(errorCode);});
                 }, function(errorCode){
+                    $rootScope.$broadcast('processComplete');
                     console.log(errorCode);
                    return detailErrorHandler(errorCode);
                 })
@@ -116,7 +120,7 @@
 
 
             },function(error){
-
+                $rootScope.$broadcast('processComplete');
               return $q.reject(error.status);
             })
         }
@@ -133,11 +137,22 @@
                 }
                 console.log( PQResModel.plot);
                 console.log(PQResModel.location);
+                $rootScope.$broadcast('processComplete');
                 $state.go('app.pqResult');
             },function(error){
                return $q.reject(error.status);
             })
         }
+        $rootScope.$on('processing',function(){
+            vm.isProcessing=true;
+            vm.btnText='Processing..'
+        });
+
+        $rootScope.$on('processComplete',function(){
+            vm.isProcessing=false;
+            vm.btnText='Submit'
+        });
+
       /*  $scope.$on('loadingstart', function(event,data){
             console.log(data);
             $ionicLoading.show({
