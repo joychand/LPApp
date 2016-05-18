@@ -1,46 +1,31 @@
 <ion-view  title="PattaDetails" cache-view="false">
     <ion-content overflow-scroll="true">
-        <div class="text-center">
-            <button class="button button-outline button-positive" ng-click="Pr.dwnJamabandi()">
-                Download Jamabandi
+        <div class="text-right">
+           <!-- <a href="" class="button button-icon" ng-clik="Pr.dwnJamabandi()">
+                <i class="icon  ion-android-download my-icon"></i>
+                Download
+            </a>-->
+           <!-- <i class="icon ion-compose my-icon"></i>
+            <h6 style="text-size:5px !important; color:#ffffff;">Land Valuation</h6></a>-->
+
+            <button class="button button-full button-outline button-positive icon icon-centre   ion-android-download " ng-click="Pr.dwnJamabandi()">
+                Download
             </button>
+
         </div>
 
-        <h3 class="text-center">PlotDetails</h3>
+       <!-- <h3 class="text-center">PlotDetails</h3>-->
         <div class="list">
-            <div class="row "  >
-                <div class="col-50" style="color:#111111">
-                    <div class="list list-inset">
-
-                        <div class="item">
-                            NewDagno: <i> {{Pr.plotdetail.newDagNo}}</i>
-                        </div>
-
-
-
-                    </div>
-                </div>
-                <div class="col-50" style="color:#111111">
-                    <div class="list list-inset">
-
-                        <div class="item">
-                            OldDagno: <i> {{Pr.plotdetail.oldDagNo}}</i>
-                        </div>
-
-
-
-                    </div>
-
-                </div>
-
-
-            </div>
+           <div class="item item-divider"  ng-click="Pr.toggleGroup()"
+                    ng-class="{active: Pr.isGroupShown()}">
+              <i class="icon" ng-class="Pr.isGroupShown() ? 'ion-minus' : 'ion-plus'"></i>
+            &nbsp;PlotDetails</div>
             <div class="row">
                 <div class="col-50" style="color:#111111">
                     <div class="list list-inset">
 
                         <div class="item">
-                            PattaNo: <i> {{Pr.plotdetail.newPattaNo}}</i>
+                            Area(A): <i style="color:#800000"> {{Pr.plotdetail.area_acre}}</i>
                         </div>
 
 
@@ -52,7 +37,7 @@
                     <div class="list list-inset">
 
                         <div class="item">
-                            Area(H): <i> {{Pr.plotdetail.area}}</i>
+                            LClass: <i style="color:#800000"> {{Pr.plotdetail.landClass}}</i>
                         </div>
 
 
@@ -61,12 +46,41 @@
 
                 </div>
             </div>
-            <div class="row">
+            <div class="row "  ng-show="Pr.isGroupShown()" >
+               
                 <div class="col-50" style="color:#111111">
                     <div class="list list-inset">
 
-                        <div class="item">
-                            Area(A): <i> {{Pr.plotdetail.area_acre}}</i>
+                        <div class="item item-accordion" ng-show="Pr.isGroupShown()">
+                            NewDagno: <i style="color:#800000"> {{Pr.plotdetail.newDagNo}}</i>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <div class="col-50" style="color:#111111">
+                    <div class="list list-inset">
+
+                        <div class="item item-accordion" ng-show="Pr.isGroupShown()">
+                            OldDagno: <i style="color:#800000"> {{Pr.plotdetail.oldDagNo}}</i>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="row"  ng-show="Pr.isGroupShown()">
+               
+                <div class="col-50" style="color:#111111">
+                    <div class="list list-inset">
+
+                       <div class="item item-accordion" ng-show="Pr.isGroupShown()">
+                            PattaNo: <i style="color:#800000"> {{Pr.plotdetail.newPattaNo}}</i>
                         </div>
 
 
@@ -77,8 +91,8 @@
                 <div class="col-50" style="color:#111111">
                     <div class="list list-inset">
 
-                        <div class="item">
-                            LClass: <i> {{Pr.plotdetail.landClass}}</i>
+                        <div class="item item-accordion" ng-show="Pr.isGroupShown()">
+                            Area(H): <i style="color:#800000"> {{Pr.plotdetail.area}}</i>
                         </div>
 
 
@@ -87,85 +101,22 @@
 
                 </div>
             </div>
+            
         </div>
-        <!-- <div class="row "  >
-             <div class="col-50" style="color:#111111">
-                 <div class="list list-inset">
 
-                     <div class="item">
-                         NewDagno: <i> {{Pr.plotdetail.newDagNo}}</i>
-                     </div>
-
-
-
-             </div>
-             </div>
-             <div class="col-50" style="color:#111111">
-                 <div class="list list-inset">
-
-                     <div class="item">
-                         NewDagno: <i> {{Pr.plotdetail.oldDagNo}}</i>
-                     </div>
-
-
-
-                 </div>
-                 &lt;!&ndash;<div class="input-label">
-                     OldDagno:{{""+Pr.plotdetail.oldDagNo}}
-                 </div>&ndash;&gt;
-             </div>
-
-
-         </div>
-             <div class="row">
-                 <div class="col-50" style="color:#111111">
-                     <div class="input-label">
-                     NewPattaNo:{{""+Pr.plotdetail.newPattaNo}}
-                 </div>
-                 </div>
-                 <div class="col-50" style="color:#111111">
-                     <div class="input-label">
-                         Area(Hect):{{""+Pr.plotdetail.area}}
-                     </div>
-                 </div>
-             </div>
-             <div class="row">
-                 <div class="col-50" style="color:#111111">
-                     <div class="input-label">
-                         Area:{{""+Pr.plotdetail.area_acre}}
-                     </div>
-                 </div>
-                 <div class="col-50" style="color:#111111">
-                     <div class="input-label">
-                         LandClass:{{""+Pr.plotdetail.landClass}}
-                     </div>
-                 </div>
-             </div>-->
-        <!-- <div class="row">
-             <div class="col-50">
-                 <div class="input-label">
-                     NewDagno:{{Pr.newDagNo}}
-                 </div>
-             </div>
-             <div class="col-50">
-                 <div class="input-label">
-                     NewDagno:{{Pr.newDagNo}}
-                 </div>
-             </div>
-
-         </div>-->
-
-        <h3 class="text-center">Pattadars</h3>
+       <!-- <h3 class="text-center">Pattadars</h3>-->
+        <div class="item item-divider">Pattadars</div>
         <div class="row ">
-            <div class="col text-center" style="color:#111111">(Slno  Name  Father/Husband  Address)</div>
+          
+            <div class="col text-left" style="color:#111111">(Slno  Name  Father/Husband  Address)</div>
 
         </div>
-        <ion-item  class="item-text-wrap"collection-repeat="o in Pr.owndetail ">
+        <ion-item  class="item-text-wrap" collection-repeat="o in Pr.owndetail ">
             <div class="row" style="display:inline-block !important">
 
-                <div  ><p style="color:#111111;font-size: large ">{{o.ownno +')' + o.name}}</p></div>
-                <div ><p style="color:#111111">{{o.father}}</P></div>
-                <div ><p style="color:#111111">{{o.address}}</P></div>
+                <div  ><p style="color:#800000;font-size: large ">{{o.ownno +')' + o.name}}</p></div>
+                <div ><p style="color:#800000">{{o.father}}</P></div>
+                <div ><p style="color:#800000">{{o.address}}</P></div>
             </div>
         </ion-item>
 

@@ -4,60 +4,50 @@
 (function(){
         'use strict'
         angular.module('LPApp')
-        .controller('PqController',['$scope','$ionicModal','InvoiceService','PqDataFactory','PQResModel','$state',PqController]);
+        .controller('PqController',['$scope','$ionicModal','InvoiceService','PqDataFactory','PQResModel','$state','$ionicPopup','$q','$ionicLoading',PqController]);
 
 
-    function PqController($scope,$ionicModal,InvoiceService,PqDataFactory,PQResModel,$state){
+    function PqController($scope,$ionicModal,InvoiceService,PqDataFactory,PQResModel,$state,$ionicPopup,$q,$ionicLoading){
         var vm = this;
         vm.village='';
         vm.NewDagNO='';
         vm.NewPattaNo='';
+       /* vm.loading={
+            show:show,
+            hide:hide
+        };*/
         //vm.district=[];
         vm.getDetail=getDetail;
-        vm.createInvoice=createInvoice;
+        //vm.createInvoice=createInvoice;
         vm.onDistSelect=onDistSelect;
         vm.onCircSelect=onCircSelect;
-        vm.onSubmit=onSubmit;
+        //vm.onSubmit=onSubmit;
         /*var initModal=initModal;*/
-
+        /*$scope.$broadcast('loadingstart','loading of page started');*/
+        $ionicLoading.show({
+            template: '<ion-spinner icon="bubbles" style="color:#ffffff"></ion-spinner>'
+        })
         activate();
         function activate(){
 
+
+
             return getdistricts().then(function(){
-                setDefaultsForPdfViewer($scope);
-                initModal();
+                $ionicLoading.hide();
             })
 
         }
 
-        // Initialize the modal view.
-        function initModal(){
-            $ionicModal.fromTemplateUrl('pdf-viewer.html', {
-                scope: $scope,
-                animation: 'slide-in-up'
-            }).then(function (modal) {
-                vm.modal = modal;
-                console.log(vm.modal);
-            });
-        }
-
-        function createInvoice() {
-            var invoice = getDummyData();
-
-            InvoiceService.createPdf(invoice)
-                .then(function (pdf) {
-                    var blob = new Blob([pdf], { type: 'application/pdf' });
-                    $scope.pdfUrl = URL.createObjectURL(blob);
-
-                    // Display the modal view
-                    vm.modal.show();
-                });
-        };
         function getdistricts(){
             return PqDataFactory.getdistrict().then(function (data){
                 vm.districts=data;
-                //console.log(vm.districts);
+
                 return vm.districts;
+            },function(error){
+                $ionicLoading.hide();
+                loadingErrorHandler(error.status);
+
+
             })
         }
         function onDistSelect(){
@@ -65,16 +55,21 @@
             vm.village='';
             vm.NewDagNO='';
                 vm.NewPattaNo='';
+            console.log(vm.district);
           return getcircle().then(function(){
-              console.log('dfdfdfdf');
+
           })
         }
         function getcircle(){
-            console.log(vm.district);
-            return PqDataFactory.getCircles(vm.district).then(function (data){
+            //console.log(vm.district);
+            return PqDataFactory.getCircles(vm.district.distcode).then(function (data){
                 vm.circles=data;
                 return vm.circles;
-            })
+                console.log(vm.circles);
+
+            },(function(error){
+                loadingErrorHandler(error.status);
+            }))
         }
         function onCircSelect(){
             vm.village='';
@@ -88,156 +83,229 @@
             return PqDataFactory.getVillages(vm.circle).then(function(data){
                 vm.villages=data;
                 return vm.villages;
+            },function(error){
+                loadingErrorHandler(error.status);
             })
         }
         function getDetail() {
             vm.pqmodal={};
             console.log(vm.NewDagNO);
             angular.extend(vm.pqmodal,{
-                LocCd: vm.village,
+                LocCd: vm.village.locCd,
                 NewDagNo:vm.NewDagNO,
                 NewPattaNo:vm.NewPattaNo
             });
-            return getOwners().then(getPlots);
-        }
-        function onSubmit(){
-            return PqDataFactory.getPdf().then(function(pdf){
-                var blob = new Blob([pdf], { type: 'application/pdf' });
-                $scope.pdfUrl = URL.createObjectURL(blob);
+            return getOwners()
+                .then(function(success){
+                    getPlots()
+                        .catch( function(errorCode){detailErrorHandler(errorCode);});
+                }, function(errorCode){
+                    console.log(errorCode);
+                   return detailErrorHandler(errorCode);
+                })
 
-                // Display the modal view
-                vm.modal.show();
+        }
+        function getOwners(){
+
+            return  PqDataFactory.getOwners(vm.pqmodal).then (function(data){
+                /*vm.owndetail=[];
+                 vm.owndetail=data;*/
+                PQResModel.owner={};
+                PQResModel.owner=data;
+                return PQResModel ;
+
+
+            },function(error){
+
+              return $q.reject(error.status);
             })
         }
+
         function getPlots(){
             return PqDataFactory.getPlot(vm.pqmodal).then(function(data){
                 PQResModel.plot={};
+                PQResModel.location={};
                 PQResModel.plot=data;
+                PQResModel.location={
+                    district:vm.district.distDesc,
+                    circle:vm.circle.cirDesc,
+                    village:vm.village.locDesc
+                }
                 console.log( PQResModel.plot);
+                console.log(PQResModel.location);
                 $state.go('app.pqResult');
+            },function(error){
+               return $q.reject(error.status);
+            })
+        }
+      /*  $scope.$on('loadingstart', function(event,data){
+            console.log(data);
+            $ionicLoading.show({
+                template:'Loading..'
+            });
+        })
+        $scope.$on('loadingstop', function(event){
+            $ionicLoading.hide();
+        })*/
+       /* function show(){
+            $ionicLoading.show({
+                template: 'Loading...'
+            }).then(function(){
+                console.log("The loading indicator is now displayed");
+            });
+        }
+        function hide(){
+            $ionicLoading.hide().then(function(){
+                console.log("The loading indicator is now hidden");
+            });
+
+        }*/
+
+
+
+        //ERROR HANDLING
+        function loadingErrorHandler(errorCode){
+            var errmessage;
+            if(errorCode===0)
+            {
+                errmessage='Service Unavailable';
+            }
+            else{
+                errmessage='Sorry Fatal Error:' + errorCode;
+            }
+            $ionicPopup.alert({
+                title:'Error',
+                content:errmessage
+            }).then(function(result){
+                $state.go('app.home');
+            })
+        }
+        function detailErrorHandler(errorCode){
+            console.log(errorCode);
+            var errmessage;
+            var fatalerror;
+            if (errorCode===404){
+
+                errmessage='Records not found Plz try Again';
+                fatalerror=false;
+
+            }
+            else{
+                errmessage='Sorry Fatal error.. Plz try again';
+                fatalerror=true;
+            }
+            $ionicPopup.alert({
+                title:'Error',
+                content:errmessage
+            }).then(function(result){
+                if(fatalerror){
+                    $state.go('app.home');
+                }
+
             })
         }
 
 
-        function getOwners(){
-
-           return  PqDataFactory.getOwners(vm.pqmodal).then (function(data){
-              /*vm.owndetail=[];
-               vm.owndetail=data;*/
-               PQResModel.owner={};
-               PQResModel.owner=data;
-               return vm.owndetail;
-
-
-           })
-        }
-
-        // Clean up the modal view.
-        $scope.$on('$destroy', function () {
-            vm.modal.remove();
-        });
-
         return vm;
-    }
-    function setDefaultsForPdfViewer($scope) {
-        $scope.scroll = 0;
-        $scope.loading = 'loading';
-
-        $scope.onError = function (error) {
-            console.error(error);
-        };
-
-        $scope.onLoad = function () {
-            $scope.loading = '';
-        };
-
-        $scope.onProgress = function (progress) {
-            console.log(progress);
-        };
-    }
-
-    function getDummyData() {
-        return {
-            Date: new Date().toLocaleDateString("en-IE", { year: "numeric", month: "long", day: "numeric" }),
-            AddressFrom: {
-                Name: chance.name(),
-                Address: chance.address(),
-                Country: chance.country({ full: true })
-            },
-            AddressTo: {
-                Name: chance.name(),
-                Address: chance.address(),
-                Country: chance.country({ full: true })
-            },
-            Items: [
-                { Description: 'iPhone 6S', Quantity: '1', Price: '€700' },
-                { Description: 'Samsung Galaxy S6', Quantity: '2', Price: '€655' }
-            ],
-            Subtotal: '€2010',
-            Shipping: '€6',
-            Total: '€2016'
-        };
     }
 
 })();
+
+/*****************PQRESULTCONTROLLER ********************/
 (function(){
     'use strict'
     angular.module('LPApp')
         .controller('PqResultController',PqResultController);
-    PqResultController.$inject=['$scope','PQResModel','$http','$rootScope','InvoiceService'];
-    function PqResultController($scope,PQResModel,$http,$rootScope,InvoiceService){
-        var vm=this;
-        vm.dwnJamabandi=dwnJamabandi;
 
+    PqResultController.$inject=['$scope','PQResModel','$http','PattaRptService','$ionicScrollDelegate'];
+    function PqResultController($scope,PQResModel,$http,PattaRptService,$ionicScrollDelegate){
+
+        var vm=this;
+        vm.show=false;
+        vm.dwnJamabandi=dwnJamabandi;
+        vm.toggleGroup=toggleGroup;
+        vm.isGroupShown=isGroupShown;
         vm.owndetail=PQResModel.owner;
         vm.plotdetail=PQResModel.plot;
-        setDefaultsForPdfViewer($scope);
-        /*Create Custom PattaDetails PDF report*/
+
+        vm.location=PQResModel.location;
+        console.log(vm.owndetail);
+        console.log(vm.plotdetail) ;
+        //setDefaultsForPdfViewer($scope);
+function toggleGroup(){
+    vm.show=!vm.show;
+    $ionicScrollDelegate.resize();
+
+}
+function isGroupShown(){
+    return vm.show;
+}
+
+// creat pdf patta and download to local file system and open with mobile default app
         function dwnJamabandi(){
-            var invoice = getDummyData();
+            console.log('dwnldstarted')
+            var rptData ={
+                pattadar:vm.owndetail,
+                plot: vm.plotdetail,
+                /*location:{
+                    district:'বিষ্ণুপুর',
+                    circle:'নম্বোল',
+                    village:'024-বলরাম খুল'
 
-            InvoiceService.createPdf(invoice)
+                }*/
+                location:vm.location
+
+            }
+            //cosole.log(rptData.plot);
+
+            PattaRptService.createPdf(rptData)
                 .then(function (pdf) {
-                    var blob = new Blob([pdf], {type: 'application/pdf'});
-                    $scope.pdfUrl = URL.createObjectURL(blob);
-                    console.log($scope.pdfUrl);
-                    var uri = $scope.pdfUrl;
-                    $rootScope.fileTransfer.download(
-                        uri,
-                        $rootScope.fileURL,
-                        function (entry) {
-                            cordova.plugins.fileOpener2.open(entry.toURL(),
-                                'application/pdf',
-                                {
-                                    error: function (e) {
-                                        console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
-                                    },
-                                    success: function () {
-                                        console.log('file opened successfully');
-                                    }
-                                });
-                        },
-                        function (error) {
-                            console.log(error);
-                        },
-                        true);
-
+                    var blob = new Blob([pdf], { type: 'application/pdf' });
+                   // $scope.pdfUrl = URL.createObjectURL(blob);
+                    var filename='PattaDetail2.pdf';
+                    writeToFile(filename,blob);
 
                 });
-                    //cordova.InAppBrowser.open($scope.pdfUrl,'_blank');
-                    /*cordova.plugins.fileOpener2.open($scope.pdfUrl,
-                        'application/pdf',
-                        {
-                            error : function(e) {
-                                console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
-                            },
-                            success : function () {
-                                console.log('file opened successfully');
-                            }
-                        });*/
+
+        }
+        function writeToFile(filename,blob){
+            console.log(blob);
+            console.log('writing to file');
+            window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function(dir){
+                 dir.getFile(filename,{create:true},function(fileEntry){
+                     console.log('got file', fileEntry);
+                     fileEntry.createWriter(function(fileWriter){
+                         fileWriter.onwriteend=function(e){
+                             console.log('Download Complete');
+                             console.log(fileEntry.fullPath);
+                             cordova.plugins.fileOpener2.open(
+                                 cordova.file.externalApplicationStorageDirectory+filename, // You can also use a Cordova-style file uri: cdvfile://localhost/persistent/Download/starwars.pdf
+                                 'application/pdf',
+                                 {
+                                     error : function(e) {
+                                         console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
+                                     },
+                                     success : function () {
+                                         console.log('file opened successfully');
+                                     }
+                                 }
+                             );
+                         };
+                         fileWriter.onerror=function(e){
+                             console.log('Download fail')
+                         };
+                         fileWriter.write(blob);
+                     })
+                 })
+            });
+
 
 
         }
+
+
+
+
         function setDefaultsForPdfViewer($scope) {
             $scope.scroll = 0;
             $scope.loading = 'loading';
@@ -254,6 +322,7 @@
                 console.log(progress);
             };
         }
+
         function getDummyData() {
             return {
                 Date: new Date().toLocaleDateString("en-IE", { year: "numeric", month: "long", day: "numeric" }),
@@ -267,6 +336,7 @@
                     Address: chance.address(),
                     Country: chance.country({ full: true })
                 },
+
                 Items: [
                     { Description: 'iPhone 6S', Quantity: '1', Price: '€700' },
                     { Description: 'Samsung Galaxy S6', Quantity: '2', Price: '€655' }
@@ -276,99 +346,9 @@
                 Total: '€2016'
             };
         }
-        /*vm.changelayout=changelayout;*/
-        /*document.addEventListener("deviceready", onDeviceReady, false);
-        function changelayout(){
-            console.log(screen);
-            window.screen.lockOrientation('potrait');
-        }
 
-            function onDeviceReady()
-            {
-                vm.changelayout() ;
 
-                /!*$scope.changeOriantationPortrait = function() {
-                    screen.lockOrientation('portrait');
-                }*!/
-            }*/
-       /* document.addEventListener("deviceready", onDeviceReady, false);
-        function onDeviceReady()
-        {
-            vm.dwnJamabandi();
-        }
-*/
-        /*function dwnJamabandi(){
-            //var fileURL = cordova.file.externalApplicationStorageDirectory+"local.pdf";
 
-            //var fileTransfer = new FileTransfer();
 
-            //console.log(FileTransfer);
-            console.log('HHHHHH');
-           // var uri = encodeURI('http://10.178.2.34:8090/uniLouchaPathap/api/patta/jamabandipdf.php?d=বিষ্ণুপুর&c=নম্বোল&v=024-বলরাম খুল&dg=329&p=309&l=0602001024&rid=t' );
-            var uri = encodeURI('http://10.178.2.34/eSiroi.Resource/api/SRController/gettrialPdf' );
-            /!*console.log(uri);
-            console.log(fileURL);*!/
-            //window.open(uri,'_system');
-            $rootScope.fileTransfer.download(
-                uri,
-                $rootScope.fileURL,
-                function(entry) {
-                    console.log(uri);
-                    console.log(entry.toURL);
-
-                    //$scope.data.localFileUri = entry.toURL();
-                    cordova.plugins.fileOpener2.open(entry.toURL(),
-                        'application/pdf',
-                        {
-                            error : function(e) {
-                                console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
-                            },
-                            success : function () {
-                                console.log('file opened successfully');
-                            }
-                        });
-                },
-                function(error) {
-                    console.log(error);
-
-                },
-                true
-            );
-        }*/
-
-       /* document.addEventListener("deviceready", onDeviceReady, false);
-        function onDeviceReady() {
-           // window.open = cordova.InAppBrowser.open;
-        }*/
-           /* function dwnJamabandi(){
-         cordova.InAppBrowser.open('http://apache.org', '_blank', 'location=yes');
-         //window.open(encodeURI('http://10.178.2.34:8090/uniLouchaPathap/api/patta/jamabandipdf.php?d=বিষ্ণুপুর&c=নম্বোল&v=024-বলরাম খুল&dg=329&p=309&l=0602001024&rid=t'), '_system');
-         /!*return $http.get('http://10.178.2.34/eSiroi.Resource/api/SRController/gettrialPdf')
-
-         .then (function(pdf){
-         var blob = new Blob([pdf], { type: 'application/pdf' });
-         var pdfUrl = URL.createObjectURL(blob);
-         console.log(pdfUrl)
-         //var ref=window.open(encodeURI(pdfUrl), '_system');
-         window.open('http://www.google.com', '_system');
-         /!*cordova.plugins.fileOpener2.open(
-         pdfUrl, // You can also use a Cordova-style file uri: cdvfile://localhost/persistent/Download/starwars.pdf
-         'application/pdf',
-         {
-         error : function(e) {
-         console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
-         },
-         success : function () {
-         console.log('file opened successfully');
-         }
-         }
-         );*!/
-         }).then(function(error){
-         console.log(error);
-         });*!/
-
-         }
-         */
-                //console.log(vm.owndetail);
     }
 })();

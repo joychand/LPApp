@@ -5,12 +5,12 @@
     'use strict'
     angular.module('LPApp')
         .factory('PqDataFactory',PqDataFactory);
-    PqDataFactory.$inject=['$http','LPAppSetting'];
-    function PqDataFactory($http,LPAppSetting){
+    PqDataFactory.$inject=['$http','LPAppSetting','$q'];
+    function PqDataFactory($http,LPAppSetting,$q){
         var service={
             getdistrict:getdistrict,
             getCircles:getCircles,
-        getVillages:getVillages,
+            getVillages:getVillages,
             getOwners:getOwners,
             getPlot:getPlot,
             getPdf:getPdf
@@ -54,9 +54,19 @@
                 .catch(failure);
         }
         function success(response){
-            return response.data;
+            return response.data
+            /*if(response.data==='object')
+            {
+                return response.data;
+            }
+            else {
+                return $q.reject(response.data)
+            }*/
+
         }
         function failure(error){
+            return $q.reject(error);
+
             /*logger.error('XHR failed' + error.data);*/
         }
 

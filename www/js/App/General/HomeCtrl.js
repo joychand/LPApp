@@ -5,9 +5,9 @@
     'use strict'
     angular.module('LPApp')
         .controller('HomeController',HomeController);
-    HomeController.$inject=['$scope']
-    function HomeController($scope){
+    HomeController.$inject=['$scope','$state']
+    function HomeController($scope,$state){
        var vm=this;
-        vm.homtitle='Happu';
+        vm.homtitle='LouchaPathap';
     }
 })();

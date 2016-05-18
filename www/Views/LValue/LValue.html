@@ -1,0 +1,170 @@
+    <ion-view title="LandValuation" cache-view="false">
+    <ion-content overflow-scroll="true" >
+        <div class="list list-inline">
+
+
+        <!--<button class="button button-block button-positive" modal-select="" ng-model="lv.someOtherModel" options="lv.longList" modal-title="Select a Unit" header-footer-class="bar-positive" has-search="true" sub-header-class="bar-positive">
+            Select Unit
+            <div class="option">
+                {{option}}
+            </div>
+        </button>-->
+        <div class="list list-inset">
+            <label class="item item-input " ng-if="vm.unitselected">
+                <span class="input-label " style="float:right">SelectedUnit:</span>
+                <input type="text" ng-model="lv.unit.unit">
+            </label>
+            <label class="item item-input item-select " ng-if="vm.unitselected">
+                <div class="input-label">
+                    Rate:
+                </div>
+                <select ng-model="lv.selectedRate" ng-change="" >
+                    //<option value="" disabled selected>-Select-</option>
+                    <option value="lv.unit.rate1">{{lv.unit.rate1}}</option>
+                    <option value="lv.unit.rate2">{{lv.unit.rate2}}</option>
+                    <option value="lv.unit.rate3">{{lv.unit.rate3}}</option>
+
+                </select>
+            </label>
+            <label class="item item-input ">
+                <span class="input-label " style="float:right">ComputedValue(Rs):</span>
+                <input type="text" ng-model="lv.cMinGV">
+            </label>
+            <label class="item item-input ">
+                <span class="input-label "style="float:right">ActualValue(Rs):</span>
+                <input type="text" ng-model="lv.MinGV" >
+            </label>
+            <label class="item item-input ">
+                <span class="input-label" style="float:right">Registration Fee(Rs):</span>
+                <input type="text" ng-model="lv.regFee"  >
+            </label>
+            <label class="item item-input ">
+                <span class="input-label" style="float:right">Stamp Paper Value(Rs):</span>
+                <input type="text" ng-model="lv.stmpValue" >
+            </label>
+
+        </div>
+
+        <!--<button class="button button-block button-positive" ng-click="modal.show()">
+           select unit
+        </button>-->
+            <div class="item item-input item-select ">
+                <select class="item-select" ng-model="lv.selectedUnit" ng-options="u as u for u in lv.unitgroup" ng-change="lv.getunitdetail()" >
+                    <option value="">-selectUnitGroup-</option>
+                </select>
+                <button class="button button-positive button-bar-inline button-balanced" modal-select="" ng-model="lv.unit" options="lv.unitdetail" modal-title="Select a Unit" header-footer-class="bar-positive" has-search="true" sub-header-class="bar-positive">
+                    GetUnitDetails
+                    <div class="option">
+                        <div class="text-center">
+                            {{option.unit }}
+                        </div>
+                        {{option.details}}
+                    </div>
+                </button>
+            </div>
+        </div>
+            <button class="button button-block button-positive" ng-click="lv.enterArea()">
+                Area
+            </button>
+            <button class="button button-block button-positive">
+                Calculate
+            </button>
+           <!-- <label class="item item-input item-select">
+                <div class="input-label">
+                    UnitGroup:
+                </div>
+                <select ng-model="PQuery.district" ng-options="d.distcode as d.distDesc for d in PQuery.districts" ng-change="PQuery.onDistSelect()" >
+                    <option value="" disabled selected>-Select-</option>
+
+                </select>
+            </label>
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Unit:
+                </div>
+                <select  ng-disabled="!PQuery.district" ng-model="PQuery.circle" ng-options=" c.cirDesc for c in PQuery.circles" ng-change="PQuery.onCircSelect()">
+                    <option value="" disabled selected>-SelectUnit-</option>
+
+                </select>
+            </label>
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Rate:
+                </div>
+                <select ng-disabled="!PQuery.circle  " ng-model="PQuery.village" ng-options=" v.locCd as v.locDesc for v in PQuery.villages ">
+                    <option value="" disabled selected>-Select Village-</option>
+
+                </select>
+            </label>
+            <label class="item item-input">
+                <span class="input-label">NewDagNo:</span>
+                <input type="text" ng-model="PQuery.NewDagNO">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">NewPattaNo:</span>
+                <input type="text" ng-model="PQuery.NewPattaNo">
+            </label>
+            <div class="padding">
+                <button class="button button-block base-color" ng-click="PQuery.getDetail()">Submit</button>
+                &lt;!&ndash; <button class="button button-block base-color" ui-sref="app.pqResult">Submit</button>&ndash;&gt;
+            </div>-->
+        </div>
+    </ion-content>
+</ion-view>
+
+<script id="templates/modal.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-positive">
+            <h1 class="title text-centre">Select Scheduled Units</h1>
+            <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+        </ion-header-bar>
+        <div class="list has-header" >
+            <label class="item item-input item-select">
+                <span class="input-label">Select Unit</span>
+                <select ng-model="newUser.firstName" ng-change="lv.getUnits()">
+                    <option value="">Select</option>
+                </select>
+            </label>
+            <label class="item item-input item-select">
+                <span class="input-label">Unit</span>
+                <select ng-model="newUser.lastName" >
+                    <option value=""></option>
+                </select>
+            </label>
+            <label class="item item-input item-select">
+                <span class="input-label">Rate</span>
+                <select ng-model="newUser.lastName" >
+                    <option value="">select</option>
+                </select>
+            </label>
+            <!--<button class="button button-full button-positive" ng-click="createContact(newUser)">Create</button>-->
+
+        </div>
+        <ion-content >
+
+            <ion-list>
+                <ion-tem class="item item-divider"> Select Scheduled Unit Details</ion-tem>
+                <ion-item  class=item-text-wrap collection-repeat="i in lv.selectables" item-height="50px" item-width="100%" ng-click="lv.onUnitSelect(i)">
+                    {{i}}
+                </ion-item>
+            </ion-list>
+            <button class="button button-full button-positive" ng-click="createContact(newUser)">Ok</button>
+            <button class="button button-full button-positive" ng-click="createContact(newUser)">Reset</button>
+        </ion-content>
+    </ion-modal-view>
+</script>
+
+    <script id="templates/area_popup.html" type="text/ng-template">
+
+            <ion-list>
+
+                    <ion-radio ng-model="area.Unit" ng-value="'H'" ng-change="changeunit()">Hectare</ion-radio>
+                    <ion-radio ng-model="area.Unit" ng-value="'A'" ng-change="changeunit()" >Acre</ion-radio>
+                    <ion-radio ng-model="area.Unit" ng-value="'sqf'" ng-change="changeunit()">SqFeet</ion-radio>
+                <div class="item item-input"><input type="text" ng-model="area.data" placeholder=" Enter Area(any one of the units)"></div>
+
+        </ion-list>
+
+
+
+            </script>
