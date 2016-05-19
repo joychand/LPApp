@@ -17,6 +17,7 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+    <preference name="orientation" value="portrait" />
     <allow-navigation href="*" />
     <access origin="*" />
     <access origin="http://10.178.2.34:8090" />
