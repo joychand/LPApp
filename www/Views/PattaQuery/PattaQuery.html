@@ -1,50 +1,60 @@
 <ion-view title="PattaDownload" cache-view="false">
     <ion-content overflow-scroll="true" >
-        <div class="list list-inset">
+        <form name="PQuery.pqForm" novalidate>
+            <div class="list list-inset">
 
-            <label class="item item-input item-select">
-                <div class="input-label">
-                    District:
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        District:
+                    </div>
+                    <!--<select ng-model="PQuery.district" ng-options="d.distcode as d.distDesc for d in PQuery.districts" ng-change="PQuery.onDistSelect()" >-->
+                    <select  name="district" ng-model="PQuery.district" ng-options="d.distDesc for d in PQuery.districts" ng-change="PQuery.onDistSelect()"  required>
+                        <option value="" disabled selected>-Select District-</option>
+
+                    </select>
+                </label>
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Circle:
+                    </div>
+                    <select name="circle" ng-disabled="!PQuery.district" ng-model="PQuery.circle" ng-options=" c.cirDesc for c in PQuery.circles" ng-change="PQuery.onCircSelect()" required>
+                        <option value="" disabled selected>-Select Circle-</option>
+
+                    </select>
+                </label>
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Village:
+                    </div>
+                    <!--<select ng-disabled="!PQuery.circle  " ng-model="PQuery.village" ng-options=" v.locCd as v.locDesc for v in PQuery.villages ">-->
+                    <select name="village" ng-disabled="!PQuery.circle  " ng-model="PQuery.village" ng-options=" v.locDesc for v in PQuery.villages" ng-change="PQuery.onVillSelect()" required>
+                        <option value="" disabled selected>-Select Village-</option>
+
+                    </select>
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">NewDagNo:</span>
+                    <input name="dagno" type="number" ng-model="PQuery.NewDagNO" required>
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">NewPattaNo:</span>
+                    <input name="pattano" type="number" ng-model="PQuery.NewPattaNo" required>
+                </label>
+               <!-- <div class="padding">
+                    <p ng-show="PQuery.pqForm.district.$error.required && !PQuery.pqForm.district.$pristine" style="color:red;"> *Plz select District</p>
+                    <p ng-show="PQuery.pqForm.dagno.$error.required && !PQuery.pqForm.dagno.$pristine" style="color:red;"> *Dagno</p>
+                </div>-->
+                <div class="padding">
+                    <button class="button button-block base-color" ng-click="PQuery.getDetail()" ng-disabled="PQuery.pqForm.$invalid">{{PQuery.btnText}}<ion-spinner class="spinner-energized myspinner" ng-if="PQuery.isProcessing"></ion-spinner></button>
+
+                    <!-- <button class="button button-block base-color" ui-sref="app.pqResult">Submit</button>-->
                 </div>
-                <!--<select ng-model="PQuery.district" ng-options="d.distcode as d.distDesc for d in PQuery.districts" ng-change="PQuery.onDistSelect()" >-->
-                    <select ng-model="PQuery.district" ng-options="d.distDesc for d in PQuery.districts" ng-change="PQuery.onDistSelect()" >
-                    <option value="" disabled selected>-Select District-</option>
 
-                </select>
-            </label>
-            <label class="item item-input item-select">
-                <div class="input-label">
-                    Circle:
-                </div>
-                <select  ng-disabled="!PQuery.district" ng-model="PQuery.circle" ng-options=" c.cirDesc for c in PQuery.circles" ng-change="PQuery.onCircSelect()">
-                    <option value="" disabled selected>-Select Circle-</option>
 
-                </select>
-            </label>
-            <label class="item item-input item-select">
-                <div class="input-label">
-                    Village:
-                </div>
-                <!--<select ng-disabled="!PQuery.circle  " ng-model="PQuery.village" ng-options=" v.locCd as v.locDesc for v in PQuery.villages ">-->
-                    <select ng-disabled="!PQuery.circle  " ng-model="PQuery.village" ng-options=" v.locDesc for v in PQuery.villages ">
-                    <option value="" disabled selected>-Select Village-</option>
-
-                </select>
-            </label>
-            <label class="item item-input">
-                <span class="input-label">NewDagNo:</span>
-                <input type="text" ng-model="PQuery.NewDagNO">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">NewPattaNo:</span>
-                <input type="text" ng-model="PQuery.NewPattaNo">
-            </label>
-            <div class="padding">
-                <button class="button button-block base-color" ng-click="PQuery.getDetail()">{{PQuery.btnText}}<ion-spinner class="spinner-energized myspinner" ng-if="PQuery.isProcessing"></ion-spinner></button>
-
-               <!-- <button class="button button-block base-color" ui-sref="app.pqResult">Submit</button>-->
             </div>
-        </div>
+
+        </form>
+
     </ion-content>
 </ion-view>
 <!--

@@ -14,6 +14,7 @@
         vm.NewPattaNo='';
         vm.isProcessing=false;
         vm.btnText='Submit'
+        //vm.pqForm;
        /* vm.loading={
             show:show,
             hide:hide
@@ -23,6 +24,7 @@
         //vm.createInvoice=createInvoice;
         vm.onDistSelect=onDistSelect;
         vm.onCircSelect=onCircSelect;
+        vm.onVillSelect=onVillSelect;
         //vm.onSubmit=onSubmit;
         /*var initModal=initModal;*/
         /*$scope.$broadcast('loadingstart','loading of page started');*/
@@ -59,7 +61,7 @@
                 vm.NewPattaNo='';
             console.log(vm.district);
           return getcircle().then(function(){
-
+           vm.pqForm.dagno.$setPristine();
           })
         }
         function getcircle(){
@@ -77,6 +79,8 @@
             vm.village='';
             vm.NewDagNO='';
             vm.NewPattaNo='';
+            vm.pqForm.dagno.$setPristine();
+            vm.pqForm.pattano.$setPristine();
             return getVill().then(function(){
                 console.log('villages success');
             })
@@ -88,6 +92,12 @@
             },function(error){
                 loadingErrorHandler(error.status);
             })
+        }
+        function onVillSelect(){
+            vm.NewDagNO='';
+            vm.NewPattaNo='';
+            vm.pqForm.dagno.$setPristine();
+            vm.pqForm.pattano.$setPristine();
         }
         function getDetail() {
             $rootScope.$broadcast('processing');
