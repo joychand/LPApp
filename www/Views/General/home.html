@@ -25,7 +25,7 @@
                         <div class="table">
                             <div class="table-cell" style="text-align:center !important;">
                                 <a ui-sref="app.pattaQuery" class="  button button-icon">
-                                    <i class="icon ion-paper-airplane my-icon"></i>
+                                    <i class="icon ion-android-download my-icon"></i>
                                     <h6 style="text-size:5px !important; color:#ffffff;">Patta Download</h6></a>
                             </div>
                         </div>
@@ -35,9 +35,9 @@
                     <div class="content">
                         <div class="table">
                             <div class="table-cell" style="text-align:center !important;">
-                                <a ui-sref="app.lValue" class="  button button-icon">
-                                    <i class="icon ion-compose my-icon"></i>
-                                    <h6 style="text-size:5px !important; color:#ffffff;">Land Valuation</h6></a>
+                                <a href="#" class="  button button-icon">
+                                    <i class="icon ion-android-search my-icon"></i>
+                                    <h6 style="text-size:5px !important; color:#ffffff;">DeedSearch</h6></a>
                             </div>
                         </div>
                     </div>
@@ -49,8 +49,8 @@
                     <div class="content">
                         <div class="table">
                             <div class="table-cell" style="text-align:center !important;">
-                                <a href="" class="  button button-icon">
-                                    <i class="icon ion-camera my-icon"></i>
+                                <a  href=""  ng-click="home.barcodescan()"class="button button-icon">
+                                    <i class="icon ion-qr-scanner my-icon" ></i>
                                     <h6 style="text-size:5px !important; color:#ffffff;">QR Verify</h6></a>
                             </div>
                         </div>
@@ -89,6 +89,10 @@
             </div>
 
     </ion-content>
+    <ion-footer-bar align-title="center" class="bar-stable">
 
+        <h6 class="text-center">Developed & Designed by NIC</h6>
+
+    </ion-footer-bar>
 
 </ion-view>

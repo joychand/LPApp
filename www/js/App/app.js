@@ -6,10 +6,10 @@
 var app =angular.module('LPApp', ['ionic','pdf','ionic-modal-select','ionicProcessSpinner']);
 //var AuthServiceBase = '/eSiroi.Authentication/';
 //var ResrcServiceBase = 'http://10.178.2.34/eSiroi.Resource/';
-var ResrcServiceBase = 'http://192.168.137.160/eSiroi.Resource';
+//var ResrcServiceBase = 'http://192.168.137.160/eSiroi.Resource';
 //var ResrcServiceBase = 'http://192.168.43.239/eSiroi.Resource';
 /*var ResrcServiceBase = 'http://10.178.2.34/eSiroi.Resource';*/
-//var ResrcServiceBase = 'http://manipurtemp12.nic.in/eSiroi.Resource';
+var ResrcServiceBase = 'http://manipurtemp12.nic.in/eSiroi.Resource';
 app.constant('LPAppSetting', {
     //apiAuthServiceBaseUri: AuthServiceBase,
     apiResrcServiceBaseUri:ResrcServiceBase,

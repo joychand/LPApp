@@ -18,10 +18,22 @@
                         bolditalics: 'Roboto-Medium.ttf'
                     },
                     Solaimanlipi: {
-                        normal: 'SolaimanLipi-Normal.ttf',
-                        bold: 'SolaimanLipi-Bold.tff',
-                        italics: 'SolaimanLipi-Normal.ttf',
-                        bolditalics: 'SolaimanLipi-Bold.ttf'
+                        normal: 'SolaimanLipi.ttf',
+                        bold: 'SolaimanLipi.tff',
+                        italics: 'SolaimanLipi.ttf',
+                        bolditalics: 'SolaimanLipi.ttf'
+                    },
+                    Lohit: {
+                        normal: 'Lohit-Bengali.ttf',
+                        bold: 'Lohit-Bengali.tff',
+                        italics: 'Lohit-Bengali.ttf',
+                        bolditalics: 'Lohit-Bengali.ttf'
+                    },
+                    vrinda: {
+                        normal: 'vrinda.ttf',
+                        bold: 'vrinda.tff',
+                        italics: 'vrinda.ttf',
+                        bolditalics: 'vrinda.ttf'
                     }
 
                 };

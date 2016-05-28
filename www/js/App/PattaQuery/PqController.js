@@ -308,7 +308,7 @@ function isGroupShown(){
                                  'application/pdf',
                                  {
                                      error : function(e) {
-                                         console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
+                                         alert('Error status: ' + e.status + ' - Error message: ' + e.message);
                                      },
                                      success : function () {
                                          console.log('file opened successfully');
@@ -317,7 +317,7 @@ function isGroupShown(){
                              );
                          };
                          fileWriter.onerror=function(e){
-                             console.log('Download fail')
+                             alert('Download fail')
                          };
                          fileWriter.write(blob);
                      })
