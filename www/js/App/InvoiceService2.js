@@ -2,14 +2,14 @@
  * Created by DELL on 25-03-2016.
  */
 (function () {
-    angular.module('LPApp').factory('PattaRptService', ['$q', PattaRptService]);
+    angular.module('LPApp').factory('PattaRptService', ['$q','$http','PqDataFactory', PattaRptService]);
 
-    function PattaRptService($q) {
+    function PattaRptService($q,$http,PqDataFactory) {
         function createPdf(rptData) {
             return $q(function (resolve, reject) {
 
 
-                window.pdfMake.fonts = {
+              /*  window.pdfMake.fonts = {
 
                     Roboto: {
                         normal: 'Roboto-Regular.ttf',
@@ -34,15 +34,39 @@
                         bold: 'vrinda.tff',
                         italics: 'vrinda.ttf',
                         bolditalics: 'vrinda.ttf'
+                    },
+                    Rupali:{
+                        normal: 'Rupali.ttf',
+                        bold: 'Rupali.tff',
+                        italics: 'Rupali.ttf',
+                        bolditalics: 'Rupali.ttf'
+                    },
+                    SakalBharati:{
+                        normal: 'SakalBharati_N_Ship.ttf',
+                        bold: 'SakalBharati_N_Ship.ttf',
+                        italics: 'SakalBharati_N_Ship.ttf',
+                        bolditalics: 'SakalBharati_N_Ship.ttf'
                     }
+
+
 
                 };
                 var dd = createDocumentDefinition(rptData);
                 var pdf = pdfMake.createPdf(dd);
-
                 pdf.getBase64(function (output) {
-                    resolve(base64ToUint8Array(output));
-                });
+                resolve(base64ToUint8Array(output));
+               });
+                */
+
+                PqDataFactory.getJamabandi(rptData).then(function(data){
+                    var pdf =data;
+                     resolve(pdf)  ;
+                      /* resolve
+                        resolve(base64ToUint8Array(pdf));*/
+
+                })
+
+
             });
         }
 
@@ -174,7 +198,7 @@
             },
             defaultStyle: {
 
-                   font: 'Solaimanlipi'
+                   font: 'vrinda'
 
             }
         }
@@ -183,11 +207,36 @@
     }
 
     function base64ToUint8Array(base64) {
-        var raw = atob(base64);
+        var raw=decodeURIComponent(escape(window.atob(base64)));
+       // var raw = atob(base64);
         var uint8Array = new Uint8Array(raw.length);
         for (var i = 0; i < raw.length; i++) {
             uint8Array[i] = raw.charCodeAt(i);
         }
         return uint8Array;
     }
+   /* function getJamabandi(){
+        return $http.get('http://localhost:8090/mdf/examples/apitest.php')
+            .then(function(response){
+                var pdf=response.data;
+
+            },function(error){
+                console.log('error downloading' + error.message);
+            })
+    }
+*/
+})();
+
+(function(){
+    html2canvas(document.getElementById('exportthis'),
+        {             onrendered: function (canvas)
+           {                 var data = canvas.toDataURL();
+               var docDefinition = {
+                   content: [{
+                       image: data, width: 500,  }]
+               };
+                     pdfMake.createPdf(docDefinition).download("Score_Details.pdf");
+           }
+        });
+
 })();

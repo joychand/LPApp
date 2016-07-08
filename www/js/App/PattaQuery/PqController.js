@@ -139,14 +139,18 @@
             return PqDataFactory.getPlot(vm.pqmodal).then(function(data){
                 PQResModel.plot={};
                 PQResModel.location={};
+                PQResModel.locCd='';
                 PQResModel.plot=data;
                 PQResModel.location={
                     district:vm.district.distDesc,
                     circle:vm.circle.cirDesc,
                     village:vm.village.locDesc
-                }
+                };
+                PQResModel.locCd=vm.village.locCd;
+
                 console.log( PQResModel.plot);
                 console.log(PQResModel.location);
+                console.log(PQResModel.locCd);
                 $rootScope.$broadcast('processComplete');
                 $state.go('app.pqResult');
             },function(error){
@@ -270,27 +274,23 @@ function isGroupShown(){
         function dwnJamabandi(){
             console.log('dwnldstarted')
             var rptData ={
-                pattadar:vm.owndetail,
-                plot: vm.plotdetail,
-                /*location:{
-                    district:'বিষ্ণুপুর',
-                    circle:'নম্বোল',
-                    village:'024-বলরাম খুল'
-
-                }*/
-                location:vm.location
+                locCd:PQResModel.locCd,
+                dagNo: vm.plotdetail.newDagNo,
+                pattaNo:vm.plotdetail.newPattaNo
 
             }
-            //cosole.log(rptData.plot);
+
 
             PattaRptService.createPdf(rptData)
                 .then(function (pdf) {
                     var blob = new Blob([pdf], { type: 'application/pdf' });
                    // $scope.pdfUrl = URL.createObjectURL(blob);
-                    var filename='PattaDetail2.pdf';
+                    var filename= rptData.dagNo+rptData.pattaNo +'louchapathap.pdf';
                     writeToFile(filename,blob);
 
                 });
+
+
 
         }
         function writeToFile(filename,blob){

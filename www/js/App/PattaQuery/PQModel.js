@@ -9,7 +9,8 @@
         var service={
             owner:{},
             plot:{},
-            location:{}
+            location:{},
+            locCd:''
         }
         return service;
     }

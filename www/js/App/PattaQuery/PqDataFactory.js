@@ -5,15 +5,17 @@
     'use strict'
     angular.module('LPApp')
         .factory('PqDataFactory',PqDataFactory);
-    PqDataFactory.$inject=['$http','LPAppSetting','$q'];
-    function PqDataFactory($http,LPAppSetting,$q){
+    PqDataFactory.$inject=['$http','LPAppSetting','$q','$httpParamSerializerJQLike'];
+    function PqDataFactory($http,LPAppSetting,$q, $httpParamSerializerJQLike){
         var service={
             getdistrict:getdistrict,
             getCircles:getCircles,
             getVillages:getVillages,
             getOwners:getOwners,
             getPlot:getPlot,
-            getPdf:getPdf
+            getPdf:getPdf,
+            getJamabandi:getJamabandi
+
         }
          return service;
         function getdistrict (){
@@ -52,6 +54,32 @@
             return $http.get(LPAppSetting.apiResrcServiceBaseUri +'/api/SRController/gettrialPdf',{responseType:'arraybuffer'})
                 .then(success)
                 .catch(failure);
+        }
+        function getJamabandi(rptData){
+            var data= {
+                LocCd:rptData.locCd,
+                NewPattaNo:rptData.pattaNo,
+                NewDagNo:rptData.dagNo
+            };
+            return $http({
+                url: LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/Jamabandi',
+                method: 'POST',
+                data:data ,
+                responseType:'arraybuffer'
+            })
+          /* return $http({
+                url: 'http://igrmanipur.vagrantshare.com/jamabandi/api/patta/jamabandipdf.php',
+                method: 'POST',
+                data: $httpParamSerializerJQLike(data),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+               responseType:'arraybuffer'
+            })*/
+               .then (success)
+               .catch(failure);
+            /*return $http.get('http://localhost:8090/mdf/examples/apitest.php',{responseType: 'arraybuffer'})
+                .then(success).catch(failure);*/
         }
         function success(response){
             return response.data
