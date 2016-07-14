@@ -7,8 +7,8 @@ var app =angular.module('LPApp', ['ionic','pdf','ionic-modal-select','ionicProce
 //var AuthServiceBase = '/eSiroi.Authentication/';
 //var ResrcServiceBase = 'http://10.178.2.34/eSiroi.Resource/';
 //var ResrcServiceBase = 'http://manipurtemp12.nic.in/eSiroi.Resource';
-var ResrcServiceBase = 'http://localhost:8080/LPAppService';
-//var ResrcServiceBase = 'http://10.178.2.34/LPAppService';
+//var ResrcServiceBase = 'http://localhost:8080/LPAppService';
+var ResrcServiceBase = 'http://10.178.2.34/LPAppService';
 
 //var JamabandiResrcBase='http://igrmanipur.localhost:9090/'
 /*var ResrcServiceBase = 'http://manipurtemp12.nic.in/eSiroi.Resource';*/
@@ -161,7 +161,9 @@ app.directive('scrollWatch', function($rootScope) {
         };
     });
 
-
+app.config(['$httpProvider',function($httpProvider){
+    $httpProvider.interceptors.push('authInterceptorService');
+}])
 app.run(function($ionicPlatform,$ionicPopup) {
 
   $ionicPlatform.ready(function() {
@@ -197,4 +199,5 @@ app.run(function($ionicPlatform,$ionicPopup) {
       $rootScope.fileTransfer = new FileTransfer();
       console.log( $rootScope.fileTransfer);*/
   });
+
 })
