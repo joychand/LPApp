@@ -9,13 +9,15 @@ var app =angular.module('LPApp', ['ionic','pdf','ionic-modal-select','ionicProce
 //var ResrcServiceBase = 'http://manipurtemp12.nic.in/eSiroi.Resource';
 //var ResrcServiceBase = 'http://localhost:8080/LPAppService';
 var ResrcServiceBase = 'http://10.178.2.34/LPAppService';
-
+var APPId = '4d53bce03ec34c0a911182d4c228ee6c';
+var APIKey = 'A93reRTUJHsCuQSHR+L3GxqOJyDmQpCgps102ciuabc=';
 //var JamabandiResrcBase='http://igrmanipur.localhost:9090/'
 /*var ResrcServiceBase = 'http://manipurtemp12.nic.in/eSiroi.Resource';*/
 app.constant('LPAppSetting', {
     //apiAuthServiceBaseUri: AuthServiceBase,
     apiResrcServiceBaseUri:ResrcServiceBase,
-    clientId: 'eSiroi.Web',
+    APPId: 'eSiroi.Web',
+    APIKey:'A93reRTUJHsCuQSHR+L3GxqOJyDmQpCgps102ciuabc='
 
 });
 app.config(function($stateProvider, $urlRouterProvider) {

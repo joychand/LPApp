@@ -2,15 +2,31 @@
  * Created by joy on 14-Jul-16.
  */
 angular.module('LPApp')
-    .factory('authInterceptorService', ['$q', '$injector', function ($q, $injector) {
+    .factory('authInterceptorService', ['$q', '$injector','LPAppSetting', function ($q, $injector,LPAppSetting) {
 
         var authInterceptorServiceFactory = {};
 
         var _request = function (config) {
 
             config.headers = config.headers || {};
+            var requestContentBase64String='';
+            var requestSignatureBase64String='';
             var url=config.url;
-            console.log(url);
+            var requestUri= encodeURIComponent(config.url.toLowerCase());
+            var requestTimeStamp=(new Date).getTime();
+            var nonce=createGuid();
+            var requestHttpMethod=config.method;
+            var requestContent=(!config.data) ? '' : config.data;
+            if(requestContent){
+                lpCryptoService.computeMD5(requestContent).then(function(md5hash){
+                    requestContentBase64String=md5hash;
+
+                },failure);
+            }
+            var stringRawData='APPId'+ requestHttpMethod + requestUri + requestTimeStamp + nonce + requestContentBase64String
+            var secretKeyByteArray = convertFrombase64(LPAppSetting.APIKey);
+            requestSignatureBase64String=lpCryptoService.computeHMACSHA256(stringRawData);
+            config.headers.Authorization = 'amx ' + 'APPId'+':'+ requestSignatureBase64String +':'+ nonce+':'+requestTimeStamp;
 /*
 
             var authData = localStorageService.get('authorizationData');
@@ -39,7 +55,13 @@ angular.module('LPApp')
             }
             return $q.reject(rejection);
         }*/
-
+        function createGuid()
+        {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
+                return v.toString(16);
+            });
+        }
         authInterceptorServiceFactory.request = _request;
        /* authInterceptorServiceFactory.responseError = _responseError;*/
 
