@@ -16,7 +16,7 @@ var APIKey = 'A93reRTUJHsCuQSHR+L3GxqOJyDmQpCgps102ciuabc=';
 app.constant('LPAppSetting', {
     //apiAuthServiceBaseUri: AuthServiceBase,
     apiResrcServiceBaseUri:ResrcServiceBase,
-    APPId: 'eSiroi.Web',
+    APPId: '4d53bce03ec34c0a911182d4c228ee6c',
     APIKey:'A93reRTUJHsCuQSHR+L3GxqOJyDmQpCgps102ciuabc='
 
 });

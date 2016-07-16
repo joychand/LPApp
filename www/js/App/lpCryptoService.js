@@ -4,7 +4,7 @@
 
 (function(){
     'use strict'
-    angular.module('LpApp')
+    angular.module('LPApp')
         .factory('lpCryptoService',['$q','LPAppSetting',lpCryptoService]);
     function lpCryptoService($q, LPAppSetting){
         //var base64RequestContent='';
@@ -20,15 +20,41 @@
     }
     function computeMD5(requestContent){
 
-    }
-    function computeHMACSHA256(){
 
+        // ** VERY IMPORTANT ** change encoding similar to .NET's encoding
+        var utf16le = CryptoJS.enc.Utf8.parse(requestContent);
+        var content=Uint82Wdarray(utf16le);
+
+        //compute hash of the correct encoding string
+        var utf16md5 = CryptoJS.MD5(content);
+
+        // encoded the hash result to Base64 encoding
+        var b64md5Content = CryptoJS.enc.Base64.stringify(utf16md5);
+        return b64md5Content;
+
+    }
+    function computeHMACSHA256(stringRawData,secretKeyByteArray){
+        // ** VERY IMPORTANT ** change encoding similar to .NET's encoding
+        var utf16le = CryptoJS.enc.Utf16LE.parse(stringRawData);
+
+        var HmacS256 = CryptoJS.HmacSHA256(utf16le, secretKeyByteArray);
+        var hashInBase64 = CryptoJS.enc.Base64.stringify(HmacS256);
+       return hashInBase64;
     }
     function str2Uint8array(){
 
     }
-    function Uint82Wdarray(){
+    function Uint82Wdarray(u8arr){
+        // Shortcut
+        var len = u8arr.length;
 
+        // Convert
+        var words = [];
+        for (var i = 0; i < len; i++) {
+            words[i >>> 2] |= (u8arr[i] & 0xff) << (24 - (i % 4) * 8);
+        }
+
+        return CryptoJS.lib.WordArray.create(words, len);
     }
 
 })();

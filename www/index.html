@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html >
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <meta http-equiv="Content-Security-Policy"/>
@@ -15,7 +15,7 @@
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
-<!--Vendor js-->
+    <!--Vendor js-->
     <script src="lib/pdfmake/build/pdfmake.min.js"></script>
     <script src="lib/pdfmake/build/vfs_fonts.js"></script>
     <script src="lib/pdfjs-dist/build/pdf.js"></script>
@@ -28,16 +28,19 @@
     <script src="lib/crypto-js/crypto-js.js"></script>
     <script src="lib/crypto-js/enc-base64.js"></script>
     <script src="lib/crypto-js/enc-utf16.js"></script>
+    <script src="lib/crypto-js/enc-utf8.js"></script>
     <script src="lib/crypto-js/md5.js"></script>
     <script src="lib/crypto-js/hmac.js"></script>
     <script src="lib/crypto-js/hmac-sha256.js"></script>
+
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
     <!-- your app's js -->
     <script src="js/App/app.js"></script>
     <script src="js/App/authenticationInterceptor.js"></script>
-   <!-- <script src="js/App/DocumentController.js"></script>-->
+    <script src="js/App/lpCryptoService.js"></script>
+    <!-- <script src="js/App/DocumentController.js"></script>-->
     <script src="js/App/InvoiceService.js"></script>
     <script src="js/App/InvoiceService2.js"></script>
     <script src="js/App/MainController.js"></script>
@@ -48,39 +51,39 @@
     <script src="js/App/PattaQuery/PQModel.js"></script>
     <script src="js/App/General/DataFactory.js"></script>
 
-  </head>
-  <body ng-app="LPApp">
+</head>
+<body ng-app="LPApp">
 
-  <ion-nav-view>
+<ion-nav-view>
 
-  </ion-nav-view>
-
-
+</ion-nav-view>
 
 
-  </body>
 
 
-  <!--<script type="text/ng-template" id="home.html">
-    <ion-view title="Todos">
-      <ion-content>
-        <h1>Hello</h1>
-        <ion-list>
-          <ion-item ng-repeat="todo in todos" class="item item-icon-right">
-            <span>{{todo.title}}</span>
-          </ion-item>
-        </ion-list>
-      </ion-content>
-    </ion-view>
-  </script>
+</body>
+
+
+<!--<script type="text/ng-template" id="home.html">
+  <ion-view title="Todos">
+    <ion-content>
+      <h1>Hello</h1>
+      <ion-list>
+        <ion-item ng-repeat="todo in todos" class="item item-icon-right">
+          <span>{{todo.title}}</span>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-view>
+</script>
 -->
- <!-- <script type="text/ng-template" id="help.html">
-    <ion-view title="Help">
-      <ion-content padding="true">
-        <h2>Using the app</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis architecto hic officia quasi excepturi sequi deleniti maiores consectetur veritatis sint?</p>
-      </ion-content>
-    </ion-view>
-  </script>
+<!-- <script type="text/ng-template" id="help.html">
+   <ion-view title="Help">
+     <ion-content padding="true">
+       <h2>Using the app</h2>
+       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis architecto hic officia quasi excepturi sequi deleniti maiores consectetur veritatis sint?</p>
+     </ion-content>
+   </ion-view>
+ </script>
 </html>
 -->
