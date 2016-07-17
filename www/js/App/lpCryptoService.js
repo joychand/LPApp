@@ -20,16 +20,25 @@
     }
     function computeMD5(requestContent){
 
-
+console.log('hahahah');
         // ** VERY IMPORTANT ** change encoding similar to .NET's encoding
-        var utf16le = CryptoJS.enc.Utf8.parse(requestContent);
-        var content=Uint82Wdarray(utf16le);
+      // var utf16le=JSON.stringify(requestContent);
+        var jsonContentString = JSON.stringify( requestContent, function( key, value ) {
+            if( key === "$$hashKey" ) {
+                return undefined;
+            }
 
+            return value;
+        });
+     //var RQ = CryptoJS.enc.Utf8.parse(utf16le);
+       console.log(utf16le);
+      //  var content=Uint82Wdarray(RQ);
+        //console.log(content)
         //compute hash of the correct encoding string
-        var utf16md5 = CryptoJS.MD5(content);
+        var requestContentMD5 = CryptoJS.MD5(jsonContentString);
 
         // encoded the hash result to Base64 encoding
-        var b64md5Content = CryptoJS.enc.Base64.stringify(utf16md5);
+        var b64md5Content = CryptoJS.enc.Base64.stringify(requestContentMD5);
         return b64md5Content;
 
     }

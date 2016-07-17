@@ -29,10 +29,11 @@ angular.module('LPApp')
             console.log('requestUri::'+requestUri  );
             console.log('requestTimeStamp::'+requestTimeStamp  );
             console.log('nonce::'+nonce  );
-            console.log('requestContent::'+requestContent  );
+            console.log(requestContent  );
             console.log('requestContentBase64String::'+requestContentBase64String );
             var secretKeyByteArray = convertFrombase64(LPAppSetting.APIKey);
             requestSignatureBase64String=lpCryptoService.computeHMACSHA256(stringRawData,secretKeyByteArray);
+            console.log('requestSignatureBase64String::'+requestSignatureBase64String );
             config.headers.Authorization = 'amx ' + LPAppSetting.APPId+':'+ requestSignatureBase64String +':'+ nonce+':'+requestTimeStamp;
 /*
 
