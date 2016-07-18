@@ -8,6 +8,7 @@ var app =angular.module('LPApp', ['ionic','pdf','ionic-modal-select','ionicProce
 //var ResrcServiceBase = 'http://10.178.2.34/eSiroi.Resource/';
 //var ResrcServiceBase = 'http://manipurtemp12.nic.in/eSiroi.Resource';
 //var ResrcServiceBase = 'http://localhost:8080/LPAppService';
+//var ResrcServiceBase = 'http://localhost:8080/LPAppService';
 var ResrcServiceBase = 'http://localhost/LPAppService';
 //var ResrcServiceBase = 'http://10.178.2.34/LPAppService';
 var APPId = '4d53bce03ec34c0a911182d4c228ee6c';

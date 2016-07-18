@@ -31,7 +31,7 @@ console.log('hahahah');
             return value;
         });
      //var RQ = CryptoJS.enc.Utf8.parse(utf16le);
-       console.log(utf16le);
+       //console.log(utf16le);
       //  var content=Uint82Wdarray(RQ);
         //console.log(content)
         //compute hash of the correct encoding string
