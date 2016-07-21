@@ -14,14 +14,16 @@ angular.module('LPApp')
            // var url=config.url;
             var requestUri= encodeURIComponent(config.url.toLowerCase());
             var requestUri=requestUri.toLowerCase();
-            var requestTimeStamp=(new Date).getTime();
+            var requestTimeStamp=Math.floor( (new Date).getTime() / 1000 );
+
+            console.log(requestTimeStamp);
             var nonce=createGuid();
             var requestHttpMethod=config.method;
             var requestContent=(!config.data) ? '' : config.data;
             if(requestContent){
 
                 requestContentBase64String= lpCryptoService.computeMD5(requestContent)
-
+                console.log('hahah');
             }
             var stringRawData=LPAppSetting.APPId + requestHttpMethod + requestUri + requestTimeStamp + nonce + requestContentBase64String
            console.log('AppId::'+LPAppSetting.APPId  );
