@@ -1,6 +1,10 @@
+
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var bower = require('bower');
+var templateCache = require('gulp-angular-templatecache');
+var ngAnnotate = require('gulp-ng-annotate');
+var useref = require('gulp-useref');
 var concat = require('gulp-concat');
 var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
@@ -8,7 +12,10 @@ var rename = require('gulp-rename');
 var sh = require('shelljs');
 
 var paths = {
-  sass: ['./scss/**/*.scss']
+  sass: ['./scss/**/*.scss'],
+  templateCache: ['./www/Views/**/*.html'],
+  ng_annotate: ['./www/js/**/*.js'],
+  useref: ['./www/*.html']
 };
 
 gulp.task('default', ['sass']);
