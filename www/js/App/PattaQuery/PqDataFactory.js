@@ -25,7 +25,8 @@
 
         }
         function getCircles (distcode){
-            return $http.get(LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/' + distcode +'/getCircle')
+            //return $http.get(LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/getCircle',{params:{dcode:distcode}})
+            return $http.get(LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/'+ distcode +'/getCircle')
                 .then(success)
                 .catch(failure);
 
