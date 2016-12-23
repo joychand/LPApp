@@ -2,18 +2,18 @@
  * Created by Joychand on 27-03-2016.
  */
 (function(){
-        'use strict'
+        'use strict';
         angular.module('LPApp')
-        .controller('PqController',['$scope','$ionicModal','InvoiceService','PqDataFactory','PQResModel','$state','$ionicPopup','$q','$ionicLoading','$rootScope',PqController]);
+        .controller('PqController',['$scope','$ionicModal','PqDataFactory','PQResModel','$state','$ionicPopup','$q','$ionicLoading','$rootScope',PqController]);
 
 
-    function PqController($scope,$ionicModal,InvoiceService,PqDataFactory,PQResModel,$state,$ionicPopup,$q,$ionicLoading,$rootScope){
+    function PqController($scope,$ionicModal,PqDataFactory,PQResModel,$state,$ionicPopup,$q,$ionicLoading,$rootScope){
         var vm = this;
         vm.village='';
         vm.NewDagNO='';
         vm.NewPattaNo='';
         vm.isProcessing=false;
-        vm.btnText='Submit'
+        vm.btnText='Submit';
         //vm.pqForm;
        /* vm.loading={
             show:show,
@@ -30,7 +30,7 @@
         /*$scope.$broadcast('loadingstart','loading of page started');*/
         $ionicLoading.show({
             template: '<ion-spinner icon="bubbles" style="color:#ffffff"></ion-spinner>'
-        })
+        });
         activate();
         function activate(){
 
@@ -38,7 +38,7 @@
 
             return getdistricts().then(function(){
                 $ionicLoading.hide();
-            })
+            });
 
         }
 
@@ -52,7 +52,7 @@
                 loadingErrorHandler(error.status);
 
 
-            })
+            });
         }
         function onDistSelect(){
            vm.circle='';
@@ -62,18 +62,18 @@
             console.log(vm.district);
           return getcircle().then(function(){
            vm.pqForm.dagno.$setPristine();
-          })
+          });
         }
         function getcircle(){
             //console.log(vm.district);
             return PqDataFactory.getCircles(vm.district.distcode).then(function (data){
                 vm.circles=data;
                 return vm.circles;
-                console.log(vm.circles);
+                //console.log(vm.circles);
 
             },(function(error){
                 loadingErrorHandler(error.status);
-            }))
+            }));
         }
         function onCircSelect(){
             vm.village='';
@@ -83,7 +83,7 @@
             vm.pqForm.pattano.$setPristine();
             return getVill().then(function(){
                 console.log('villages success');
-            })
+            });
         }
         function getVill(){
             return PqDataFactory.getVillages(vm.circle).then(function(data){
@@ -91,7 +91,7 @@
                 return vm.villages;
             },function(error){
                 loadingErrorHandler(error.status);
-            })
+            });
         }
         function onVillSelect(){
             vm.NewDagNO='';
@@ -116,7 +116,7 @@
                     $rootScope.$broadcast('processComplete');
                     console.log(errorCode);
                    return detailErrorHandler(errorCode);
-                })
+                });
 
         }
         function getOwners(){
@@ -132,7 +132,7 @@
             },function(error){
                 $rootScope.$broadcast('processComplete');
               return $q.reject(error.status);
-            })
+            });
         }
 
         function getPlots(){
@@ -155,42 +155,17 @@
                 $state.go('app.pqResult');
             },function(error){
                return $q.reject(error.status);
-            })
+            });
         }
         $rootScope.$on('processing',function(){
             vm.isProcessing=true;
-            vm.btnText='Processing..'
+            vm.btnText='Processing..';
         });
 
         $rootScope.$on('processComplete',function(){
             vm.isProcessing=false;
-            vm.btnText='Submit'
+            vm.btnText='Submit';
         });
-
-      /*  $scope.$on('loadingstart', function(event,data){
-            console.log(data);
-            $ionicLoading.show({
-                template:'Loading..'
-            });
-        })
-        $scope.$on('loadingstop', function(event){
-            $ionicLoading.hide();
-        })*/
-       /* function show(){
-            $ionicLoading.show({
-                template: 'Loading...'
-            }).then(function(){
-                console.log("The loading indicator is now displayed");
-            });
-        }
-        function hide(){
-            $ionicLoading.hide().then(function(){
-                console.log("The loading indicator is now hidden");
-            });
-
-        }*/
-
-
 
         //ERROR HANDLING
         function loadingErrorHandler(errorCode){
@@ -207,7 +182,7 @@
                 content:errmessage
             }).then(function(result){
                 $state.go('app.home');
-            })
+            });
         }
         function detailErrorHandler(errorCode){
             console.log(errorCode);
@@ -231,7 +206,7 @@
                     $state.go('app.home');
                 }
 
-            })
+            });
         }
 
 
@@ -242,15 +217,17 @@
 
 /*****************PQRESULTCONTROLLER ********************/
 (function(){
-    'use strict'
+    'use strict';
     angular.module('LPApp')
         .controller('PqResultController',PqResultController);
 
-    PqResultController.$inject=['$scope','PQResModel','$http','PattaRptService','$ionicScrollDelegate'];
-    function PqResultController($scope,PQResModel,$http,PattaRptService,$ionicScrollDelegate){
+    PqResultController.$inject=['$scope','PQResModel','$http','PattaRptService','$ionicScrollDelegate','$ionicPopup','$q','$ionicLoading','$rootScope'];
+    function PqResultController($scope,PQResModel,$http,PattaRptService,$ionicScrollDelegate,$ionicPopup,$q,$ionicLoading,$rootScope){
 
         var vm=this;
         vm.show=false;
+        vm.isdownloading=false;
+        vm.btnTxt='Download';
         vm.dwnJamabandi=dwnJamabandi;
         vm.toggleGroup=toggleGroup;
         vm.isGroupShown=isGroupShown;
@@ -272,13 +249,13 @@ function isGroupShown(){
 
 // creat pdf patta and download to local file system and open with mobile default app
         function dwnJamabandi(){
-            console.log('dwnldstarted')
+            $rootScope.$broadcast('downloading');
             var rptData ={
                 locCd:PQResModel.locCd,
                 dagNo: vm.plotdetail.newDagNo,
                 pattaNo:vm.plotdetail.newPattaNo
 
-            }
+            };
 
 
             PattaRptService.createPdf(rptData)
@@ -287,7 +264,11 @@ function isGroupShown(){
                    // $scope.pdfUrl = URL.createObjectURL(blob);
                     var filename= rptData.dagNo+rptData.pattaNo +'louchapathap.pdf';
                     writeToFile(filename,blob);
+                    $rootScope.$broadcast('downloadcomplete');
 
+                },function(error){
+                    $rootScope.$broadcast('downloadcomplete');
+                    return $q.reject(error.status);
                 });
 
 
@@ -301,6 +282,7 @@ function isGroupShown(){
                      console.log('got file', fileEntry);
                      fileEntry.createWriter(function(fileWriter){
                          fileWriter.onwriteend=function(e){
+                             $rootScope.$broadcast('downloadcomplete');
                              console.log('Download Complete');
                              console.log(fileEntry.fullPath);
                              cordova.plugins.fileOpener2.open(
@@ -308,72 +290,39 @@ function isGroupShown(){
                                  'application/pdf',
                                  {
                                      error : function(e) {
-                                         alert('Error status: ' + e.status + ' - Error message: ' + e.message);
+                                         alert('No Apps found to open the pdf');
+                                         $rootScope.$broadcast('downloadcomplete');
                                      },
                                      success : function () {
+                                         $rootScope.$broadcast('downloadcomplete');
                                          console.log('file opened successfully');
                                      }
                                  }
                              );
                          };
                          fileWriter.onerror=function(e){
-                             alert('Download fail')
+                             alert('Download fail');
+                             $rootScope.$broadcast('downloadcomplete');
                          };
                          fileWriter.write(blob);
-                     })
-                 })
+                         $rootScope.$broadcast('downloadcomplete');
+                     });
+                 });
             });
 
 
 
         }
 
+        $rootScope.$on('downloading',function(){
+            vm.isdownloading=true;
+            vm.btnTxt='Downloading....';
+        });
 
-
-
-        function setDefaultsForPdfViewer($scope) {
-            $scope.scroll = 0;
-            $scope.loading = 'loading';
-
-            $scope.onError = function (error) {
-                console.error(error);
-            };
-
-            $scope.onLoad = function () {
-                $scope.loading = '';
-            };
-
-            $scope.onProgress = function (progress) {
-                console.log(progress);
-            };
-        }
-
-        function getDummyData() {
-            return {
-                Date: new Date().toLocaleDateString("en-IE", { year: "numeric", month: "long", day: "numeric" }),
-                AddressFrom: {
-                    Name: chance.name(),
-                    Address: chance.address(),
-                    Country: chance.country({ full: true })
-                },
-                AddressTo: {
-                    Name: chance.name(),
-                    Address: chance.address(),
-                    Country: chance.country({ full: true })
-                },
-
-                Items: [
-                    { Description: 'iPhone 6S', Quantity: '1', Price: '€700' },
-                    { Description: 'Samsung Galaxy S6', Quantity: '2', Price: '€655' }
-                ],
-                Subtotal: '€2010',
-                Shipping: '€6',
-                Total: '€2016'
-            };
-        }
-
-
-
+        $rootScope.$on('downloadcomplete',function(){
+            vm.isdownloading=false;
+            vm.btnTxt='Download';
+        });
 
     }
 })();

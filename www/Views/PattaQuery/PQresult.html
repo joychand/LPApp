@@ -4,11 +4,19 @@
 
 
 
-        <div class="text-right">
+        <div class="text-right" ng-if="!Pr.isdownloading">
 
 
             <button class="button button-full button-outline button-positive icon icon-centre   ion-android-download " ng-click="Pr.dwnJamabandi()">
-                Download
+                {{Pr.btnTxt}}
+            </button>
+
+        </div>
+        <div class="text-right" ng-if="Pr.isdownloading">
+
+
+            <button class="button button-full button-outline button-positive">
+                {{Pr.btnTxt}}
             </button>
 
         </div>

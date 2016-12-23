@@ -3,20 +3,24 @@
     <ion-content class="base-color">
         <ion-list  class="base-color">
             <ion-item class="base-color item-icon-right" >
-                Settings
-                <i class="icon ion-ios-arrow-right"></i>
+                 Settings
+               
                </ion-item>
-            <ion-item class="base-color item-icon-right" >
+            <ion-item class="base-color item-icon-right" menu-close ui-sref="app.home" >
                 Home
                 <i class="icon ion-ios-arrow-right"></i>
             </ion-item>
-            <ion-item class="base-color item-icon-right" >
-                PattaDownload
+            <ion-item class="base-color item-icon-right"  menu-close ui-sref="app.pattaQuery" >
+                Patta Download
                 <i class="icon ion-ios-arrow-right"></i>
             </ion-item>
 
-            <ion-item class="base-color item-icon-right" >
+            <ion-item class="base-color item-icon-right"  menu-close ng-click="sMenu.barcodescan()" >
                 QRVerify
+                <i class="icon ion-ios-arrow-right"></i>
+            </ion-item>
+            <ion-item class="base-color item-icon-right"  menu-close ui-sref="app.contactUs" >
+                Contact Us
                 <i class="icon ion-ios-arrow-right"></i>
             </ion-item>
 

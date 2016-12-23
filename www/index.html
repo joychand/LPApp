@@ -5,25 +5,20 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <meta http-equiv="Content-Security-Policy"/>
     <title></title>
-
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <!-- build:css dist_css/styles.css -->
+    <link href="css/ionic.app.css" rel="stylesheet">
+   <!-- <link href="lib/ionic/css/ionic.css" rel="stylesheet">-->
     <link href="css/style.css" rel="stylesheet">
-
+        <!-- endbuild -->
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
-
+   
     <!-- ionic/angularjs js -->
+    <!-- build:js dist_js/lib.js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
-    <!--Vendor js-->
-    <script src="lib/pdfmake/build/pdfmake.min.js"></script>
-    <script src="lib/pdfmake/build/vfs_fonts.js"></script>
-    <script src="lib/pdfjs-dist/build/pdf.js"></script>
-    <script src="lib/angular-pdf/dist/angular-pdf.js"></script>
-    <script src="lib/chance/chance.js"></script>
-    <script src="lib/ionic-modal-select/dist/ionic-modal-select.min.js"></script>
-    <script src="lib/ionic-process-spinner/src/ionic-process-spinner.min.js"></script>
-    <!--<script src="lib/html2canvas.js"></script>-->
+    <script src="lib/ionic-modal-select/dist/ionic-modal-select.js"></script>
+    <script src="lib/ionic-process-spinner/src/ionic-process-spinner.js"></script>
     <script src="lib/crypto-js/core.js"></script>
     <script src="lib/crypto-js/crypto-js.js"></script>
     <script src="lib/crypto-js/enc-base64.js"></script>
@@ -32,27 +27,33 @@
     <script src="lib/crypto-js/md5.js"></script>
     <script src="lib/crypto-js/hmac.js"></script>
     <script src="lib/crypto-js/hmac-sha256.js"></script>
+    <!-- endbuild -->
+
+	 <!-- your app's js -->
+    <!-- build:js dist_js/templates.js -->
+    <script src="dist/dist_js/templates.js"></script>
+    <!-- endbuild -->
+	
+	<!-- build:js dist_js/app.js -->
+    <script src="dist/dist_js/App/app.js"></script>
+    <script src="dist/dist_js/App/General/sideMenuController.js"></script>
+    <script src="dist/dist_js/App/authenticationInterceptor.js"></script>
+    <script src="dist/dist_js/App/lpCryptoService.js"></script>
+    <script src="dist/dist_js/App/InvoiceService2.js"></script>
+    <script src="dist/dist_js/App/MainController.js"></script>
+    <script src="dist/dist_js/App/General/HomeCtrl.js"></script>
+    <script src="dist/dist_js/App/PattaQuery/PqController.js"></script>
+    <script src="dist/dist_js/App/PattaQuery/PqDataFactory.js"></script>
+    <script src="dist/dist_js/App/PattaQuery/PQModel.js"></script>
+    <script src="dist/dist_js/App/General/DataFactory.js"></script>
+    <!-- endbuild -->
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
-    <!-- your app's js -->
-    <script src="js/App/app.js"></script>
-    <script src="js/App/authenticationInterceptor.js"></script>
-    <script src="js/App/lpCryptoService.js"></script>
-    <!-- <script src="js/App/DocumentController.js"></script>-->
-    <script src="js/App/InvoiceService.js"></script>
-    <script src="js/App/InvoiceService2.js"></script>
-    <script src="js/App/MainController.js"></script>
-    <script src="js/App/General/HomeCtrl.js"></script>
-    <script src="js/App/PattaQuery/PqController.js"></script>
-    <script src="js/App/PattaQuery/PqDataFactory.js"></script>
-    <script src="js/App/LValue/LValue.js"></script>
-    <script src="js/App/PattaQuery/PQModel.js"></script>
-    <script src="js/App/General/DataFactory.js"></script>
-
+   
 </head>
-<body ng-app="LPApp">
+<body ng-app="LPApp" ng-strict-di>
 
 <ion-nav-view>
 

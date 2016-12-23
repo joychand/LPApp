@@ -2,7 +2,7 @@
  * Created by DELL on 27-03-2016.
  */
 (function(){
-    'use strict'
+    'use strict';
     angular.module('LPApp')
         .factory('PqDataFactory',PqDataFactory);
     PqDataFactory.$inject=['$http','LPAppSetting','$q','$httpParamSerializerJQLike'];
@@ -16,17 +16,17 @@
             getPdf:getPdf,
             getJamabandi:getJamabandi
 
-        }
+        };
          return service;
         function getdistrict (){
-            return $http.get(LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/getDistrict')
+            return $http.get(LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/getDistrict', {cache:false})
                 .then(success)
                 .catch(failure);
 
         }
         function getCircles (distcode){
             //return $http.get(LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/getCircle',{params:{dcode:distcode}})
-            return $http.get(LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/'+ distcode +'/getCircle')
+            return $http.get(LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/'+ distcode +'/getCircle', {cache:false})
                 .then(success)
                 .catch(failure);
 
@@ -34,18 +34,18 @@
         function getVillages (circle){
             var data =circle;
             console.log(data);
-            return $http.post(LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/postVillage', data)
+            return $http.post(LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/postVillage', data, {cache:false})
                 .then(success)
                 .catch(failure);
 
         }
         function getOwners(pqmodal){
-          return $http.post(LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/getOwnDetail', pqmodal)
+          return $http.post(LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/getOwnDetail', pqmodal, {cache:false})
               .then (success)
               .catch(failure);
         }
         function getPlot(pqmodal){
-            return $http.post(LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/getplotDetail',pqmodal)
+            return $http.post(LPAppSetting.apiResrcServiceBaseUri +'/api/LPAppController/getplotDetail',pqmodal, {cache:false})
                 .then(success)
                 .catch(failure);
 
@@ -83,7 +83,7 @@
                 .then(success).catch(failure);*/
         }
         function success(response){
-            return response.data
+            return response.data;
             /*if(response.data==='object')
             {
                 return response.data;

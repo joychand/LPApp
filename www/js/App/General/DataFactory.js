@@ -4,12 +4,12 @@
 (function(){
     angular.module('LPApp').
         factory('LVfactory',LVfactory);
-    LVfactory.$inject=['$http','$q','LPAppSetting']
+    LVfactory.$inject=['$http','$q','LPAppSetting'];
     function LVfactory($http,$q,LPAppSetting){
         var service={
             getunit:getunit,
             getMasterLandValue:getMasterLandValue
-        }
+        };
         return service;
 
         function getMasterLandValue(unit){

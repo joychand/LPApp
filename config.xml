@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ionicframework.lpapp139964" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>LouchaPathap</name>
+<widget id="in.nic.louchapathap" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>LouchaPathap-RoR in Manipur App</name>
     <description>
         Mobile Application for LouchaPathap
     </description>
@@ -10,7 +10,6 @@
     <content src="index.html" />
     <access origin="*" />
     <access origin="*" />
-    <access origin="http://10.178.2.34:8090" />
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />

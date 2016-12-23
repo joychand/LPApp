@@ -3,10 +3,11 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app =angular.module('LPApp', ['ionic','pdf','ionic-modal-select','ionicProcessSpinner']);
+var app =angular.module('LPApp', ['ionic','ionic-modal-select','ionicProcessSpinner','templates']);
 //var AuthServiceBase = '/eSiroi.Authentication/';
 //var ResrcServiceBase = 'http://10.178.2.34/eSiroi.Resource/'
-var ResrcServiceBase = 'http://manipurtemp12.nic.in/LPAppService';
+//var ResrcServiceBase = 'http://manipurtemp12.nic.in/LPAppService';
+var ResrcServiceBase = 'http://louchapathap.nic.in/LPAppService';
 //var ResrcServiceBase = 'http://localhost/LPAppService';
 //var ResrcServiceBase = 'http://localhost:8888/LPAppService';
 //var ResrcServiceBase = 'http://localhost/LPAppService';
@@ -23,28 +24,32 @@ app.constant('LPAppSetting', {
 
 });
 app.config(function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/app/home')
+    $urlRouterProvider.otherwise('/app/home');
+
+
 
     $stateProvider
         .state('app',{
             url:'/app',
             abstract:true,
-            templateUrl:'Views/General/main.html',
+            templateUrl:'General/main.html',
             controller:'MainController',
             controllerAs:'master'
         })
 
         .state('app.home', {
             url: '/home',
-             views: {
-             'maincontent@app': {
-                 templateUrl: 'Views/General/home.html',
-                 controller: 'HomeController',
-                 controllerAs:'home'
-             },
-                 'sidemenu@app':{
-                     templateUrl:'Views/General/side_menu.html'
-                 }
+            views: {
+                'maincontent@app': {
+                    templateUrl: 'General/home.html',
+                    controller: 'HomeController',
+                    controllerAs:'home'
+                },
+                'sidemenu@app':{
+                    templateUrl:'General/side_menu.html',
+                    controller:'sideMenuController',
+                    controllerAs:'sMenu'
+                }
             }
         })
 
@@ -52,7 +57,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/help',
             views: {
                 'help@app': {
-                    templateUrl: 'Views/help.html'
+                    templateUrl: 'help.html'
                 }
             }
         })
@@ -61,13 +66,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
             cache:'false',
             views:{
                 'maincontent':{
-                    templateUrl:'Views/PattaQuery/PattaQuery.html',
+                    templateUrl:'PattaQuery/PattaQuery.html',
                     controller: 'PqController',
                     controllerAs:'PQuery'
                 },
                 'sidemenu':{
-                    templateUrl:'Views/General/side_menu.html'
-
+                    templateUrl:'General/side_menu.html',
+                    controller:'sideMenuController',
+                    controllerAs:'sMenu'
                 }
             }
         })
@@ -75,32 +81,34 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url:'/pqResult',
             views:{
                 'maincontent':{
-                    templateUrl:'Views/PattaQuery/PQresult.html',
+                    templateUrl:'PattaQuery/PQresult.html',
                     controller: 'PqResultController',
                     controllerAs:'Pr'
                 },
                 'sidemenu':{
-                    templateUrl:'Views/General/side_menu.html'
-
+                    templateUrl:'General/side_menu.html',
+                    controller:'sideMenuController',
+                    controllerAs:'sMenu'
                 }
             }
         })
-        .state('app.lValue',{
-            url:'/lValue',
-            cache:'false',
+        .state('app.disclaimer',{
+            url:'/disclaimer',
+           
             views:{
                 'maincontent':{
-                    templateUrl:'Views/LValue/LValue.html',
-                   controller: 'LValueController',
-                    controllerAs:'lv'
+                    templateUrl:'General/disclaimer.html',
+                    
                 },
                 'sidemenu':{
-                    templateUrl:'Views/General/side_menu.html'
+                    templateUrl:'General/side_menu.html',
+                    controller:'sideMenuController',
+                    controllerAs:'sMenu'
 
                 }
             }
-        })
-})
+        });
+});
 
 
 
@@ -143,7 +151,7 @@ app.directive('headerShrink', function($document) {
                 }
             });
         }
-    }
+    };
 });
 app.directive('scrollWatch', function($rootScope) {
         return function(scope, elem, attr) {
@@ -166,13 +174,13 @@ app.directive('scrollWatch', function($rootScope) {
     });
 
 app.config(['$httpProvider',function($httpProvider){
-    $httpProvider.interceptors.push('authInterceptorService');
-}])
-app.run(function($ionicPlatform,$ionicPopup) {
+    //$httpProvider.interceptors.push('authInterceptorService');
+}]);
+app.run(['$ionicPlatform','$ionicPopup',function($ionicPlatform,$ionicPopup) {
 
   $ionicPlatform.ready(function() {
     if (window.connection){
-        if(navigator.connection.type=Connection.NONE){
+        if(navigator.connection.type===Connection.NONE){
             $ionicPopup.confirm({
                 title:'NO INTERNET',
                 content:'Please Check your internet connection and try again'
@@ -180,7 +188,7 @@ app.run(function($ionicPlatform,$ionicPopup) {
                 if(!result){
                     $ionicPlatform.exitApp();
                 }
-            })
+            });
 
         }
     }
@@ -204,4 +212,4 @@ app.run(function($ionicPlatform,$ionicPopup) {
       console.log( $rootScope.fileTransfer);*/
   });
 
-})
+}]);

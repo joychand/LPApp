@@ -13,7 +13,7 @@
             vm.$state.go('app.home');
         }
         vm.toggleLeftSideMenu = function() {
-            $ionicSideMenuDelegate.toggleLeft()
+            $ionicSideMenuDelegate.toggleLeft();
             /*$state.go('app.sidemenu');*/
         };
        // return vm;

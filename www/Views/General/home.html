@@ -1,4 +1,4 @@
-<ion-view title="Home" hide-back-button="true">
+<ion-view title="Welcome" hide-back-button="true">
 
     <!--<ion-content header-shrink scroll-event-interval="3">-->
         <ion-content >
@@ -7,7 +7,7 @@
                 <img src="img/Logo_kanglasha.png" width="70" height="50" alt="">
 
             </div>
-            <div class="  text-center home-header-text">
+            <div class="  text-center home-header-text" >
 
                 LouchaPathap Mobile App
 
@@ -18,7 +18,7 @@
        </span>
             </div>
 
-            <div class="row ">
+            <div class="row " id="focusitem">
 
                 <div class="square  ">
                     <div class="content">
@@ -26,29 +26,19 @@
                             <div class="table-cell" style="text-align:center !important;">
                                 <a ui-sref="app.pattaQuery" class="  button button-icon">
                                     <i class="icon ion-android-download my-icon"></i>
-                                    <h6 style="text-size:5px !important; color:#ffffff;">Patta Download</h6></a>
+                                    <h6 style="text-size:2em !important; color:#ffffff;">Patta Download</h6></a>
                             </div>
                         </div>
                     </div>
                 </div>
-             <!--   <div class="square  ">
-                    <div class="content">
-                        <div class="table">
-                            <div class="table-cell" style="text-align:center !important;">
-                                <a href="#" class="  button button-icon">
-                                    <i class="icon ion-android-search my-icon"></i>
-                                    <h6 style="text-size:5px !important; color:#ffffff;">DeedSearch</h6></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
+            
                 <div class="square  ">
                     <div class="content">
                         <div class="table">
                             <div class="table-cell" style="text-align:center !important;">
                                 <a  href=""  ng-click="home.barcodescan()"class="button button-icon">
                                     <i class="icon ion-qr-scanner my-icon" ></i>
-                                    <h6 style="text-size:5px !important; color:#ffffff;">QR Verify</h6></a>
+                                    <h6 style="text-size:2em !important; color:#ffffff;">QR Verify</h6></a>
                             </div>
                         </div>
                     </div>
@@ -56,19 +46,15 @@
             </div>
             <div class="row ">
 
-                <div class="square  ">
+                <div class="square">
                     <div class="content">
                         <div class="table">
-                          <!--  <div class="table-cell" style="text-align:center !important;">
-                                <a  href=""  ng-click="home.barcodescan()"class="button button-icon">
-                                    <i class="icon ion-qr-scanner my-icon" ></i>
-                                    <h6 style="text-size:5px !important; color:#ffffff;">QR Verify</h6></a>
-                            </div>-->
+                          
                             <div class="table-cell" style="text-align:center !important;">
 
-                                <a href="" class=" button button-icon">
+                                <a ui-sref="app.disclaimer" class=" button button-icon">
                                     <i class="icon ion-information-circled my-icon"></i>
-                                    <h6 style="text-size:4px !important; color:#ffffff;">AboutUs</h6></a>
+                                    <h6 style="text-size:2em !important; color:#ffffff;">Disclaimer</h6></a>
 
                             </div>
                         </div>
@@ -78,38 +64,42 @@
                     <div class="content">
                         <div class="table">
                             <div class="table-cell" style="text-align:center !important;">
-                                <a href="" class="  button button-icon">
+                                <a href="" class="  button button-icon" ng-click="home.openModal()">
                                     <i class="icon ion-help my-icon"></i>
-                                    <h6 style="text-size:5px !important; color:#ffffff;">Help</h6></a>
+                                    <h6 style="text-size:2em !important; color:#ffffff;">Help</h6></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-           <!-- <div class="row ">
+            <!--<walkthrough-->
+                    <!--id="Tour1"-->
+                    <!--walkthrough-type="tip"-->
+                    <!--focus-element-selector="#focusitem"-->
 
+                    <!--main-caption="{{home.tourCaption1}}"-->
 
-                <div class="col-50 col-offset-25" style=" padding-bottom:2%;width:50% !important;margin-top:.66%; background-color:#5DBCD2 !important; ">
-                    &lt;!&ndash;<div class="content">&ndash;&gt;
-                        &lt;!&ndash;<div class="table">&ndash;&gt;
-                            <div class="table-cell" style="text-align:center !important;">
+                    <!--is-active="true"-->
 
-                                <a href="" class=" button button-icon">
-                                    <i class="icon ion-information-circled my-icon"></i>
-                                    <h6 style="text-size:4px !important; color:#ffffff;">AboutUs</h6></a>
-
-                            </div>
-
-                       &lt;!&ndash; </div>&ndash;&gt;
-                   &lt;!&ndash; </div>&ndash;&gt;
+                   <!--&gt;-->
+            <!--</walkthrough>-->
+            <script id="image-modal.html" type="text/ng-template">
+                <div class="modal image-modal transparent"
+                     ng-click="closeModal()">
+                    <ion-slide-box on-slide-changed="slideChanged(index)"
+                                   show-pager="false">
+                        <ion-slide ng-repeat="oImage in aImages">
+                            <img ng-src="{{oImage.src}}" class="fullscreen-image" />
+                            <p class="info">{{oImage.msg}}</p>
+                        </ion-slide>
+                    </ion-slide-box>
                 </div>
-
-            </div>-->
+            </script>
 
     </ion-content>
     <ion-footer-bar align-title="center" class="bar-stable">
 
-        <h6 class="text-center">Developed & Designed by NIC</h6>
+       <pre><h6 class="text-center">Developed & Designed by NIC</h6></pre>
 
     </ion-footer-bar>
 

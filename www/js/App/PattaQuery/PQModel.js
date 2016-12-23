@@ -11,7 +11,7 @@
             plot:{},
             location:{},
             locCd:''
-        }
+        };
         return service;
     }
 })();

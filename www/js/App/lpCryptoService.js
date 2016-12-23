@@ -3,7 +3,7 @@
  */
 
 (function(){
-    'use strict'
+    'use strict';
     angular.module('LPApp')
         .factory('lpCryptoService',['$q','LPAppSetting',lpCryptoService]);
     function lpCryptoService($q, LPAppSetting){
@@ -15,7 +15,7 @@
             str2Uint8array:str2Uint8array,
             Uint82Wdarray:Uint82Wdarray,
 
-        }
+        };
         return service;
     }
     function computeMD5(requestContent){
@@ -30,11 +30,7 @@ console.log('hahahah');
 
             return value;
         });
-     //var RQ = CryptoJS.enc.Utf8.parse(utf16le);
-       //console.log(utf16le);
-      //  var content=Uint82Wdarray(RQ);
-        //console.log(content)
-        //compute hash of the correct encoding string
+
         var requestContentMD5 = CryptoJS.MD5(jsonContentString);
 
         // encoded the hash result to Base64 encoding

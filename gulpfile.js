@@ -18,7 +18,7 @@ var paths = {
   useref: ['./www/*.html']
 };
 
-gulp.task('default', ['sass']);
+gulp.task('default', ['sass','templatecache', 'ng_annotate', 'useref']);
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
@@ -32,9 +32,34 @@ gulp.task('sass', function(done) {
     .pipe(gulp.dest('./www/css/'))
     .on('end', done);
 });
+gulp.task('templatecache',['sass'], function(done){
+  gulp.src('./www/Views/**/*.html')
+      .pipe(templateCache({standalone:true}))
+      .pipe(gulp.dest('./www/dist/dist_js'))
+      .on('end', done);
+});
+
+gulp.task('ng_annotate',['templatecache'], function (done) {
+  gulp.src('./www/js/**/*.js')
+      .pipe(ngAnnotate({single_quotes: true}))
+      .pipe(gulp.dest('./www/dist/dist_js'))
+      .on('end', done);
+});
+
+gulp.task('useref',['ng_annotate'], function (done) {
+  //var assets = useref.assets();
+  gulp.src('./www/*.html')
+     
+      .pipe(useref())
+      .pipe(gulp.dest('./www/dist'))
+      .on('end', done);
+});
 
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
+  gulp.watch(paths.templatecache, ['templatecache']);
+  gulp.watch(paths.ng_annotate, ['ng_annotate']);
+  gulp.watch(paths.useref, ['useref']);
 });
 
 gulp.task('install', ['git-check'], function() {
