@@ -16,16 +16,16 @@
         function barcodescan(){
             cordova.plugins.barcodeScanner.scan(
                 function (result) {
-                    console.log(result);
-                    if(result.format==="QR_CODE")
-
-                    {
-                      $scope.result=result;
-                        openModal();
-                        $scope.DagNO=result.text;
-                        $scope.PattaNo=result.format;
-                    }
-                    else{
+                    //console.log(result);
+                    //if(result.format==="QR_CODE")
+                    //
+                    //{
+                    //  $scope.result=result;
+                    //    openModal();
+                    //    $scope.DagNO=result.text;
+                    //    $scope.PattaNo=result.format;
+                    //}
+                    //else{
                         alert(
 
                             "We got a barcode\n" +
@@ -33,7 +33,7 @@
                             "Format: " + result.format + "\n" +
                             "Cancelled: " + result.cancelled
                         );
-                    }
+                   // }
 
                 },
                 function (error) {
@@ -56,16 +56,16 @@
             'msg' : 'Welcome to help tour. Swipe to the left<-'
         }, {
             'src' : 'img/circle.jpg',
-            'msg' : ''
+            'msg' : '<--  swipe  -->'
         }, {
             'src' : 'img/village.jpg',
-            'msg' : ''
+            'msg' : '<--  swipe  -->'
         },{
             'src' : 'img/newdagno.jpg',
-            'msg' : ''
+            'msg' : '<--  swipe  -->'
         },{
             'src' : 'img/patta.jpg',
-            'msg' : ''
+            'msg' : '<--  swipe  -->'
         }, {
             'src' : 'img/submit.jpg',
             'msg' : 'OK got it!. Tap/Click to close '

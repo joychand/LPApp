@@ -107,7 +107,23 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
                 }
             }
-        });
+        })
+    .state('app.contactus',{
+        url:'/contactus',
+
+        views:{
+            'maincontent':{
+                templateUrl:'General/contactus.html',
+
+            },
+            'sidemenu':{
+                templateUrl:'General/side_menu.html',
+                controller:'sideMenuController',
+                controllerAs:'sMenu'
+
+            }
+        }
+    });
 });
 
 
