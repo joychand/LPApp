@@ -12,6 +12,8 @@
                     var pdf =data;
                      resolve(pdf)  ;
 
+                },function(error){
+                    reject(error);
                 });
 
 

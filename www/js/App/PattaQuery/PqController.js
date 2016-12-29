@@ -262,29 +262,30 @@ function isGroupShown(){
                 .then(function (pdf) {
                     var blob = new Blob([pdf], { type: 'application/pdf' });
                    // $scope.pdfUrl = URL.createObjectURL(blob);
-                    var filename= rptData.dagNo+rptData.pattaNo +'louchapathap.pdf';
+                    var filename= rptData.locCd+ rptData.dagNo+rptData.pattaNo +'jambnd.pdf';
                     writeToFile(filename,blob);
                     $rootScope.$broadcast('downloadcomplete');
 
                 },function(error){
+                    alert('download fail.. plz try again');
                     $rootScope.$broadcast('downloadcomplete');
-                    return $q.reject(error.status);
+                    //return $q.reject(error.status);
                 });
 
 
 
         }
         function writeToFile(filename,blob){
-            console.log(blob);
-            console.log('writing to file');
+            //console.log(blob);
+            //console.log('writing to file');
             window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function(dir){
                  dir.getFile(filename,{create:true},function(fileEntry){
                      console.log('got file', fileEntry);
                      fileEntry.createWriter(function(fileWriter){
                          fileWriter.onwriteend=function(e){
                              $rootScope.$broadcast('downloadcomplete');
-                             console.log('Download Complete');
-                             console.log(fileEntry.fullPath);
+                             //console.log('Download Complete');
+                             //console.log(fileEntry.fullPath);
                              cordova.plugins.fileOpener2.open(
                                  cordova.file.externalApplicationStorageDirectory+filename, // You can also use a Cordova-style file uri: cdvfile://localhost/persistent/Download/starwars.pdf
                                  'application/pdf',
